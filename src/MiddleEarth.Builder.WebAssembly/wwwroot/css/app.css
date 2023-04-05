@@ -4,6 +4,16 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+body {
+    background-image: url("img/middle-earth-map-light.jpg"), url("../img/middle-earth-map-light.jpg");
+    background-color: #e7d1b9; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    width: 100vw;
+    height: 100vh;
+}
+
 h1:focus {
     outline: none;
 }
