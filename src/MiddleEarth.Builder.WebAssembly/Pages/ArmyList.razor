@@ -1,0 +1,56 @@
+﻿@page "/{Side}/army-list"
+@page "/{Side}/army-list/{ArmyListName}"
+@using MiddleEarth.Builder.Application
+@using MiddleEarth.Models
+@inject NavigationManager NavigationManager
+@inject IRepository<string, MiddleEarth.Models.ArmyList> Repository
+<h3>Army List</h3>
+@if (string.IsNullOrEmpty(ArmyListName))
+{
+    <EditForm class="d-flex flex-row align-items-center justify-content-center" Model="@_armyListNameForm" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <label for="armyListName" class="form-label m-0 me-2">Name</label>
+        <InputText id="armyListName" class="form-control me-2" @bind-Value="_armyListNameForm.Name" />
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
+else
+{
+    <h4>@ArmyListName</h4>
+}
+
+@code {
+    [Parameter]
+    public string? ArmyListName { get; set; }
+
+    [Parameter]
+    public string? Side { get; set; }
+    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
+
+    private MiddleEarth.Models.ArmyList? Army { get; set; }
+
+    private readonly ArmyListNameForm _armyListNameForm = new();
+
+    protected override async Task OnParametersSetAsync() => await LoadAsync();
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        if (string.IsNullOrEmpty(ArmyListName) || Army?.Name == ArmyListName)
+            return;
+
+        Army = await Repository.Get(ArmyListName, CancellationToken.None);
+    }
+
+    private void HandleValidSubmit()
+    {
+        NavigationManager.NavigateTo(RouteProvider.GetArmyListRoute(SideEnum, _armyListNameForm.Name));
+    }
+
+    private class ArmyListNameForm
+    {
+        public string Name { get; set; }
+    }
+}

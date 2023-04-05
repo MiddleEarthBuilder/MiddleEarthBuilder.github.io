@@ -1,0 +1,16 @@
+﻿@page "/armies"
+@page "/armies/{Side}"
+@using MiddleEarth.Models
+@using MiddleEarth.Builder.Application
+<h3>@(SideEnum == Models.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
+
+<lead>
+    <p>Can't find your army list? You can add it <a href="@RouteProvider.GetArmyListRoute(SideEnum)">here</a>.</p>
+</lead>
+
+@code {
+    [Parameter]
+    public string? Side { get; set; }
+
+    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
+}

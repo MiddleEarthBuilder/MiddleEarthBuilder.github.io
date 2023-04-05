@@ -2,7 +2,7 @@
 
 namespace MiddleEarth.Models;
 
-public record ArmyList(string Name, HeroProfile[] Heroes, WarriorProfile[] Warriors, SpecialRule[] ArmyBonuses, Alliance[] Alliances);
+public record ArmyList(string Name, Side Side, HeroProfile[] Heroes, WarriorProfile[] Warriors, SpecialRule[] ArmyBonuses, Alliance[] Alliances);
 
 public record Alliance(string ArmyList, AllianceLevel Level);
 
@@ -28,4 +28,9 @@ public record Tier(int Id, string Name, int FollowersLimit)
     public static Tier GetTier(int id) =>
         Tiers.FirstOrDefault(tier => tier.Id == id) ??
         throw new KeyNotFoundException($"Tier with id \"{id}\" not exists");
+}
+
+public enum Side
+{
+    Undefined, Good, Evil
 }

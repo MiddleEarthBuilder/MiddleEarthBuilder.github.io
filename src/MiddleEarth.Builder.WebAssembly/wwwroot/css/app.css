@@ -32,10 +32,12 @@ a, .btn-link {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.content {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+@media screen {
+    .content {
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25), 2px 2px 5px rgba(0, 0, 0, 0.33);
+        border-radius: 10px;
+    }
 }
 
 .valid.modified:not([type=checkbox]) {

@@ -2,7 +2,8 @@
 
 public class ArmyDto
 {
-    private string Leader { get; set; }
+    public Side Side { get; set; }
+    public string Leader { get; set; }
     public List<WarbandDto> Warbands { get; set; } = new();
 
     public int PointsCount => Warbands.Count > 0 ? Warbands.Sum(warband => warband.Points) : 0;

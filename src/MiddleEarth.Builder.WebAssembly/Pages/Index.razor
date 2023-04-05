@@ -1,10 +1,20 @@
 ﻿@page "/"
+@using MiddleEarth.Builder.Application
+@using MiddleEarth.Models
 
 <h1>Middle-Earth Builder</h1>
 
 <lead>
     <p>Welcome commander. Let's build your first army.</p>
 
-    <p>First, choose your side:</p>
-    
+    <p>First, choose your force:</p>
+
+    <div class="d-flex flex-row">
+        <a href="@RouteProvider.GetArmiesRoute(Side.Good)" class="w-100 h-100 btn btn-primary m-1">
+            <span class="h2 m-auto">Good</span>
+        </a>
+        <a href="@RouteProvider.GetArmiesRoute(Side.Evil)" class="w-100 h-100 btn btn-danger m-1">
+            <span class="h2 m-auto">Evil</span>
+        </a>
+    </div>
 </lead>

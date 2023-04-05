@@ -11,4 +11,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.4" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\data\army-list\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiddleEarth.Builder.Infrastructure\MiddleEarth.Builder.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
