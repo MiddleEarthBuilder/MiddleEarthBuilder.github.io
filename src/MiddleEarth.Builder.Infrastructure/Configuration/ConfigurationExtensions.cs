@@ -8,5 +8,5 @@ public static class ConfigurationExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services) =>
         services
-            .AddSingleton<IRepository<string, ArmyList>, ArmyListRepository>();
+            .AddSingleton<IRepository<string, ArmyList>, ArmyListMultipleFilesRepository>();
 }

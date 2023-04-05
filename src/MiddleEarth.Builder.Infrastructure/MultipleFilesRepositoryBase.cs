@@ -1,33 +1,37 @@
-﻿using MiddleEarth.Builder.Application;
+﻿using Microsoft.Extensions.Logging;
+using MiddleEarth.Builder.Application;
+using System.Collections.Concurrent;
 using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace MiddleEarth.Builder.Infrastructure;
 
-public abstract class RepositoryBase<TKey, TValue> : IRepository<TKey, TValue>
+public abstract class MultipleFilesRepositoryBase<TKey, TValue> : IRepository<TKey, TValue>
 {
-    protected abstract string DataDirectoryRoute { get; }
+    protected abstract string DataDirectoryPath { get; }
 
-    private readonly Dictionary<TKey, TValue> _dictionary = new();
+    private readonly IDictionary<TKey, TValue> _dictionary = new ConcurrentDictionary<TKey, TValue>();
     private TKey[]? _index;
 
     private readonly HttpClient _httpClient;
+    private readonly ILogger<MultipleFilesRepositoryBase<TKey, TValue>> _logger;
 
-    protected RepositoryBase(HttpClient httpClient)
+    protected MultipleFilesRepositoryBase(HttpClient httpClient, ILogger<MultipleFilesRepositoryBase<TKey, TValue>> logger)
     {
         _httpClient = httpClient;
+        _logger = logger;
     }
 
     public async Task<IReadOnlyCollection<TValue>> Get(CancellationToken cancellationToken)
     {
-        _index ??= await _httpClient.GetFromJsonAsync<TKey[]>($"{DataDirectoryRoute}/_index.json", cancellationToken);
+        _index ??= await _httpClient.GetFromJsonAsync<TKey[]>($"{DataDirectoryPath}/_index.json", cancellationToken);
         if (_index == null)
-            return _dictionary.Values;
+            return _dictionary.Values.ToArray();
 
         foreach (var name in _index)
             await Get(name, cancellationToken);
 
-        return _dictionary.Values;
+        return _dictionary.Values.ToArray();
     }
 
     public async Task<TValue?> Get(TKey name, CancellationToken cancellationToken)
@@ -35,9 +39,10 @@ public abstract class RepositoryBase<TKey, TValue> : IRepository<TKey, TValue>
         if (_dictionary.TryGetValue(name, out var value))
             return value;
 
+        var path = $"{DataDirectoryPath}/{name}.json";
         try
         {
-            var result = await _httpClient.GetFromJsonAsync<TValue>($"{DataDirectoryRoute}/{name}", cancellationToken);
+            var result = await _httpClient.GetFromJsonAsync<TValue>(path, cancellationToken);
             if (result == null)
                 return default;
 
@@ -45,8 +50,9 @@ public abstract class RepositoryBase<TKey, TValue> : IRepository<TKey, TValue>
 
             return result;
         }
-        catch (JsonException ex)
+        catch (JsonException exception)
         {
+            _logger.LogError(exception, $"A JSON error occurred while loading \"{path}\".");
             return CreateNew(name);
         }
     }

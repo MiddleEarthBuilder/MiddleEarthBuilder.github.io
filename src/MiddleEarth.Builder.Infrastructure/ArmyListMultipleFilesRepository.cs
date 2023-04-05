@@ -1,13 +1,14 @@
-﻿using MiddleEarth.Models;
+﻿using Microsoft.Extensions.Logging;
+using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure;
 
-internal class ArmyListRepository : RepositoryBase<string, ArmyList>
+internal class ArmyListMultipleFilesRepository : MultipleFilesRepositoryBase<string, ArmyList>
 {
-    protected override string DataDirectoryRoute => "/data/army-list";
+    protected override string DataDirectoryPath => "/data/army-list";
 
-    public ArmyListRepository(HttpClient httpClient) :
-        base(httpClient)
+    public ArmyListMultipleFilesRepository(HttpClient httpClient, ILogger<MultipleFilesRepositoryBase<string, ArmyList>> logger) :
+        base(httpClient, logger)
     { }
 
     protected override string GetKey(ArmyList entity) => entity.Name;
