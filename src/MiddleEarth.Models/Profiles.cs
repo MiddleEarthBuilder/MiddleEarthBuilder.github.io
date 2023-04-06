@@ -4,35 +4,28 @@ public record HeroProfile(
     string ArmyList,
     string Name,
     string Tier,
-    HeroCharacteristics Characteristics,
-    CommonEquipment CommonEquipment,
-    CustomEquipment CustomEquipment,
+    Characteristics Characteristics,
+    ProfileEquipment[] Equipment,
     int Cost,
     string? Note);
 
 public record WarriorProfile(
     string ArmyList,
     string Name,
-    WarriorCharacteristics Characteristics,
-    CommonEquipment CommonEquipment,
-    CustomEquipment CustomEquipment,
+    Characteristics Characteristics,
+    ProfileEquipment[] Equipment,
     int Cost,
     string? Note);
 
-public record CommonEquipment(
+public record ProfileEquipment(
     string Name,
-    bool IsDefault,
-    int Cost);
-
-public record CustomEquipment(
-    Equipment Profile,
     bool IsDefault,
     int Cost);
 
 public record Equipment(
     string Name,
     string Description,
-    WarriorCharacteristics CharacteristicsBonus,
+    Characteristics CharacteristicsBonus,
     bool IsBow = false,
     bool IsAllowedOnce = true,
     string[]? DeniedEquipment = null,
@@ -48,25 +41,23 @@ public record CombinedHeroProfile(
     string ArmyList,
     string Name,
     string Tier,
-    HeroCharacteristics Characteristics,
-    CommonEquipment CommonEquipment,
-    CustomEquipment CustomEquipment,
+    Characteristics Characteristics,
+    ProfileEquipment[] Equipment,
     int Cost,
     string? Note,
     WarriorProfile[] AdditionalUnits,
     bool CountsAsOne) :
     HeroProfile(ArmyList, Name, Tier, Characteristics,
-        CommonEquipment, CustomEquipment, Cost, Note);
+        Equipment, Cost, Note);
 
 public record CombinedWarriorProfile(
     string ArmyList,
     string Name,
-    WarriorCharacteristics Characteristics,
-    CommonEquipment CommonEquipment,
-    CustomEquipment CustomEquipment,
+    Characteristics Characteristics,
+    ProfileEquipment[] Equipment,
     int Cost,
     string? Note,
     WarriorProfile[] AdditionalUnits,
     bool CountsAsOne) :
     WarriorProfile(ArmyList, Name, Characteristics,
-        CommonEquipment, CustomEquipment, Cost, Note);
+        Equipment, Cost, Note);

@@ -1,9 +1,11 @@
 ﻿@page "/{Side}/army-list"
 @page "/{Side}/army-list/{ArmyListName}"
 @using MiddleEarth.Builder.Application
+@using MiddleEarth.Builder.Infrastructure
 @using MiddleEarth.Models
+@using AppContext = MiddleEarth.Builder.Infrastructure.BuilderContext
 @inject NavigationManager NavigationManager
-@inject IRepository<string, MiddleEarth.Models.ArmyList> Repository
+@inject AppContext Context
 <h3>Army List</h3>
 @if (string.IsNullOrEmpty(ArmyListName))
 {
@@ -28,7 +30,7 @@ else
     public string? Side { get; set; }
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
 
-    private MiddleEarth.Models.ArmyList? Army { get; set; }
+    private ArmyListDto? Army { get; set; }
 
     private readonly ArmyListNameForm _armyListNameForm = new();
 
@@ -41,7 +43,7 @@ else
         if (string.IsNullOrEmpty(ArmyListName) || Army?.Name == ArmyListName)
             return;
 
-        Army = await Repository.Get(ArmyListName, CancellationToken.None);
+        Army = await Context.ArmyLists.GetOrCreateAsync(ArmyListName, CancellationToken.None);
     }
 
     private void HandleValidSubmit()
@@ -51,6 +53,6 @@ else
 
     private class ArmyListNameForm
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

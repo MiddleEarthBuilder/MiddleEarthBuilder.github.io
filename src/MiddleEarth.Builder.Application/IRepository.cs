@@ -2,8 +2,10 @@
 
 public interface IRepository<TKey, TValue>
 {
-    Task<IReadOnlyCollection<TValue>> Get(CancellationToken cancellationToken);
-    Task<TValue?> Get(TKey key, CancellationToken cancellationToken);
-    Task Update(TValue entity, CancellationToken cancellationToken);
-    Task Delete(TKey key, CancellationToken cancellationToken);
+    IReadOnlyCollection<TValue> GetAll();
+    Task<IReadOnlyCollection<TValue>> GetAllAsync(CancellationToken cancellationToken);
+    TValue GetOrCreate(TKey key);
+    Task<TValue> GetOrCreateAsync(TKey key, CancellationToken cancellationToken);
+    Task UpdateAsync(TValue entity, CancellationToken cancellationToken);
+    Task DeleteAsync(TKey key, CancellationToken cancellationToken);
 }

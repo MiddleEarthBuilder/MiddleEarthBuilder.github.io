@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{0D53D1FB-29F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleEarth.Models", "src\MiddleEarth.Models\MiddleEarth.Models.csproj", "{FF9AD15D-3A84-462C-BD02-C9EC9783D55A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleEarth.Builder.Application", "src\MiddleEarth.Builder.Application\MiddleEarth.Builder.Application.csproj", "{62D4EB69-6F82-4BDA-8E90-8F64846FAAE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleEarth.Builder.Application", "src\MiddleEarth.Builder.Application\MiddleEarth.Builder.Application.csproj", "{62D4EB69-6F82-4BDA-8E90-8F64846FAAE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleEarth.Builder.Infrastructure", "src\MiddleEarth.Builder.Infrastructure\MiddleEarth.Builder.Infrastructure.csproj", "{DC878169-4DFD-4177-BAC4-0729012FC663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleEarth.Builder.Infrastructure", "src\MiddleEarth.Builder.Infrastructure\MiddleEarth.Builder.Infrastructure.csproj", "{DC878169-4DFD-4177-BAC4-0729012FC663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FF9AD15D-3A84-462C-BD02-C9EC9783D55A} = {0D53D1FB-29F3-4D2A-AE0E-7D2FE8E27833}
 		{62D4EB69-6F82-4BDA-8E90-8F64846FAAE7} = {0D53D1FB-29F3-4D2A-AE0E-7D2FE8E27833}
+		{DC878169-4DFD-4177-BAC4-0729012FC663} = {0D53D1FB-29F3-4D2A-AE0E-7D2FE8E27833}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C66C9BE-9B33-4131-975F-F38910C1DC71}

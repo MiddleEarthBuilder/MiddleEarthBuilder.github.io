@@ -2,7 +2,24 @@
 @page "/armies/{Side}"
 @using MiddleEarth.Models
 @using MiddleEarth.Builder.Application
+@using AppContext = MiddleEarth.Builder.Infrastructure.BuilderContext
+@inject AppContext Context
+
 <h3>@(SideEnum == Models.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
+
+@if (FilteredArmiesList == null)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    @foreach (var armyList in FilteredArmiesList)
+    {
+        <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Models.Side.Good ? "btn-primary" : "btn-danger")">@armyList.Name</a>
+    }
+}
 
 <lead>
     <p>Can't find your army list? You can add it <a href="@RouteProvider.GetArmyListRoute(SideEnum)">here</a>.</p>
@@ -12,5 +29,22 @@
     [Parameter]
     public string? Side { get; set; }
 
+    private List<ArmyListDto>? ArmiesList { get; set; }
+    private IEnumerable<ArmyListDto>? FilteredArmiesList { get; set; }
+
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
+
+    protected override Task OnParametersSetAsync()
+    {
+        FilteredArmiesList = SideEnum == Models.Side.Undefined ?
+            ArmiesList :
+            ArmiesList?.Where(armyList => armyList.Side == SideEnum);
+
+        return Task.CompletedTask;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArmiesList = new List<ArmyListDto>(await Context.ArmyLists.GetAllAsync(CancellationToken.None));
+    }
 }

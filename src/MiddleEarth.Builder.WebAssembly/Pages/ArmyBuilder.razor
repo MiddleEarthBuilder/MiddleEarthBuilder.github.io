@@ -1,0 +1,20 @@
+﻿@page "/armies/{ArmyName}/builder"
+@using MiddleEarth.Models
+@using MiddleEarth.Builder.Infrastructure
+@inject BuilderContext Context
+<h3>@ArmyListName</h3>
+<h4>Builder</h4>
+
+@code {
+    [Parameter]
+    public string? ArmyListName { get; set; }
+
+    private ArmyDto? Army { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(ArmyListName))
+            return;
+        Army = await Context.CreateArmy(ArmyListName);
+    }
+}

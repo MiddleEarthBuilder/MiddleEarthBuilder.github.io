@@ -1,50 +1,30 @@
 ﻿namespace MiddleEarth.Models;
 
-public record HeroCharacteristics(
+public record Characteristics(
     int Move,
-    FightCharacteristic Fight,
-    int Strength,
-    int Defense,
-    int Attacks,
-    int Wounds,
-    int Courage,
-    int Might,
-    int Will,
-    int Fate,
-    string[] CommonSpecialRules,
-    SpecialRule[] CustomSpecialRules) :
-    WarriorCharacteristics(Move, Fight, Strength,
-        Defense, Attacks, Wounds, Courage,
-        CommonSpecialRules, CustomSpecialRules)
-{
-    public override string ToString() =>
-        $"{base.ToString()}, M{Might}, W{Will}, F{Fate}";
-}
-
-public record WarriorCharacteristics(
-    int Move,
-    FightCharacteristic Fight,
-    int Strength,
-    int Defense,
-    int Attacks,
-    int Wounds,
-    int Courage,
-    string[] CommonSpecialRules,
-    SpecialRule[] CustomSpecialRules)
-{
-    public override string ToString() =>
-        $"Mv {Move}\", F{Fight}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}";
-}
-
-public record FightCharacteristic(
     int Fight,
-    int? Shoot)
+    int? Shoot,
+    int Strength,
+    int Defense,
+    int Attacks,
+    int Wounds,
+    int Courage,
+    int? Might = null,
+    int? Will = null,
+    int? Fate = null,
+    string[]? SpecialRules = null)
 {
-    public override string ToString() => 
-        Shoot == null ? $"{Fight}/-" : $"{Fight}/{Shoot}+";
+    public string[] SpecialRules { get; } = SpecialRules ?? Array.Empty<string>();
+    private string FightString => Shoot == null ? $"{Fight}/-" : $"{Fight}/{Shoot}+";
+
+    public override string ToString() =>
+        $"Mv {Move}\", F{FightString}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}, M{Might}, W{Will}, F{Fate}, Rules: {string.Join(", ", SpecialRules)}";
 }
 
 public record SpecialRule(
     string Name,
-    string Description,
-    WarriorCharacteristics Bonus);
+    string? Target,
+    string Description)
+{
+    public override string ToString() => string.IsNullOrEmpty(Target) ? Name : $"{Name} ({Target})";
+}

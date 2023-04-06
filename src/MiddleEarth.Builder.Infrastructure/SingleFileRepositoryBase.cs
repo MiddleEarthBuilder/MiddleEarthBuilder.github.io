@@ -5,46 +5,65 @@ using System.Net.Http.Json;
 
 namespace MiddleEarth.Builder.Infrastructure;
 
-internal abstract class SingleFileRepositoryBase<TKey, TValue> : IRepository<TKey, TValue> where TKey : notnull
+internal abstract class SingleFileRepositoryBase<TKey, TValue, TStoreValue> : IRepository<TKey, TValue> where TKey : notnull
 {
     protected abstract string DataFilePath { get; }
 
+    protected readonly BuilderContext Context;
     private readonly HttpClient _httpClient;
-    private readonly ILogger<SingleFileRepositoryBase<TKey, TValue>> _logger;
+    private readonly ILogger<SingleFileRepositoryBase<TKey, TValue, TStoreValue>> _logger;
 
-    public SingleFileRepositoryBase(HttpClient httpClient, ILogger<SingleFileRepositoryBase<TKey, TValue>> logger)
+    public SingleFileRepositoryBase(BuilderContext context, HttpClient httpClient, ILogger<SingleFileRepositoryBase<TKey, TValue, TStoreValue>> logger)
     {
+        Context = context;
         _httpClient = httpClient;
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<TValue>> Get(CancellationToken cancellationToken)
+    public IReadOnlyCollection<TValue> GetAll()
+    {
+        var task = GetAllAsync(CancellationToken.None).ConfigureAwait(false);
+        return task.GetAwaiter().GetResult();
+    }
+
+    public async Task<IReadOnlyCollection<TValue>> GetAllAsync(CancellationToken cancellationToken)
     {
         var dictionary = await GetDictionary(cancellationToken);
         return dictionary.Values.ToArray();
     }
 
-    public async Task<TValue?> Get(TKey key, CancellationToken cancellationToken)
+    public TValue GetOrCreate(TKey key)
+    {
+        var task = GetOrCreateAsync(key, CancellationToken.None).ConfigureAwait(false);
+        return task.GetAwaiter().GetResult();
+    }
+
+    public async Task<TValue> GetOrCreateAsync(TKey key, CancellationToken cancellationToken)
     {
         var dictionary = await GetDictionary(cancellationToken);
-        dictionary.TryGetValue(key, out var value);
+        if (dictionary.TryGetValue(key, out var value))
+            return value;
+
+        value = CreateEmpty(key);
+        dictionary[key] = value;
         return value;
     }
 
-    public async Task Update(TValue entity, CancellationToken cancellationToken)
+    public async Task UpdateAsync(TValue entity, CancellationToken cancellationToken)
     {
         var dictionary = await GetDictionary(cancellationToken);
         var key = GetKey(entity);
         dictionary[key] = entity;
     }
 
-    public async Task Delete(TKey key, CancellationToken cancellationToken)
+    public async Task DeleteAsync(TKey key, CancellationToken cancellationToken)
     {
         var dictionary = await GetDictionary(cancellationToken);
         dictionary.Remove(key);
     }
 
     protected abstract TKey GetKey(TValue entity);
+    protected abstract TValue CreateEmpty(TKey key);
 
     private readonly SemaphoreSlim _semaphore = new(1);
     private IDictionary<TKey, TValue>? _dictionary;
@@ -53,9 +72,17 @@ internal abstract class SingleFileRepositoryBase<TKey, TValue> : IRepository<TKe
         await _semaphore.WaitAsync(cancellationToken);
         try
         {
-            return _dictionary ??= new ConcurrentDictionary<TKey, TValue>(
-                await _httpClient.GetFromJsonAsync<IDictionary<TKey, TValue>>(DataFilePath, cancellationToken) ??
-                new Dictionary<TKey, TValue>());
+            if (_dictionary != null)
+                return _dictionary;
+
+            var storeDictionary = await _httpClient.GetFromJsonAsync<IDictionary<TKey, TStoreValue>>(DataFilePath, cancellationToken);
+            _dictionary = storeDictionary == null ?
+                new ConcurrentDictionary<TKey, TValue>() :
+                new ConcurrentDictionary<TKey, TValue>(
+                    storeDictionary.Select(kv =>
+                        new KeyValuePair<TKey, TValue>(kv.Key, Map(kv.Value))));
+
+            return _dictionary;
         }
         catch (Exception exception)
         {
@@ -67,4 +94,6 @@ internal abstract class SingleFileRepositoryBase<TKey, TValue> : IRepository<TKe
             _semaphore.Release();
         }
     }
+
+    protected abstract TValue Map(TStoreValue storageValue);
 }

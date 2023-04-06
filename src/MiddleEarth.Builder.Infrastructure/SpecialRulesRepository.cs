@@ -3,12 +3,16 @@ using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure;
 
-internal class SpecialRulesRepository : SingleFileRepositoryBase<string, SpecialRule>
+internal class SpecialRulesRepository : SingleFileRepositoryBase<string, SpecialRuleDto, SpecialRule>
 {
     protected override string DataFilePath => "/data/special-rules.json";
-    protected override string GetKey(SpecialRule entity) => entity.Name;
 
-    public SpecialRulesRepository(HttpClient httpClient, ILogger<SingleFileRepositoryBase<string, SpecialRule>> logger) :
-        base(httpClient, logger)
+    public SpecialRulesRepository(BuilderContext context, HttpClient httpClient, ILogger<SpecialRulesRepository> logger) :
+        base(context, httpClient, logger)
     { }
+
+    protected override string GetKey(SpecialRuleDto entity) => entity.Name;
+    protected override SpecialRuleDto CreateEmpty(string key) => new(key);
+
+    protected override SpecialRuleDto Map(SpecialRule storageValue) => Context.Mapper.Map(storageValue);
 }
