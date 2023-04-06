@@ -15,15 +15,17 @@
 }
 else
 {
-    @foreach (var armyList in FilteredArmiesList)
-    {
-        <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Models.Side.Good ? "btn-primary" : "btn-danger")">@armyList.Name</a>
-    }
-}
+    <div class="container-fluid">
+        @foreach (var armyList in FilteredArmiesList)
+        {
+            <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Models.Side.Good ? "btn-primary" : "btn-danger") mb-2">@armyList.Name</a>
+        }
+    </div>
 
-<lead>
-    <p>Can't find your army list? You can add it <a href="@RouteProvider.GetArmyListRoute(SideEnum)">here</a>.</p>
-</lead>
+    <lead>
+        <p>Can't find your army list? You can add it <a href="@RouteProvider.GetArmyListRoute(SideEnum)">here</a>.</p>
+    </lead>
+}
 
 @code {
     [Parameter]

@@ -1,7 +1,6 @@
 ﻿@page "/{Side}/army-list"
 @page "/{Side}/army-list/{ArmyListName}"
 @using MiddleEarth.Builder.Application
-@using MiddleEarth.Builder.Infrastructure
 @using MiddleEarth.Models
 @using AppContext = MiddleEarth.Builder.Infrastructure.BuilderContext
 @inject NavigationManager NavigationManager
@@ -44,6 +43,7 @@ else
             return;
 
         Army = await Context.ArmyLists.GetOrCreateAsync(ArmyListName, CancellationToken.None);
+        Army.Side = SideEnum;
     }
 
     private void HandleValidSubmit()
