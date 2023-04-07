@@ -3,4 +3,4 @@
 public record HeroRaw(
     string ArmyList,
     string Name,
-    string[] Equipment);
+    EquipmentRaw[] Equipment);

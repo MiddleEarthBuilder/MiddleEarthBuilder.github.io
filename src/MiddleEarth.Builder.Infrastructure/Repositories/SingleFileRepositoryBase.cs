@@ -98,5 +98,5 @@ internal abstract class SingleFileRepositoryBase<TKey, TValue, TStoreValue> : IR
         }
     }
 
-    protected abstract TValue Map(TStoreValue storageValue);
+    protected abstract TValue Map(TStoreValue raw);
 }

@@ -6,7 +6,7 @@ namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
 internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyList, ArmyListRaw>
 {
-    protected override string DataDirectoryPath => "/data/army-list";
+    protected override string DataDirectoryPath => "/data/army-lists";
 
     public ArmyListsRepository(BuilderContext context, HttpClient httpClient, ILogger<ArmyListsRepository> logger) :
         base(context, httpClient, logger)

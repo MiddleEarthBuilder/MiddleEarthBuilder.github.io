@@ -14,19 +14,19 @@ public class ArmyListMapper
         _mapper = mapper;
     }
 
-    public void Map(ArmyListRaw storageValue, ArmyList value)
-    {
-        value.ArmyBonuses = storageValue.ArmyBonuses.Select(_mapper.SpecialRuleMapper.Map).ToList();
-        value.Heroes = storageValue.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList();
-        value.Warriors = storageValue.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList();
-        value.Alliances = storageValue.Alliances.Select(_mapper.AllianceMapper.Map).ToList();
-    }
-
     public ArmyListRaw Map(ArmyList value) => new(
         value.Name,
         value.Side,
-        value.Heroes.Select(_mapper.HeroProfileMapper.MapHero).ToArray(),
-        value.Warriors.Select(_mapper.WarriorProfileMapper.MapWarrior).ToArray(),
+        value.Heroes.Select(_mapper.HeroProfileMapper.Map).ToArray(),
+        value.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToArray(),
         value.ArmyBonuses.Select(_mapper.SpecialRuleMapper.Map).ToArray(),
         value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray());
+
+    public void Map(ArmyListRaw raw, ArmyList value)
+    {
+        value.ArmyBonuses = raw.ArmyBonuses.Select(_mapper.SpecialRuleMapper.Map).ToList();
+        value.Heroes = raw.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList();
+        value.Warriors = raw.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList();
+        value.Alliances = raw.Alliances.Select(_mapper.AllianceMapper.Map).ToList();
+    }
 }

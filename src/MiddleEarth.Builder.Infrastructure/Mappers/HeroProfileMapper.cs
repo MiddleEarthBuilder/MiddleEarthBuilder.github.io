@@ -14,19 +14,19 @@ public class HeroProfileMapper
         _mapper = mapper;
     }
 
-    public HeroProfileRaw MapHero(Warrior value)
+    public HeroProfileRaw Map(HeroProfile value)
     {
         throw new NotImplementedException();
     }
 
-    public Warrior Map(HeroProfileRaw storageValue) => new(
-        _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
-        storageValue.Name,
-        Tier.GetTier(storageValue.Tier))
+    public HeroProfile Map(HeroProfileRaw raw) => new(
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        raw.Name,
+        Tier.GetTier(raw.Tier))
     {
-        Characteristics = _mapper.CharacteristicsMapper.Map(storageValue.Characteristics),
-        Equipment = storageValue.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToList(),
-        BaseCost = storageValue.Cost,
-        Note = storageValue.Note
+        Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
+        Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
+        Cost = raw.Cost,
+        Note = raw.Note
     };
 }

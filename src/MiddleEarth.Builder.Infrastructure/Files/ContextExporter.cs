@@ -51,11 +51,11 @@ public class ContextExporter
         return dictionary;
     }
 
-    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, Equipment> equipmentsRepository, CancellationToken cancellationToken)
+    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, EquipmentProfile> equipmentsRepository, CancellationToken cancellationToken)
     {
         var equipmentDtos = await equipmentsRepository.GetAllAsync(cancellationToken);
         var equipments = equipmentDtos
-            .Select(_context.Mapper.EquipmentMapper.Map)
+            .Select(_context.Mapper.EquipmentProfileMapper.Map)
             .OrderBy(equipment => equipment.Name);
         var bytes = JsonSerializer.SerializeToUtf8Bytes(equipments, JsonSerializerOptions);
         return new KeyValuePair<string, byte[]>("equipments.json", bytes);
@@ -67,7 +67,7 @@ public class ContextExporter
         var specialRules = specialRuleDtos
             .Select(_context.Mapper.SpecialRuleMapper.Map)
             .OrderBy(rule => rule.Name);
-        var bytes = JsonSerializer.SerializeToUtf8Bytes(specialRules);
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(specialRules, JsonSerializerOptions);
         return new KeyValuePair<string, byte[]>("special-rules.json", bytes);
     }
 

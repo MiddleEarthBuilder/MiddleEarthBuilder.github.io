@@ -6,6 +6,5 @@
 /// <param name="Leader">A name of the hero with highest tier in the army</param>
 /// <param name="Warbands">Warbands' details</param>
 public record ArmyRaw(
-    string Name,
-    string Leader,
+    string? Leader,
     WarbandRaw[] Warbands);

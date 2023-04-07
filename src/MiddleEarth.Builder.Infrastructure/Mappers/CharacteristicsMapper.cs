@@ -28,20 +28,20 @@ public class CharacteristicsMapper
         value.Fate,
         value.SpecialRules.Select(rule => rule.Name).ToArray());
 
-    public Characteristics Map(CharacteristicsRaw storageValue) => new()
+    public Characteristics Map(CharacteristicsRaw raw) => new()
     {
-        Move = storageValue.Move,
-        Fight = storageValue.Fight,
-        Shoot = storageValue.Shoot,
-        Strength = storageValue.Strength,
-        Defense = storageValue.Defense,
-        Attacks = storageValue.Attacks,
-        Wounds = storageValue.Wounds,
-        Courage = storageValue.Courage,
-        Might = storageValue.Might,
-        Will = storageValue.Will,
-        Fate = storageValue.Fate,
-        SpecialRules = storageValue.SpecialRules
+        Move = raw.Move,
+        Fight = raw.Fight,
+        Shoot = raw.Shoot,
+        Strength = raw.Strength,
+        Defense = raw.Defense,
+        Attacks = raw.Attacks,
+        Wounds = raw.Wounds,
+        Courage = raw.Courage,
+        Might = raw.Might,
+        Will = raw.Will,
+        Fate = raw.Fate,
+        SpecialRules = raw.SpecialRules
             .Select(_context.SpecialRules.GetOrCreate)
             .ToList()
     };

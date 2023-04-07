@@ -14,9 +14,14 @@ public class ArmyMapper
         _mapper = mapper;
     }
 
-    public void Map(ArmyRaw storageValue, Army value)
+    public ArmyRaw Map(Army value) => new(
+        value.Leader?.Profile.Name,
+        value.Warbands.Select(_mapper.WarbandMapper.Map).ToArray());
+
+    public void Map(ArmyRaw raw, Army value)
     {
-        value.Warbands = storageValue.Warbands.Select(_mapper.WarbandMapper.Map).ToList();
-        value.Leader = value.PotentialLeaders.FirstOrDefault(hero => hero.Name == storageValue.Name);
+        value.Warbands = raw.Warbands.Select(_mapper.WarbandMapper.Map).ToList();
+        value.Leader = raw.Leader == null ? null :
+            value.PotentialLeaders.FirstOrDefault(hero => hero.Profile.Name == raw.Leader);
     }
 }

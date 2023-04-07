@@ -4,7 +4,7 @@ public record CombinedWarriorProfileRaw(
     string ArmyList,
     string Name,
     CharacteristicsRaw Characteristics,
-    ProfileEquipmentRaw[] Equipment,
+    UnitProfileEquipmentRaw[] Equipment,
     int Cost,
     string? Note,
     WarriorProfileRaw[] AdditionalUnits,

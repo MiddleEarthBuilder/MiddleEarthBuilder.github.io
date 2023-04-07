@@ -18,7 +18,7 @@ public class AllianceMapper
         value.ArmyList.Name,
         value.Level);
 
-    public Alliance Map(AllianceRaw storageValue) => new(
-        _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
-        storageValue.Level);
+    public Alliance Map(AllianceRaw raw) => new(
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        raw.Level);
 }

@@ -14,22 +14,21 @@ public class WarriorProfileMapper
         _mapper = mapper;
     }
 
-    public WarriorProfileRaw Map(Warrior value) => new(
+    public WarriorProfileRaw Map(WarriorProfile value) => new(
         value.ArmyList.Name,
         value.Name,
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
-        value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray(),
-        value.BaseCost,
+        value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
+        value.Cost,
         value.Note);
 
-    public Warrior Map(WarriorProfileRaw storageValue) => new(
-        _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
-        storageValue.Name,
-        Tier.Warrior)
+    public WarriorProfile Map(WarriorProfileRaw raw) => new(
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        raw.Name)
     {
-        Characteristics = _mapper.CharacteristicsMapper.Map(storageValue.Characteristics),
-        Equipment = storageValue.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToList(),
-        BaseCost = storageValue.Cost,
-        Note = storageValue.Note
+        Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
+        Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
+        Cost = raw.Cost,
+        Note = raw.Note
     };
 }

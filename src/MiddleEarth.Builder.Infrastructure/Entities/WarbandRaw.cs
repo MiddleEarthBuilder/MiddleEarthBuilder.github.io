@@ -7,6 +7,5 @@
 /// <param name="Hero">Warband's hero details</param>
 /// <param name="Followers">Hero's followers.</param>
 public record WarbandRaw(
-    string ArmyList,
     HeroRaw? Hero,
     WarriorRaw[] Followers);

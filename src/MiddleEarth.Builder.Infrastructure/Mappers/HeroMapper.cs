@@ -14,12 +14,17 @@ public class HeroMapper
         _mapper = mapper;
     }
 
-    public Warrior? Map(HeroRaw storageValue)
+    public HeroRaw Map(Hero value) => new(
+        value.Profile.ArmyList.Name,
+        value.Profile.Name,
+        value.Equipment.Select(_mapper.EquipmentMapper.Map).ToArray());
+
+    public Hero? Map(HeroRaw raw)
     {
-        var armyList = _context.ArmyLists.GetOrCreate(storageValue.ArmyList);
-        var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == storageValue.Name);
+        var armyList = _context.ArmyLists.GetOrCreate(raw.ArmyList);
+        var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == raw.Name);
         return hero == null ?
             null :
-            new Warrior(hero);
+            new Hero(hero);
     }
 }

@@ -14,9 +14,14 @@ public class WarbandMapper
         _mapper = mapper;
     }
 
-    public Warband Map(WarbandRaw storageValue) => new()
+    public WarbandRaw Map(Warband value) => new(
+        _mapper.HeroMapper.Map(value.Hero),
+        value.Followers.Select(_mapper.WarriorMapper.Map).ToArray());
+
+    public Warband Map(WarbandRaw raw) => new()
     {
-        Hero = storageValue.Hero == null ? null : _mapper.HeroMapper.Map(storageValue.Hero),
-        Followers = storageValue.Followers.Select(_mapper.WarriorMapper.Map).OfType<Warrior>().ToList()
+        Hero = raw.Hero == null ? null :
+            _mapper.HeroMapper.Map(raw.Hero),
+        Followers = raw.Followers.Select(_mapper.WarriorMapper.Map).OfType<Warrior>().ToList()
     };
 }

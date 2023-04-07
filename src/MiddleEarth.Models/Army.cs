@@ -3,7 +3,7 @@
 public class Army
 {
     public ArmyList List { get; set; }
-    public Warrior? Leader { get; set; }
+    public Hero? Leader { get; set; }
     public List<Warband> Warbands { get; set; } = new();
 
     public int PointsCount => Warbands.Count > 0 ? Warbands.Sum(warband => warband.Points) : 0;
@@ -11,12 +11,16 @@ public class Army
     public int BrokenCount => UnitsCount / 2;
     public int QuarterCount => UnitsCount / 4;
     public int BowsCount => Warbands.Count > 0 ? Warbands.Sum(warband => warband.BowsCount) : 0;
-    public List<Warrior> PotentialLeaders
+    public IEnumerable<Hero> Heroes => Warbands.Select(warband => warband.Hero).OfType<Hero>();
+    public IEnumerable<Hero> PotentialLeaders
     {
         get
         {
-            var maxTier = Warbands.Max(dto => dto.Hero.Tier);
-            return Warbands.Select(warband => warband.Hero).Where(hero => hero.Tier == maxTier).ToList();
+            if (!Heroes.Any())
+                return new List<Hero>();
+
+            var maxTier = Heroes.Max(hero => hero.Profile.Tier);
+            return Heroes.Where(hero => hero.Profile.Tier == maxTier);
         }
     }
 

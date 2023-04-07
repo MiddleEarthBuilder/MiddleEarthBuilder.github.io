@@ -10,7 +10,7 @@ public class BuilderContext
 {
     public IRepository<string, ArmyList> ArmyLists { get; }
     public IRepository<string, SpecialRule> SpecialRules { get; }
-    public IRepository<string, Equipment> Equipments { get; }
+    public IRepository<string, EquipmentProfile> Equipments { get; }
     public Mapper Mapper { get; }
 
     public BuilderContext(HttpClient httpClient, ILoggerFactory loggerFactory)
