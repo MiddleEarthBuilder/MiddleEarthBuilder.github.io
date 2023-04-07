@@ -20,7 +20,7 @@ public class HeroProfileMapper
         value.Tier.Name,
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
         value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
-        value.SpecialRules.Select(rule => rule.Name).ToArray(),
+        value.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToArray(),
         value.Cost,
         value.Note);
 
@@ -31,7 +31,7 @@ public class HeroProfileMapper
     {
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
         Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
-        SpecialRules = raw.SpecialRules.Select(_context.SpecialRules.GetOrCreate).ToList(),
+        SpecialRules = raw.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToList(),
         Cost = raw.Cost,
         Note = raw.Note
     };

@@ -6,7 +6,7 @@ public record CombinedHeroProfileRaw(
     string Tier,
     CharacteristicsRaw Characteristics,
     UnitProfileEquipmentRaw[] Equipment,
-    string[] SpecialRules,
+    UnitProfileSpecialRuleRaw[] SpecialRules,
     int Cost,
     string? Note,
     WarriorProfileRaw[] AdditionalUnits,

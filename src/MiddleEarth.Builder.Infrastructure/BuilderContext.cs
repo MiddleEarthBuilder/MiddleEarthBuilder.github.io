@@ -31,7 +31,8 @@ public class BuilderContext
             .SelectMany(list => list.Heroes
                 .SelectMany(hero => hero.SpecialRules)
                 .Concat(list.Warriors
-                    .SelectMany(warrior => warrior.SpecialRules)));
+                    .SelectMany(warrior => warrior.SpecialRules)))
+            .Select(rule => rule.Rule);
 
         foreach (var specialRule in specialRules)
             await SpecialRules.UpdateAsync(specialRule, cancellationToken); // TODO: Choose the newest

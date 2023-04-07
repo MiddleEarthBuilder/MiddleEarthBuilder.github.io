@@ -5,6 +5,6 @@ public record WarriorProfileRaw(
     string Name,
     CharacteristicsRaw Characteristics,
     UnitProfileEquipmentRaw[] Equipment,
-    string[] SpecialRules,
+    UnitProfileSpecialRuleRaw[] SpecialRules,
     int Cost,
     string? Note);
