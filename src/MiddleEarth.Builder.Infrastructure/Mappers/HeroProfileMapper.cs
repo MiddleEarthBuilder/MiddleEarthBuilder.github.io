@@ -14,10 +14,15 @@ public class HeroProfileMapper
         _mapper = mapper;
     }
 
-    public HeroProfileRaw Map(HeroProfile value)
-    {
-        throw new NotImplementedException();
-    }
+    public HeroProfileRaw Map(HeroProfile value) => new(
+        value.ArmyList.Name,
+        value.Name,
+        value.Tier.Name,
+        _mapper.CharacteristicsMapper.Map(value.Characteristics),
+        value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
+        value.SpecialRules.Select(rule => rule.Name).ToArray(),
+        value.Cost,
+        value.Note);
 
     public HeroProfile Map(HeroProfileRaw raw) => new(
         _context.ArmyLists.GetOrCreate(raw.ArmyList),
@@ -26,6 +31,7 @@ public class HeroProfileMapper
     {
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
         Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
+        SpecialRules = raw.SpecialRules.Select(_context.SpecialRules.GetOrCreate).ToList(),
         Cost = raw.Cost,
         Note = raw.Note
     };

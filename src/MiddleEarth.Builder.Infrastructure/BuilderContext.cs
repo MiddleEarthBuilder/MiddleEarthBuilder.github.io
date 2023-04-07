@@ -23,4 +23,27 @@ public class BuilderContext
 
     public async Task<Army> CreateArmy(string armyListName) => new(
         await ArmyLists.GetOrCreateAsync(armyListName, CancellationToken.None));
+
+    public async Task Update(CancellationToken cancellationToken)
+    {
+        var armyLists = await ArmyLists.GetAllAsync(cancellationToken);
+        var specialRules = armyLists
+            .SelectMany(list => list.Heroes
+                .SelectMany(hero => hero.SpecialRules)
+                .Concat(list.Warriors
+                    .SelectMany(warrior => warrior.SpecialRules)));
+
+        foreach (var specialRule in specialRules)
+            await SpecialRules.UpdateAsync(specialRule, cancellationToken); // TODO: Choose the newest
+
+        var equipmentProfiles = armyLists
+            .SelectMany(list => list.Heroes
+                .SelectMany(hero => hero.Equipment)
+                .Concat(list.Warriors
+                    .SelectMany(warrior => warrior.Equipment)))
+            .Select(equipment => equipment.Profile);
+
+        foreach (var equipment in equipmentProfiles)
+            await Equipments.UpdateAsync(equipment, cancellationToken); // TODO: Choose the newest
+    }
 }

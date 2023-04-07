@@ -24,6 +24,7 @@ public class ContextExporter
 
     public async Task<Stream> GetDataStream(CancellationToken cancellationToken)
     {
+        await _context.Update(cancellationToken);
         var armyListFiles = await GetFiles(_context.ArmyLists, cancellationToken);
         var equipmentsFile = await GetFile(_context.Equipments, cancellationToken);
         var specialRulesFile = await GetFile(_context.SpecialRules, cancellationToken);

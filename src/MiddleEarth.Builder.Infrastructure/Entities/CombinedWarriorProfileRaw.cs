@@ -5,9 +5,10 @@ public record CombinedWarriorProfileRaw(
     string Name,
     CharacteristicsRaw Characteristics,
     UnitProfileEquipmentRaw[] Equipment,
+    string[] SpecialRules,
     int Cost,
     string? Note,
     WarriorProfileRaw[] AdditionalUnits,
     bool CountsAsOne) :
     WarriorProfileRaw(ArmyList, Name, Characteristics,
-        Equipment, Cost, Note);
+        Equipment, SpecialRules, Cost, Note);

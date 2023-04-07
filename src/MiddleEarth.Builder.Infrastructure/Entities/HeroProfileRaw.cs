@@ -6,5 +6,6 @@ public record HeroProfileRaw(
     string Tier,
     CharacteristicsRaw Characteristics,
     UnitProfileEquipmentRaw[] Equipment,
+    string[] SpecialRules,
     int Cost,
     string? Note);

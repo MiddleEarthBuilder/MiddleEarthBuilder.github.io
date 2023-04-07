@@ -91,7 +91,7 @@ public abstract class MultipleFilesRepositoryBase<TKey, TValue, TStoreValue> : I
         return value;
     }
 
-    public Task UpdateAsync(TValue entity, CancellationToken cancellationToken)
+    public virtual Task UpdateAsync(TValue entity, CancellationToken cancellationToken)
     {
         var key = GetKey(entity);
         _dictionary[key] = entity;
