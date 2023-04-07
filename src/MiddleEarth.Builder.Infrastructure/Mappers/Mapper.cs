@@ -1,4 +1,5 @@
-﻿using MiddleEarth.Models;
+﻿using MiddleEarth.Builder.Infrastructure.Entities;
+using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure.Mappers;
 

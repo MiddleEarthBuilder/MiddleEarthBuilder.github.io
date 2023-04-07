@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MiddleEarth.Builder.Infrastructure.Entities;
 using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure.Repositories;

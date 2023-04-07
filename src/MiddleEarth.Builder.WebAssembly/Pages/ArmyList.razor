@@ -1,10 +1,10 @@
 ﻿@page "/{Side}/army-lists"
 @page "/{Side}/army-lists/{ArmyListName}"
 @using MiddleEarth.Builder.Application
+@using MiddleEarth.Builder.Infrastructure
 @using MiddleEarth.Models
-@using AppContext = MiddleEarth.Builder.Infrastructure.BuilderContext
 @inject NavigationManager NavigationManager
-@inject AppContext Context
+@inject BuilderContext Context
 <h3>Army List</h3>
 @if (string.IsNullOrEmpty(ArmyListName))
 {
