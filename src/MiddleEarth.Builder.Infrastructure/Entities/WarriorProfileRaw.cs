@@ -1,10 +1,9 @@
 ﻿namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record HeroProfile(
+public record WarriorProfileRaw(
     string ArmyList,
     string Name,
-    string Tier,
-    Characteristics Characteristics,
-    ProfileEquipment[] Equipment,
+    CharacteristicsRaw Characteristics,
+    ProfileEquipmentRaw[] Equipment,
     int Cost,
     string? Note);

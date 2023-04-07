@@ -1,6 +1,6 @@
 ﻿namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record Characteristics(
+public record CharacteristicsRaw(
     int Move,
     int Fight,
     int? Shoot,

@@ -1,12 +1,12 @@
 ﻿namespace MiddleEarth.Models;
 
-public class SpecialRuleDto
+public class SpecialRule
 {
     public string Name { get; set; }
     public string? Target { get; set; }
     public string Description { get; set; } = string.Empty;
 
-    public SpecialRuleDto(string name)
+    public SpecialRule(string name)
     {
         Name = name;
     }

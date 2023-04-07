@@ -4,7 +4,7 @@ using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
-internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyListDto, ArmyList>
+internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyList, ArmyListRaw>
 {
     protected override string DataDirectoryPath => "/data/army-list";
 
@@ -12,10 +12,10 @@ internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyLis
         base(context, httpClient, logger)
     { }
 
-    protected override string GetKey(ArmyListDto entity) => entity.Name;
+    protected override string GetKey(ArmyList entity) => entity.Name;
 
-    protected override ArmyListDto CreateEmpty(string name) => new(name);
+    protected override ArmyList CreateEmpty(string name) => new(name);
 
-    protected override void Map(ArmyList storeValue, ArmyListDto value) =>
+    protected override void Map(ArmyListRaw storeValue, ArmyList value) =>
         Context.Mapper.Map(storeValue, value);
 }

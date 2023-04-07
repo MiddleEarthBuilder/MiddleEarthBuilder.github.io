@@ -35,7 +35,7 @@ public class ContextExporter
         return fileStream;
     }
 
-    private async Task<Dictionary<string, byte[]>> GetFiles(IRepository<string, ArmyListDto> armyListsRepository, CancellationToken cancellationToken)
+    private async Task<Dictionary<string, byte[]>> GetFiles(IRepository<string, ArmyList> armyListsRepository, CancellationToken cancellationToken)
     {
         var armyListDtos = await armyListsRepository.GetAllAsync(cancellationToken);
 
@@ -51,7 +51,7 @@ public class ContextExporter
         return dictionary;
     }
 
-    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, EquipmentDto> equipmentsRepository, CancellationToken cancellationToken)
+    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, Equipment> equipmentsRepository, CancellationToken cancellationToken)
     {
         var equipmentDtos = await equipmentsRepository.GetAllAsync(cancellationToken);
         var equipments = equipmentDtos
@@ -61,7 +61,7 @@ public class ContextExporter
         return new KeyValuePair<string, byte[]>("equipments.json", bytes);
     }
 
-    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, SpecialRuleDto> specialRulesRepository, CancellationToken cancellationToken)
+    private async Task<KeyValuePair<string, byte[]>> GetFile(IRepository<string, SpecialRule> specialRulesRepository, CancellationToken cancellationToken)
     {
         var specialRuleDtos = await specialRulesRepository.GetAllAsync(cancellationToken);
         var specialRules = specialRuleDtos

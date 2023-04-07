@@ -32,8 +32,8 @@ else
     [Parameter]
     public string? Side { get; set; }
 
-    private List<ArmyListDto>? ArmiesList { get; set; }
-    private IEnumerable<ArmyListDto>? FilteredArmiesList { get; set; }
+    private List<Models.ArmyList>? ArmiesList { get; set; }
+    private IEnumerable<Models.ArmyList>? FilteredArmiesList { get; set; }
 
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
 
@@ -48,6 +48,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        ArmiesList = new List<ArmyListDto>(await Context.ArmyLists.GetAllAsync(CancellationToken.None));
+        ArmiesList = new List<Models.ArmyList>(await Context.ArmyLists.GetAllAsync(CancellationToken.None));
     }
 }

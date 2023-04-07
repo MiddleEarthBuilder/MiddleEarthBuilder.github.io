@@ -1,10 +1,10 @@
 ﻿namespace MiddleEarth.Models;
 
-public class EquipmentDto
+public class Equipment
 {
     public string Name { get; set; }
     public string Description { get; set; } = string.Empty;
-    public CharacteristicsDto? CharacteristicsBonus { get; set; }
+    public Characteristics? CharacteristicsBonus { get; set; }
     public int Cost { get; set; }
     public bool IsBow { get; set; }
     public bool IsAllowedOnce { get; set; } = true;
@@ -12,16 +12,16 @@ public class EquipmentDto
     public List<string> ReplacedEquipment { get; set; } = new();
     public bool IsEquipped { get; set; }
 
-    public EquipmentDto(string name)
+    public Equipment(string name)
     {
         Name = name;
     }
 
-    public EquipmentDto(EquipmentDto source)
+    public Equipment(Equipment source)
     {
         Name = source.Name;
         Description = source.Description;
-        CharacteristicsBonus = source.CharacteristicsBonus == null ? null : new CharacteristicsDto(source.CharacteristicsBonus);
+        CharacteristicsBonus = source.CharacteristicsBonus == null ? null : new Characteristics(source.CharacteristicsBonus);
         Cost = source.Cost;
         IsBow = source.IsBow;
         IsAllowedOnce = source.IsAllowedOnce;

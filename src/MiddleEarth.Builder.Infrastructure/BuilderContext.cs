@@ -8,9 +8,9 @@ namespace MiddleEarth.Builder.Infrastructure;
 
 public class BuilderContext
 {
-    public IRepository<string, ArmyListDto> ArmyLists { get; }
-    public IRepository<string, SpecialRuleDto> SpecialRules { get; }
-    public IRepository<string, EquipmentDto> Equipments { get; }
+    public IRepository<string, ArmyList> ArmyLists { get; }
+    public IRepository<string, SpecialRule> SpecialRules { get; }
+    public IRepository<string, Equipment> Equipments { get; }
     public Mapper Mapper { get; }
 
     public BuilderContext(HttpClient httpClient, ILoggerFactory loggerFactory)
@@ -21,6 +21,6 @@ public class BuilderContext
         Mapper = new Mapper(this);
     }
 
-    public async Task<ArmyDto> CreateArmy(string armyListName) => new(
+    public async Task<Army> CreateArmy(string armyListName) => new(
         await ArmyLists.GetOrCreateAsync(armyListName, CancellationToken.None));
 }

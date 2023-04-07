@@ -29,7 +29,7 @@ else
     public string? Side { get; set; }
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
 
-    private ArmyListDto? Army { get; set; }
+    private Models.ArmyList? Army { get; set; }
 
     private readonly ArmyListNameForm _armyListNameForm = new();
 

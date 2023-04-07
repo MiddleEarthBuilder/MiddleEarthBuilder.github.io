@@ -1,12 +1,12 @@
 ﻿namespace MiddleEarth.Models;
 
-public class ArmyUnitDto
+public class Warrior
 {
-    public ArmyListDto ArmyList { get; set; }
+    public ArmyList ArmyList { get; set; }
     public string Name { get; set; }
     public Tier Tier { get; set; }
-    public CharacteristicsDto Characteristics { get; set; } = new();
-    public List<EquipmentDto> Equipment { get; set; } = new();
+    public Characteristics Characteristics { get; set; } = new();
+    public List<Equipment> Equipment { get; set; } = new();
     public int BaseCost { get; set; }
     public int Count { get; set; } = 1;
     public bool IsHero { get; set; }
@@ -15,20 +15,20 @@ public class ArmyUnitDto
     public int TotalCost => Count * UnitCost;
     public bool HasBow => Equipment.Any(equipment => equipment is { IsEquipped: true, IsBow: true });
 
-    public ArmyUnitDto(ArmyListDto armyList, string name, Tier tier)
+    public Warrior(ArmyList armyList, string name, Tier tier)
     {
         ArmyList = armyList;
         Name = name;
         Tier = tier;
     }
 
-    public ArmyUnitDto(ArmyUnitDto source)
+    public Warrior(Warrior source)
     {
         ArmyList = source.ArmyList;
         Name = source.Name;
         Tier = source.Tier;
-        Characteristics = new CharacteristicsDto(source.Characteristics);
-        Equipment = source.Equipment.Select(equipment => new EquipmentDto(equipment)).ToList();
+        Characteristics = new Characteristics(source.Characteristics);
+        Equipment = source.Equipment.Select(equipment => new Equipment(equipment)).ToList();
         BaseCost = source.BaseCost;
         Note = source.Note;
     }

@@ -2,6 +2,6 @@
 
 namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record Alliance(
+public record AllianceRaw(
     string ArmyList,
     AllianceLevel Level);

@@ -1,6 +1,6 @@
 ﻿namespace MiddleEarth.Models;
 
-public class CharacteristicsDto
+public class Characteristics
 {
     public int Move { get; set; }
     public int Fight { get; set; }
@@ -13,11 +13,11 @@ public class CharacteristicsDto
     public int? Might { get; set; }
     public int? Will { get; set; }
     public int? Fate { get; set; }
-    public List<SpecialRuleDto> SpecialRules { get; set; } = new();
+    public List<SpecialRule> SpecialRules { get; set; } = new();
 
-    public CharacteristicsDto() { }
+    public Characteristics() { }
 
-    public CharacteristicsDto(CharacteristicsDto source)
+    public Characteristics(Characteristics source)
     {
         Move = source.Move;
         Fight = source.Fight;

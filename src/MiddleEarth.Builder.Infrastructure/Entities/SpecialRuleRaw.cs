@@ -1,11 +1,11 @@
 ﻿namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record SpecialRule(
+public record SpecialRuleRaw(
     string Name,
     string? Target,
-    string Description) : IComparable<SpecialRule>
+    string Description) : IComparable<SpecialRuleRaw>
 {
-    public int CompareTo(SpecialRule? other) =>
+    public int CompareTo(SpecialRuleRaw? other) =>
         string.Compare(Name, other?.Name, StringComparison.Ordinal);
 
     public override string ToString() =>

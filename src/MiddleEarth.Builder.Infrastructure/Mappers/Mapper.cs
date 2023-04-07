@@ -12,43 +12,43 @@ public class Mapper
         _context = context;
     }
 
-    public void Map(Army storageValue, ArmyDto value)
+    public void Map(ArmyRaw storageValue, Army value)
     {
         value.Warbands = storageValue.Warbands.Select(Map).ToList();
         value.Leader = value.PotentialLeaders.FirstOrDefault(hero => hero.Name == storageValue.Name);
     }
 
-    public WarbandDto Map(Warband storageValue)
+    public Warband Map(WarbandRaw storageValue)
     {
-        return new WarbandDto
+        return new Warband
         {
             Hero = storageValue.Hero == null ? null : Map(storageValue.Hero),
             Followers = storageValue.Followers.Select(Map).ToList()
         };
     }
 
-    private ArmyUnitDto? Map(Hero storageValue)
+    private Warrior? Map(HeroRaw storageValue)
     {
         var armyList = _context.ArmyLists.GetOrCreate(storageValue.ArmyList);
         var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == storageValue.Name);
         return hero == null ?
             null :
-            new ArmyUnitDto(hero);
+            new Warrior(hero);
     }
 
-    private ArmyUnitDto? Map(Warrior storageValue)
+    private Warrior? Map(WarriorRaw storageValue)
     {
         var armyList = _context.ArmyLists.GetOrCreate(storageValue.ArmyList);
         var warrior = armyList.Warriors.FirstOrDefault(warrior => warrior.Name == storageValue.Name);
         if (warrior != null)
-            return new ArmyUnitDto(warrior);
+            return new Warrior(warrior);
         var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == storageValue.Name);
         return hero == null ?
             null :
-            new ArmyUnitDto(hero);
+            new Warrior(hero);
     }
 
-    public void Map(ArmyList storageValue, ArmyListDto value)
+    public void Map(ArmyListRaw storageValue, ArmyList value)
     {
         value.ArmyBonuses = storageValue.ArmyBonuses.Select(Map).ToList();
         value.Heroes = storageValue.Heroes.Select(Map).ToList();
@@ -56,7 +56,7 @@ public class Mapper
         value.Alliances = storageValue.Alliances.Select(Map).ToList();
     }
 
-    public ArmyList Map(ArmyListDto value) => new(
+    public ArmyListRaw Map(ArmyList value) => new(
         value.Name,
         value.Side,
         value.Heroes.Select(MapHero).ToArray(),
@@ -64,12 +64,12 @@ public class Mapper
         value.ArmyBonuses.Select(Map).ToArray(),
         value.Alliances.Select(Map).ToArray());
 
-    private HeroProfile MapHero(ArmyUnitDto value)
+    private HeroProfileRaw MapHero(Warrior value)
     {
         throw new NotImplementedException();
     }
 
-    private WarriorProfile MapWarrior(ArmyUnitDto value) => new(
+    private WarriorProfileRaw MapWarrior(Warrior value) => new(
         value.ArmyList.Name,
         value.Name,
         Map(value.Characteristics),
@@ -77,16 +77,16 @@ public class Mapper
         value.BaseCost,
         value.Note);
 
-    private ProfileEquipment MapProfile(EquipmentDto value) => new(
+    private ProfileEquipmentRaw MapProfile(Equipment value) => new(
         value.Name,
         value.IsDefault,
         value.Cost);
 
-    private Alliance Map(AllianceDto value) => new(
+    private AllianceRaw Map(Alliance value) => new(
         value.ArmyList.Name,
         value.Level);
 
-    public ArmyUnitDto Map(HeroProfile storageValue) => new(
+    public Warrior Map(HeroProfileRaw storageValue) => new(
         _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
         storageValue.Name,
         Tier.GetTier(storageValue.Tier))
@@ -97,7 +97,7 @@ public class Mapper
         Note = storageValue.Note
     };
 
-    public ArmyUnitDto Map(WarriorProfile storageValue) => new(
+    public Warrior Map(WarriorProfileRaw storageValue) => new(
         _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
         storageValue.Name,
         Tier.Warrior)
@@ -108,11 +108,11 @@ public class Mapper
         Note = storageValue.Note
     };
 
-    public EquipmentDto Map(ProfileEquipment storageValue)
+    public Equipment Map(ProfileEquipmentRaw storageValue)
     {
         var equipment = _context.Equipments.GetOrCreate(storageValue.Name);
 
-        return new EquipmentDto(equipment.Name)
+        return new Equipment(equipment.Name)
         {
             Description = equipment.Description,
             CharacteristicsBonus = equipment.CharacteristicsBonus,
@@ -125,11 +125,11 @@ public class Mapper
         };
     }
 
-    public AllianceDto Map(Alliance storageValue) => new(
+    public Alliance Map(AllianceRaw storageValue) => new(
         _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
         storageValue.Level);
 
-    public EquipmentDto Map(Equipment storageValue) => new(storageValue.Name)
+    public Equipment Map(EquipmentRaw storageValue) => new(storageValue.Name)
     {
         Description = storageValue.Description,
         CharacteristicsBonus = Map(storageValue.CharacteristicsBonus),
@@ -139,7 +139,7 @@ public class Mapper
         ReplacedEquipment = storageValue.ReplacedEquipment.ToList()
     };
 
-    public Equipment Map(EquipmentDto value) => new(
+    public EquipmentRaw Map(Equipment value) => new(
         value.Name,
         value.Description,
         value.CharacteristicsBonus == null ? null : Map(value.CharacteristicsBonus),
@@ -148,7 +148,7 @@ public class Mapper
         value.DeniedEquipment.ToArray(),
         value.ReplacedEquipment.ToArray());
 
-    private Characteristics Map(CharacteristicsDto value) => new(
+    private CharacteristicsRaw Map(Characteristics value) => new(
         value.Move,
         value.Fight,
         value.Shoot,
@@ -162,13 +162,13 @@ public class Mapper
         value.Fate,
         value.SpecialRules.Select(rule => rule.Name).ToArray());
 
-    public SpecialRuleDto Map(SpecialRule storageValue) => new(storageValue.Name)
+    public SpecialRule Map(SpecialRuleRaw storageValue) => new(storageValue.Name)
     {
         Description = storageValue.Description,
         Target = storageValue.Target
     };
 
-    public CharacteristicsDto Map(Characteristics storageValue) => new()
+    public Characteristics Map(CharacteristicsRaw storageValue) => new()
     {
         Move = storageValue.Move,
         Fight = storageValue.Fight,
@@ -183,11 +183,11 @@ public class Mapper
         Fate = storageValue.Fate,
         SpecialRules = storageValue.SpecialRules
             .Select(_context.SpecialRules.GetOrCreate)
-            .OfType<SpecialRuleDto>()
+            .OfType<SpecialRule>()
             .ToList()
     };
 
-    public SpecialRule Map(SpecialRuleDto value) => new(
+    public SpecialRuleRaw Map(SpecialRule value) => new(
         value.Name,
         value.Target,
         value.Description);

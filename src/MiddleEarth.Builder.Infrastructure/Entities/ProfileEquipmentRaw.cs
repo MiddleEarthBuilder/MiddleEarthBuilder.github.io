@@ -1,6 +1,6 @@
 ﻿namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record Hero(
-    string ArmyList,
+public record ProfileEquipmentRaw(
     string Name,
-    string[] Equipment);
+    bool IsDefault,
+    int Cost);

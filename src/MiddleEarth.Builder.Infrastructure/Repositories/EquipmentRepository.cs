@@ -4,7 +4,7 @@ using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
-internal class EquipmentRepository : SingleFileRepositoryBase<string, EquipmentDto, Equipment>
+internal class EquipmentRepository : SingleFileRepositoryBase<string, Equipment, EquipmentRaw>
 {
     protected override string DataFilePath => "/data/equipments.json";
 
@@ -12,8 +12,8 @@ internal class EquipmentRepository : SingleFileRepositoryBase<string, EquipmentD
         base(context, httpClient, logger)
     { }
 
-    protected override string GetKey(EquipmentDto entity) => entity.Name;
-    protected override EquipmentDto CreateEmpty(string key) => new(key);
+    protected override string GetKey(Equipment entity) => entity.Name;
+    protected override Equipment CreateEmpty(string key) => new(key);
 
-    protected override EquipmentDto Map(Equipment storageValue) => Context.Mapper.Map(storageValue);
+    protected override Equipment Map(EquipmentRaw storageValue) => Context.Mapper.Map(storageValue);
 }

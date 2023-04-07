@@ -1,12 +1,12 @@
 ﻿namespace MiddleEarth.Models;
 
-public class WarbandDto
+public class Warband
 {
-    public ArmyUnitDto? Hero { get; set; }
+    public Warrior? Hero { get; set; }
     /// <summary>
     /// Dictionary of units and their count in a warband
     /// </summary>
-    public List<ArmyUnitDto> Followers { get; set; } = new();
+    public List<Warrior> Followers { get; set; } = new();
 
     public int Points => Hero?.TotalCost ?? 0 + (Followers.Count > 0 ? Followers.Sum(warrior => warrior.TotalCost) : 0);
     public int UnitsCount => (Hero == null ? 0 : 1) + Followers.Sum(warrior => warrior.Count);

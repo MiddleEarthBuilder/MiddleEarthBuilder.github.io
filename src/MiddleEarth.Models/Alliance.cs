@@ -1,13 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace MiddleEarth.Models;
 
-namespace MiddleEarth.Models;
-
-public class AllianceDto
+public class Alliance
 {
-    public ArmyListDto ArmyList { get; set; }
+    public ArmyList ArmyList { get; set; }
     public AllianceLevel Level { get; set; }
 
-    public AllianceDto(ArmyListDto armyList, AllianceLevel level)
+    public Alliance(ArmyList armyList, AllianceLevel level)
     {
         ArmyList = armyList;
         Level = level;
