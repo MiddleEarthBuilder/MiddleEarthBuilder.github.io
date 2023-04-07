@@ -24,7 +24,11 @@ public record Characteristics(
 public record SpecialRule(
     string Name,
     string? Target,
-    string Description)
+    string Description) : IComparable<SpecialRule>
 {
-    public override string ToString() => string.IsNullOrEmpty(Target) ? Name : $"{Name} ({Target})";
+    public int CompareTo(SpecialRule? other) => 
+        string.Compare(Name, other?.Name, StringComparison.Ordinal);
+
+    public override string ToString() => 
+        string.IsNullOrEmpty(Target) ? Name : $"{Name} ({Target})";
 }

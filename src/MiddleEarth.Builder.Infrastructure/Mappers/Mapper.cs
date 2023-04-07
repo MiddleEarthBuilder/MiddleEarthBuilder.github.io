@@ -55,6 +55,36 @@ public class Mapper
         value.Alliances = storageValue.Alliances.Select(Map).ToList();
     }
 
+    public ArmyList Map(ArmyListDto value) => new(
+        value.Name,
+        value.Side,
+        value.Heroes.Select(MapHero).ToArray(),
+        value.Warriors.Select(MapWarrior).ToArray(),
+        value.ArmyBonuses.Select(Map).ToArray(),
+        value.Alliances.Select(Map).ToArray());
+
+    private HeroProfile MapHero(ArmyUnitDto value)
+    {
+        throw new NotImplementedException();
+    }
+
+    private WarriorProfile MapWarrior(ArmyUnitDto value) => new(
+        value.ArmyList.Name,
+        value.Name,
+        Map(value.Characteristics),
+        value.Equipment.Select(MapProfile).ToArray(),
+        value.BaseCost,
+        value.Note);
+
+    private ProfileEquipment MapProfile(EquipmentDto value) => new(
+        value.Name,
+        value.IsDefault,
+        value.Cost);
+
+    private Alliance Map(AllianceDto value) => new(
+        value.ArmyList.Name,
+        value.Level);
+
     public ArmyUnitDto Map(HeroProfile storageValue) => new(
         _context.ArmyLists.GetOrCreate(storageValue.ArmyList),
         storageValue.Name,
@@ -62,7 +92,8 @@ public class Mapper
     {
         Characteristics = Map(storageValue.Characteristics),
         Equipment = storageValue.Equipment.Select(Map).ToList(),
-        BaseCost = storageValue.Cost
+        BaseCost = storageValue.Cost,
+        Note = storageValue.Note
     };
 
     public ArmyUnitDto Map(WarriorProfile storageValue) => new(
@@ -72,7 +103,8 @@ public class Mapper
     {
         Characteristics = Map(storageValue.Characteristics),
         Equipment = storageValue.Equipment.Select(Map).ToList(),
-        BaseCost = storageValue.Cost
+        BaseCost = storageValue.Cost,
+        Note = storageValue.Note
     };
 
     public EquipmentDto Map(ProfileEquipment storageValue)
@@ -106,6 +138,29 @@ public class Mapper
         ReplacedEquipment = storageValue.ReplacedEquipment.ToList()
     };
 
+    public Equipment Map(EquipmentDto value) => new(
+        value.Name,
+        value.Description,
+        value.CharacteristicsBonus == null ? null : Map(value.CharacteristicsBonus),
+        value.IsBow,
+        value.IsAllowedOnce,
+        value.DeniedEquipment.ToArray(),
+        value.ReplacedEquipment.ToArray());
+
+    private Characteristics Map(CharacteristicsDto value) => new(
+        value.Move,
+        value.Fight,
+        value.Shoot,
+        value.Strength,
+        value.Defense,
+        value.Attacks,
+        value.Wounds,
+        value.Courage,
+        value.Might,
+        value.Will,
+        value.Fate,
+        value.SpecialRules.Select(rule => rule.Name).ToArray());
+
     public SpecialRuleDto Map(SpecialRule storageValue) => new(storageValue.Name)
     {
         Description = storageValue.Description,
@@ -130,4 +185,9 @@ public class Mapper
             .OfType<SpecialRuleDto>()
             .ToList()
     };
+
+    public SpecialRule Map(SpecialRuleDto value) => new(
+        value.Name,
+        value.Target,
+        value.Description);
 }

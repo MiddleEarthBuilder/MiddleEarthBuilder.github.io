@@ -75,12 +75,15 @@ internal abstract class SingleFileRepositoryBase<TKey, TValue, TStoreValue> : IR
             if (_dictionary != null)
                 return _dictionary;
 
-            var storeDictionary = await _httpClient.GetFromJsonAsync<IDictionary<TKey, TStoreValue>>(DataFilePath, cancellationToken);
-            _dictionary = storeDictionary == null ?
+            var storeValues = await _httpClient.GetFromJsonAsync<IEnumerable<TStoreValue>>(DataFilePath, cancellationToken);
+            _dictionary = storeValues == null ?
                 new ConcurrentDictionary<TKey, TValue>() :
                 new ConcurrentDictionary<TKey, TValue>(
-                    storeDictionary.Select(kv =>
-                        new KeyValuePair<TKey, TValue>(kv.Key, Map(kv.Value))));
+                    storeValues.Select(storeValue =>
+                    {
+                        var value = Map(storeValue);
+                        return new KeyValuePair<TKey, TValue>(GetKey(value), value);
+                    }));
 
             return _dictionary;
         }

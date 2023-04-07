@@ -49,6 +49,7 @@ public class ArmyUnitDto
     public int BaseCost { get; set; }
     public int Count { get; set; } = 1;
     public bool IsHero { get; set; }
+    public string? Note { get; set; }
     public int UnitCost => BaseCost + Equipment.Sum(equipment => equipment.IsEquipped ? equipment.Cost : 0);
     public int TotalCost => Count * UnitCost;
     public bool HasBow => Equipment.Any(equipment => equipment is { IsEquipped: true, IsBow: true });
@@ -68,6 +69,7 @@ public class ArmyUnitDto
         Characteristics = new CharacteristicsDto(source.Characteristics);
         Equipment = source.Equipment.Select(equipment => new EquipmentDto(equipment)).ToList();
         BaseCost = source.BaseCost;
+        Note = source.Note;
     }
 }
 
