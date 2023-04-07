@@ -40,7 +40,7 @@ public class ContextExporter
         var armyListDtos = await armyListsRepository.GetAllAsync(cancellationToken);
 
         var dictionary = armyListDtos
-            .Select(_context.Mapper.Map)
+            .Select(_context.Mapper.ArmyListMapper.Map)
             .ToDictionary(
                 armyList => $"army-lists/{armyList.Name}.json",
                 armyList => JsonSerializer.SerializeToUtf8Bytes(armyList, JsonSerializerOptions));
@@ -55,7 +55,7 @@ public class ContextExporter
     {
         var equipmentDtos = await equipmentsRepository.GetAllAsync(cancellationToken);
         var equipments = equipmentDtos
-            .Select(_context.Mapper.Map)
+            .Select(_context.Mapper.EquipmentMapper.Map)
             .OrderBy(equipment => equipment.Name);
         var bytes = JsonSerializer.SerializeToUtf8Bytes(equipments, JsonSerializerOptions);
         return new KeyValuePair<string, byte[]>("equipments.json", bytes);
@@ -65,7 +65,7 @@ public class ContextExporter
     {
         var specialRuleDtos = await specialRulesRepository.GetAllAsync(cancellationToken);
         var specialRules = specialRuleDtos
-            .Select(_context.Mapper.Map)
+            .Select(_context.Mapper.SpecialRuleMapper.Map)
             .OrderBy(rule => rule.Name);
         var bytes = JsonSerializer.SerializeToUtf8Bytes(specialRules);
         return new KeyValuePair<string, byte[]>("special-rules.json", bytes);

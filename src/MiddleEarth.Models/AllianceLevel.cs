@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MiddleEarth.Models
+namespace MiddleEarth.Models;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum AllianceLevel
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum AllianceLevel
-    {
-        Impossible, Convenient, Historical
-    }
+    Impossible, Convenient, Historical
 }

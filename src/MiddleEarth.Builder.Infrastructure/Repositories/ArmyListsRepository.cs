@@ -17,5 +17,5 @@ internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyLis
     protected override ArmyList CreateEmpty(string name) => new(name);
 
     protected override void Map(ArmyListRaw storeValue, ArmyList value) =>
-        Context.Mapper.Map(storeValue, value);
+        Context.Mapper.ArmyListMapper.Map(storeValue, value);
 }

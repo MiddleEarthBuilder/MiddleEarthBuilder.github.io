@@ -15,5 +15,6 @@ internal class SpecialRulesRepository : SingleFileRepositoryBase<string, Special
     protected override string GetKey(SpecialRule entity) => entity.Name;
     protected override SpecialRule CreateEmpty(string key) => new(key);
 
-    protected override SpecialRule Map(SpecialRuleRaw storageValue) => Context.Mapper.Map(storageValue);
+    protected override SpecialRule Map(SpecialRuleRaw storageValue) =>
+        Context.Mapper.SpecialRuleMapper.Map(storageValue);
 }

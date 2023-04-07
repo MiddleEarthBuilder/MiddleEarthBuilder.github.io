@@ -15,5 +15,6 @@ internal class EquipmentRepository : SingleFileRepositoryBase<string, Equipment,
     protected override string GetKey(Equipment entity) => entity.Name;
     protected override Equipment CreateEmpty(string key) => new(key);
 
-    protected override Equipment Map(EquipmentRaw storageValue) => Context.Mapper.Map(storageValue);
+    protected override Equipment Map(EquipmentRaw storageValue) => 
+        Context.Mapper.EquipmentMapper.Map(storageValue);
 }
