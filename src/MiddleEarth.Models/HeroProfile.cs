@@ -7,8 +7,8 @@ public class HeroProfile
     public Tier Tier { get; set; }
     public List<string> Keywords { get; set; }
     public Characteristics Characteristics { get; set; } = new();
-    public List<UnitProfileEquipment> Equipment { get; set; } = new();
-    public List<UnitProfileSpecialRule> SpecialRules { get; set; } = new();
+    public List<ProfileEquipment> Equipment { get; set; } = new();
+    public List<ProfileSpecialRule> SpecialRules { get; set; } = new();
     public int Cost { get; set; }
     public string? Note { get; set; }
 

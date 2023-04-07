@@ -19,8 +19,8 @@ public class WarriorProfileMapper
         value.Name,
         value.Keywords.ToArray(),
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
-        value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
-        value.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToArray(),
+        value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray(),
+        value.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
         value.Cost,
         value.Note);
 
@@ -30,8 +30,8 @@ public class WarriorProfileMapper
     {
         Keywords = raw.Keywords.ToList(),
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
-        Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
-        SpecialRules = raw.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToList(),
+        Equipment = raw.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToList(),
+        SpecialRules = raw.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList(),
         Cost = raw.Cost,
         Note = raw.Note
     };

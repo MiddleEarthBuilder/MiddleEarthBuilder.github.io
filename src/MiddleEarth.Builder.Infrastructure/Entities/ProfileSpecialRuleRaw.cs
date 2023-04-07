@@ -1,6 +1,6 @@
 ﻿namespace MiddleEarth.Builder.Infrastructure.Entities;
 
-public record UnitProfileSpecialRuleRaw(
+public record ProfileSpecialRuleRaw(
     string Name,
     string? Target)
 {

@@ -3,29 +3,29 @@ using MiddleEarth.Models;
 
 namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
-public class UnitProfileEquipmentMapper
+public class ProfileEquipmentMapper
 {
     private readonly BuilderContext _context;
     private readonly Mapper _mapper;
 
-    public UnitProfileEquipmentMapper(BuilderContext context, Mapper mapper)
+    public ProfileEquipmentMapper(BuilderContext context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public UnitProfileEquipmentRaw Map(UnitProfileEquipment value) => new(
+    public ProfileEquipmentRaw Map(ProfileEquipment value) => new(
         value.Profile.Name,
         value.DefaultCount,
         value.Cost,
         value.IsAllowedOnce,
         value.ReplacedEquipment.ToArray());
 
-    public UnitProfileEquipment Map(UnitProfileEquipmentRaw raw)
+    public ProfileEquipment Map(ProfileEquipmentRaw raw)
     {
         var equipment = _context.Equipments.GetOrCreate(raw.Name);
 
-        return new UnitProfileEquipment(equipment)
+        return new ProfileEquipment(equipment)
         {
             DefaultCount = raw.DefaultCount,
             Cost = raw.Cost,

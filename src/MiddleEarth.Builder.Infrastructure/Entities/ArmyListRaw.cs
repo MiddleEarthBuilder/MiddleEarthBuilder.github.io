@@ -7,5 +7,5 @@ public record ArmyListRaw(
     Side Side,
     HeroProfileRaw[] Heroes,
     WarriorProfileRaw[] Warriors,
-    SpecialRuleRaw[] ArmyBonuses,
+    ProfileSpecialRuleRaw[] ArmyBonuses,
     AllianceRaw[] Alliances);

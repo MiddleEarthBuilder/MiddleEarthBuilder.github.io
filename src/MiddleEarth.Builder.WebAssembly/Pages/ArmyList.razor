@@ -23,13 +23,41 @@
         <h4>@ArmyListName</h4>
     }
 </header>
-<div class="overflow-auto">
-    <h5>Special Rules</h5>
-
-    <h5>Heroes</h5>
-
-    <h5>Warriors</h5>
-</div>
+@if (Army != null)
+{
+    <div class="overflow-auto">
+        <div>
+            <h5>Army Bonus</h5>
+            <dl>
+                @foreach (var rule in Army.ArmyBonuses)
+                {
+                    <dt>@rule.FullName</dt>
+                    <dd>@rule.Rule.Description</dd>
+                }
+            </dl>
+        </div>
+        <div>
+            <h5>Heroes</h5>
+            <dl>
+                @foreach (var hero in Army.Heroes)
+                {
+                    <dt>@($"{hero.Name} ({hero.Cost}p)")</dt>
+                    <dd>@string.Join(", ", hero.Keywords)</dd>
+                }
+            </dl>
+        </div>
+        <div>
+            <h5>Warriors</h5>
+            <dl>
+                @foreach (var warrior in Army.Warriors)
+                {
+                    <dt>@($"{warrior.Name} ({warrior.Cost}p)")</dt>
+                    <dd>@string.Join(", ", warrior.Keywords)</dd>
+                }
+            </dl>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter]

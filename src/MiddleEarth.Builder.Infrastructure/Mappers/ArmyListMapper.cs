@@ -19,12 +19,12 @@ public class ArmyListMapper
         value.Side,
         value.Heroes.Select(_mapper.HeroProfileMapper.Map).ToArray(),
         value.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToArray(),
-        value.ArmyBonuses.Select(_mapper.SpecialRuleMapper.Map).ToArray(),
+        value.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
         value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray());
 
     public void Map(ArmyListRaw raw, ArmyList value)
     {
-        value.ArmyBonuses = raw.ArmyBonuses.Select(_mapper.SpecialRuleMapper.Map).ToList();
+        value.ArmyBonuses = raw.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList();
         value.Heroes = raw.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList();
         value.Warriors = raw.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList();
         value.Alliances = raw.Alliances.Select(_mapper.AllianceMapper.Map).ToList();

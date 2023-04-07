@@ -2,10 +2,10 @@
 
 public class Equipment
 {
-    public UnitProfileEquipment ProfileEquipment { get; set; }
+    public ProfileEquipment ProfileEquipment { get; set; }
     public int Count { get; set; } = 1;
 
-    public Equipment(UnitProfileEquipment equipment)
+    public Equipment(ProfileEquipment equipment)
     {
         ProfileEquipment = equipment;
     }

@@ -10,9 +10,9 @@ public class Mapper
     public readonly EquipmentProfileMapper EquipmentProfileMapper;
     public readonly HeroMapper HeroMapper;
     public readonly HeroProfileMapper HeroProfileMapper;
+    public readonly ProfileEquipmentMapper ProfileEquipmentMapper;
+    public readonly ProfileSpecialRuleMapper ProfileSpecialRuleMapper;
     public readonly SpecialRuleMapper SpecialRuleMapper;
-    public readonly UnitProfileEquipmentMapper UnitProfileEquipmentMapper;
-    public readonly UnitProfileSpecialRuleMapper UnitProfileSpecialRuleMapper;
     public readonly WarbandMapper WarbandMapper;
     public readonly WarriorMapper WarriorMapper;
     public readonly WarriorProfileMapper WarriorProfileMapper;
@@ -27,9 +27,9 @@ public class Mapper
         EquipmentProfileMapper = new EquipmentProfileMapper(this);
         HeroMapper = new HeroMapper(context, this);
         HeroProfileMapper = new HeroProfileMapper(context, this);
+        ProfileEquipmentMapper = new ProfileEquipmentMapper(context, this);
+        ProfileSpecialRuleMapper = new ProfileSpecialRuleMapper(context, this);
         SpecialRuleMapper = new SpecialRuleMapper();
-        UnitProfileEquipmentMapper = new UnitProfileEquipmentMapper(context, this);
-        UnitProfileSpecialRuleMapper = new UnitProfileSpecialRuleMapper(context, this);
         WarbandMapper = new WarbandMapper(context, this);
         WarriorMapper = new WarriorMapper(context, this);
         WarriorProfileMapper = new WarriorProfileMapper(context, this);
