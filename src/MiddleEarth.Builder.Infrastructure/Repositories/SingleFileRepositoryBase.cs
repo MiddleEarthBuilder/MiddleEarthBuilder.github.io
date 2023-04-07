@@ -3,7 +3,7 @@ using MiddleEarth.Builder.Application;
 using System.Collections.Concurrent;
 using System.Net.Http.Json;
 
-namespace MiddleEarth.Builder.Infrastructure;
+namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
 internal abstract class SingleFileRepositoryBase<TKey, TValue, TStoreValue> : IRepository<TKey, TValue> where TKey : notnull
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MiddleEarth.Models;
 
-namespace MiddleEarth.Builder.Infrastructure;
+namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
 internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyListDto, ArmyList>
 {
@@ -15,6 +15,6 @@ internal class ArmyListsRepository : MultipleFilesRepositoryBase<string, ArmyLis
 
     protected override ArmyListDto CreateEmpty(string name) => new(name);
 
-    protected override void Map(ArmyList storeValue, ArmyListDto value) => 
+    protected override void Map(ArmyList storeValue, ArmyListDto value) =>
         Context.Mapper.Map(storeValue, value);
 }

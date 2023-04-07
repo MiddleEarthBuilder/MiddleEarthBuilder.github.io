@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MiddleEarth.Models;
 
-namespace MiddleEarth.Builder.Infrastructure;
+namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
 internal class EquipmentRepository : SingleFileRepositoryBase<string, EquipmentDto, Equipment>
 {

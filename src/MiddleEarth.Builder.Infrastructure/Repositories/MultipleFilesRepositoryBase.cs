@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace MiddleEarth.Builder.Infrastructure;
+namespace MiddleEarth.Builder.Infrastructure.Repositories;
 
 public abstract class MultipleFilesRepositoryBase<TKey, TValue, TStoreValue> : IRepository<TKey, TValue>
 {

@@ -1,6 +1,6 @@
 ﻿using MiddleEarth.Models;
 
-namespace MiddleEarth.Builder.Infrastructure;
+namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class Mapper
 {
