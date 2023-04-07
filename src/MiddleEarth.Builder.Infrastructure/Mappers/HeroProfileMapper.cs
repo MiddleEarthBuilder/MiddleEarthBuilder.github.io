@@ -18,6 +18,7 @@ public class HeroProfileMapper
         value.ArmyList.Name,
         value.Name,
         value.Tier.Name,
+        value.Keywords.ToArray(),
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
         value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
         value.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToArray(),
@@ -29,6 +30,7 @@ public class HeroProfileMapper
         raw.Name,
         Tier.GetTier(raw.Tier))
     {
+        Keywords = raw.Keywords.ToList(),
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
         Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
         SpecialRules = raw.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToList(),

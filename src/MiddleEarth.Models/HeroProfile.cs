@@ -5,6 +5,7 @@ public class HeroProfile
     public ArmyList ArmyList { get; set; }
     public string Name { get; set; }
     public Tier Tier { get; set; }
+    public List<string> Keywords { get; set; }
     public Characteristics Characteristics { get; set; } = new();
     public List<UnitProfileEquipment> Equipment { get; set; } = new();
     public List<UnitProfileSpecialRule> SpecialRules { get; set; } = new();

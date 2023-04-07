@@ -17,6 +17,7 @@ public class WarriorProfileMapper
     public WarriorProfileRaw Map(WarriorProfile value) => new(
         value.ArmyList.Name,
         value.Name,
+        value.Keywords.ToArray(),
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
         value.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToArray(),
         value.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToArray(),
@@ -27,6 +28,7 @@ public class WarriorProfileMapper
         _context.ArmyLists.GetOrCreate(raw.ArmyList),
         raw.Name)
     {
+        Keywords = raw.Keywords.ToList(),
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
         Equipment = raw.Equipment.Select(_mapper.UnitProfileEquipmentMapper.Map).ToList(),
         SpecialRules = raw.SpecialRules.Select(_mapper.UnitProfileSpecialRuleMapper.Map).ToList(),

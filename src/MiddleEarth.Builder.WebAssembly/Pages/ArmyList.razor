@@ -5,21 +5,31 @@
 @using MiddleEarth.Models
 @inject NavigationManager NavigationManager
 @inject BuilderContext Context
-<h3>Army List</h3>
-@if (string.IsNullOrEmpty(ArmyListName))
-{
-    <EditForm class="d-flex flex-row align-items-center justify-content-center" Model="@_armyListNameForm" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <label for="armyListName" class="form-label m-0 me-2">Name</label>
-        <InputText id="armyListName" class="form-control me-2" @bind-Value="_armyListNameForm.Name" />
-        <button type="submit" class="btn btn-primary">Save</button>
-    </EditForm>
-}
-else
-{
-    <h4>@ArmyListName</h4>
-}
+
+<header>
+    <h3>Army List</h3>
+    @if (string.IsNullOrEmpty(ArmyListName))
+    {
+        <EditForm class="d-flex flex-row align-items-center justify-content-center" Model="@_armyListNameForm" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label for="armyListName" class="form-label m-0 me-2">Name</label>
+            <InputText id="armyListName" class="form-control me-2" @bind-Value="_armyListNameForm.Name" />
+            <button type="submit" class="btn btn-primary">Save</button>
+        </EditForm>
+    }
+    else
+    {
+        <h4>@ArmyListName</h4>
+    }
+</header>
+<div class="overflow-auto">
+    <h5>Special Rules</h5>
+
+    <h5>Heroes</h5>
+
+    <h5>Warriors</h5>
+</div>
 
 @code {
     [Parameter]

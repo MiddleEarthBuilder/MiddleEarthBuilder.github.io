@@ -64,6 +64,17 @@ a, .btn-link {
     margin: 0;
 }
 
+article {
+    padding: 24px;
+    overflow: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+article header {
+    position: sticky;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
