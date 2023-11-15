@@ -13,7 +13,6 @@ public class Characteristics
     public int? Might { get; set; }
     public int? Will { get; set; }
     public int? Fate { get; set; }
-    public List<SpecialRule> SpecialRules { get; set; } = new();
 
     public Characteristics() { }
 

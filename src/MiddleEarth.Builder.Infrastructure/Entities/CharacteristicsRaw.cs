@@ -11,12 +11,10 @@ public record CharacteristicsRaw(
     int Courage,
     int? Might = null,
     int? Will = null,
-    int? Fate = null,
-    string[]? SpecialRules = null)
+    int? Fate = null)
 {
-    public string[] SpecialRules { get; } = SpecialRules ?? Array.Empty<string>();
     private string FightString => Shoot == null ? $"{Fight}/-" : $"{Fight}/{Shoot}+";
 
     public override string ToString() =>
-        $"Mv {Move}\", F{FightString}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}, M{Might}, W{Will}, F{Fate}, Rules: {string.Join(", ", SpecialRules)}";
+        $"Mv {Move}\", F{FightString}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}, M{Might}, W{Will}, F{Fate}";
 }

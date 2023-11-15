@@ -1,13 +1,17 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace MiddleEarth.Models;
 
 public class ProfileSpecialRule
 {
-    public SpecialRule Rule { get; set; }
+    [Required]
+    public SpecialRule Rule { get; set; } = new();
     public string? Target { get; set; }
 
     public string FullName => string.IsNullOrEmpty(Target) ? Rule.Name : $"{Rule.Name} ({Target})";
+
+    public ProfileSpecialRule() { }
 
     public ProfileSpecialRule(SpecialRule rule)
     {

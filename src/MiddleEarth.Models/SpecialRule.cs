@@ -1,9 +1,16 @@
-﻿namespace MiddleEarth.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MiddleEarth.Models;
 
 public class SpecialRule
 {
-    public string Name { get; set; }
-    public string Description { get; set; } = string.Empty;
+    [Required]
+    public string? Name { get; set; }
+
+    [Required]
+    public string? Description { get; set; }
+
+    public SpecialRule() { }
 
     public SpecialRule(string name)
     {

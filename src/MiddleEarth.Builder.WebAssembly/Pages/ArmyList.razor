@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject BuilderContext Context
 @inject IModalService ModalService
+@inject ILogger<ArmyList> Logger
 
 <header>
     <h3>Army List</h3>
@@ -26,37 +27,60 @@
     <div class="overflow-auto">
         <div>
             <h5>Army Bonus</h5>
-            <dl>
-                @foreach (var rule in Army.ArmyBonuses)
-                {
-                    <dt>@rule.FullName</dt>
-                    <dd>@rule.Rule.Description</dd>
-                }
-                <button @onclick="@ShowProfileSpecialRuleForm"
-                        class="btn btn-primary">
-                    +
+            @foreach (var (rule, i) in Army.ArmyBonuses.Select((r, i) => (r, i)))
+            {
+                <button @onclick="() => ShowSpecialRuleForm(rule, i)"
+                        class="bg-transparent border-0 p-1 text-start">
+                    <h6>
+                        @rule.FullName
+                    </h6>
+                    <div>
+                        @rule.Rule.Description
+                    </div>
                 </button>
-            </dl>
+            }
+            <button @onclick="() => ShowSpecialRuleForm()"
+                    class="btn btn-primary w-100 p-0">
+                +
+            </button>
         </div>
         <div>
             <h5>Heroes</h5>
-            <dl>
-                @foreach (var hero in Army.Heroes)
-                {
-                    <dt>@($"{hero.Name} ({hero.Cost}p)")</dt>
-                    <dd>@string.Join(", ", hero.Keywords)</dd>
-                }
-            </dl>
+            @foreach (var (hero, i) in Army.Heroes.Select((r, i) => (r, i)))
+            {
+                <button @onclick="() => ShowHeroForm(hero, i)"
+                        class="bg-transparent border-0 p-1 text-start">
+                    <h6>
+                        @($"{hero.Name} ({hero.Cost}p)")
+                    </h6>
+                    <div>
+                        @string.Join(", ", hero.Keywords)
+                    </div>
+                </button>
+            }
+            <button @onclick="() => ShowHeroForm()"
+                    class="btn btn-primary w-100 p-0">
+                +
+            </button>
         </div>
         <div>
-            <h5>Warriors</h5>
-            <dl>
-                @foreach (var warrior in Army.Warriors)
-                {
-                    <dt>@($"{warrior.Name} ({warrior.Cost}p)")</dt>
-                    <dd>@string.Join(", ", warrior.Keywords)</dd>
-                }
-            </dl>
+            <h5 class="mt-2">Warriors</h5>
+            @foreach (var (warrior, i) in Army.Warriors.Select((r, i) => (r, i)))
+            {
+                <button @onclick="() => ShowWarriorForm(warrior, i)"
+                        class="bg-transparent border-0 p-1 text-start">
+                    <h6>
+                        @($"{warrior.Name} ({warrior.Cost}p)")
+                    </h6>
+                    <div>
+                        @string.Join(", ", warrior.Keywords)
+                    </div>
+                </button>
+            }
+            <button @onclick="() => ShowWarriorForm()"
+                    class="btn btn-primary w-100 p-0">
+                +
+            </button>
         </div>
     </div>
 }
@@ -96,16 +120,49 @@
         public string Name { get; set; } = string.Empty;
     }
 
-    private async Task ShowProfileSpecialRuleForm()
-    {
-        var reference = ModalService.Show<ProfileSpecialRuleForm>("Add army bonus");
-        var result = await reference.Result;
+    private Task ShowSpecialRuleForm(ProfileSpecialRule? source = null, int? idx = null) =>
+        ShowForm<ProfileSpecialRule, ProfileSpecialRuleForm>(
+            "Add army bonus",
+            source ?? new ProfileSpecialRule(),
+            Army!.ArmyBonuses,
+            idx);
 
-        if (result is { Confirmed: true, Data: ProfileSpecialRuleForm.Form form })
+    private Task ShowHeroForm(HeroProfile? source = null, int? idx = null) =>
+        ShowForm<HeroProfile, HeroProfileForm>(
+            "Add hero profile",
+            source ?? new HeroProfile(Army!, "", Tier.IndependentHero),
+            Army!.Heroes,
+            idx);
+
+    private Task ShowWarriorForm(WarriorProfile? source = null, int? idx = null) =>
+        ShowForm<WarriorProfile, WarriorProfileForm>(
+            "Add warrior profile",
+            source ?? new WarriorProfile(Army!, ""),
+            Army!.Warriors,
+            idx);
+
+    private async Task ShowForm<T, TFormComponent>(string title, T source,
+        IList<T> list, int? idx)
+     where T : class where TFormComponent : IComponent
+    {
+        ArgumentNullException.ThrowIfNull(Army);
+
+        var parameters = new ModalParameters { { "Model", source } };
+        var reference = ModalService.Show<TFormComponent>(title, parameters);
+        var result = await reference.Result;
+        if (result is { Confirmed: true, Data: T data })
         {
-            ArgumentException.ThrowIfNullOrEmpty(form.NameWithTarget);
-            ArgumentException.ThrowIfNullOrEmpty(form.Description);
-            Army?.ArmyBonuses.Add(new ProfileSpecialRule(form.NameWithTarget, form.Description));
+            if (idx != null)
+                list[idx.Value] = data;
+            else
+                list.Add(data);
+        }
+        else
+        {
+            if (result.Confirmed)
+                Logger.LogError("Wrong Data type.");
+            else
+                Logger.LogDebug("Result is not confirmed.");
         }
     }
 }

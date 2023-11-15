@@ -14,8 +14,29 @@ body {
     height: 100vh;
 }
 
-h1:focus {
-    outline: none;
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.5rem;
+}
+
+    .h1 h1 {
+        top: 0.5rem;
+        color: #85200c;
+        text-transform: uppercase;
+    }
+
+    .h1:focus h1:focus {
+        outline: none;
+    }
+
+.h2, .h3, .h4, .h5, h2, h3, h4, h5 {
+    top: 0.5rem;
+    color: #a61c00;
+    text-transform: uppercase;
+}
+
+.h6, h6 {
+    top: 0.5rem;
+    font-weight: bold;
 }
 
 a, .btn-link {
@@ -71,9 +92,9 @@ article {
     max-height: 100vh;
 }
 
-article header {
-    position: sticky;
-}
+    article header {
+        position: sticky;
+    }
 
 .blazored-modal {
     margin-top: 63px !important;

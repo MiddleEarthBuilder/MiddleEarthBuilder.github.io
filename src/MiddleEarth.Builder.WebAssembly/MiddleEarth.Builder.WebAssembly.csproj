@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\ProfileSpecialRuleForm.razor" />
+    <_ContentIncludedByDefault Remove="Components\WarriorProfileForm.razor" />
     <_ContentIncludedByDefault Remove="Pages\ArmyBuilder.razor" />
     <_ContentIncludedByDefault Remove="wwwroot\data\special-rules.json" />
   </ItemGroup>
@@ -29,6 +30,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\ProfileSpecialRuleForm.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\WarriorProfileForm.razor" />
   </ItemGroup>
 
 </Project>

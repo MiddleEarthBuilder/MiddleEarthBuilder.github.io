@@ -25,8 +25,7 @@ public class CharacteristicsMapper
         value.Courage,
         value.Might,
         value.Will,
-        value.Fate,
-        value.SpecialRules.Select(rule => rule.Name).ToArray());
+        value.Fate);
 
     public Characteristics Map(CharacteristicsRaw raw) => new()
     {
@@ -40,9 +39,6 @@ public class CharacteristicsMapper
         Courage = raw.Courage,
         Might = raw.Might,
         Will = raw.Will,
-        Fate = raw.Fate,
-        SpecialRules = raw.SpecialRules
-            .Select(_context.SpecialRules.GetOrCreate)
-            .ToList()
+        Fate = raw.Fate
     };
 }
