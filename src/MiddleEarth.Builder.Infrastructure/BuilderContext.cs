@@ -47,4 +47,9 @@ public class BuilderContext
         foreach (var equipment in equipmentProfiles)
             await Equipments.UpdateAsync(equipment, cancellationToken); // TODO: Choose the newest
     }
+
+    public async Task Load(CancellationToken cancellationToken)
+    {
+
+    }
 }

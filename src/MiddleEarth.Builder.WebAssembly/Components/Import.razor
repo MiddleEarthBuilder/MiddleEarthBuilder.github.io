@@ -1,0 +1,22 @@
+﻿@inject ILogger<Import> Logger
+
+<lead>When you confirm loading files, all data in the application will be overriden until you close the browser or refresh the page.</lead>
+
+<InputFile class="btn btn-link text-inherit" OnChange="@ImportData"><i class="bi bi-cloud-arrow-up"></i> load</InputFile>
+
+@code {
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    protected override Task OnInitializedAsync()
+    {
+        BlazoredModal.Title = "Load data";
+
+        return base.OnInitializedAsync();
+    }
+
+    private async Task ImportData(InputFileChangeEventArgs e)
+    {
+        Logger.LogInformation("File {name} of size {size} kB imported.", e.File.Name, e.File.Size / 1024);
+    }
+}

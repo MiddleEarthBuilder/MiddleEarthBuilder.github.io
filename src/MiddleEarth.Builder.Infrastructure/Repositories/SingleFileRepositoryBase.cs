@@ -89,7 +89,7 @@ internal abstract class SingleFileRepositoryBase<TKey, TValue, TStoreValue> : IR
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, $"An error occurred while loading dictionary \"{DataFilePath}\".");
+            _logger.LogError(exception, "An error occurred while loading dictionary {path}.", DataFilePath);
             return _dictionary ??= new ConcurrentDictionary<TKey, TValue>();
         }
         finally

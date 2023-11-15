@@ -74,15 +74,15 @@ public abstract class MultipleFilesRepositoryBase<TKey, TValue, TStoreValue> : I
         }
         catch (JsonException exception)
         {
-            _logger.LogWarning(exception, $"A JSON error occurred while loading \"{path}\".");
+            _logger.LogWarning(exception, "A JSON error occurred while loading {path}.", path);
         }
         catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.NotFound)
         {
-            _logger.LogInformation($"Data for path \"{path}\" was not found.");
+            _logger.LogInformation("Data for path {path} was not found.", path);
         }
         catch (HttpRequestException exception)
         {
-            _logger.LogWarning(exception, $"A HttpRequest error occurred while loading \"{path}\".");
+            _logger.LogWarning(exception, "A HttpRequest error occurred while loading {path}.", path);
         }
 
         value = CreateEmpty(key);

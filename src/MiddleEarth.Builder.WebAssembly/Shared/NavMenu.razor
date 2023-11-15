@@ -2,6 +2,7 @@
 @inject ContextImporter Importer
 @inject ContextExporter Exporter
 @inject IJSRuntime Js
+@inject IModalService ModalService
 
 <nav class="navbar fixed-top">
     <div class="container-fluid d-flex justify-content-start">
@@ -9,15 +10,11 @@
             Home
         </NavLink>
         <button class="btn btn-link text-inherit" @onclick="Export"><i class="bi bi-cloud-download"></i> save</button>
-        <button class="btn btn-link text-inherit" @onclick="Import"><i class="bi bi-cloud-arrow-up"></i> load</button>
+        <button class="btn btn-link text-inherit" @onclick="() => ModalService.Show<Import>()"><i class="bi bi-cloud-arrow-up"></i> load</button>
     </div>
 </nav>
 
 @code {
-    private async Task Import()
-    {
-        throw new NotImplementedException();
-    }
 
     private async Task Export()
     {

@@ -44,6 +44,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        ArmiesList = new List<Models.ArmyList>(await Context.ArmyLists.GetAllAsync(CancellationToken.None));
+        ArmiesList = (await Context.ArmyLists.GetAllAsync(CancellationToken.None)).ToList();
     }
 }
