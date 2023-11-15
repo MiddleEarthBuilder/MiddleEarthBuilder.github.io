@@ -1,0 +1,33 @@
+﻿<EditForm Model="@_form" OnValidSubmit="@SubmitForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label for="armyListName" class="form-label m-0 me-2">Name</label>
+        <InputText id="armyListName" class="form-control me-2" @bind-Value="_form.NameWithTarget" />
+    </div>
+    <div class="mb-3">
+        <label for="armyListName" class="form-label m-0 me-2">Description</label>
+        <InputText id="armyListDescription" class="form-control me-2" @bind-Value="_form.Description" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</EditForm>
+
+@code {
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    private readonly Form _form = new();
+
+    public class Form
+    {
+        [Required]
+        public string? NameWithTarget { get; set; }
+
+        [Required]
+        public string? Description { get; set; }
+    }
+
+    private async Task SubmitForm() =>
+        await BlazoredModal.CloseAsync(ModalResult.Ok(_form));
+
+}

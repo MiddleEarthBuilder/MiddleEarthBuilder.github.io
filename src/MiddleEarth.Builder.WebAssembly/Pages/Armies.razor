@@ -1,9 +1,6 @@
 ﻿@page "/armies"
 @page "/armies/{Side}"
-@using MiddleEarth.Builder.Application
-@using AppContext = MiddleEarth.Builder.Infrastructure.BuilderContext
-@using Side = MiddleEarth.Models.Side
-@inject AppContext Context
+@inject BuilderContext Context
 
 <h3>@(SideEnum == Models.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
 

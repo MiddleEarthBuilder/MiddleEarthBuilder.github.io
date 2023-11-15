@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    background-image: url("img/middle-earth-map-light.jpg"), url("../img/middle-earth-map-light.jpg");
+    background-image: url("../img/middle-earth-map-light.jpg");
     background-color: #e7d1b9; /* Used if the image is unavailable */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -39,13 +39,13 @@ a, .btn-link {
 @media screen {
     .content {
         background: rgba(255, 255, 255, 0.5);
-        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25), 2px 2px 5px rgba(0, 0, 0, 0.33);
+        box-shadow: 2px 2px 15px 4px rgba(0, 0, 0, 0.33);
         border-radius: 10px;
     }
 
     nav.navbar {
         background: rgba(255, 255, 255, 0.5);
-        box-shadow: 0 21px 42px rgba(255, 255, 255, 0.75);
+        box-shadow: 0 0 20px 20px rgba(255, 255, 255, 0.5);
         width: 200vw;
         padding: 0 50vw;
         margin-left: -50vw;
@@ -73,6 +73,11 @@ article {
 
 article header {
     position: sticky;
+}
+
+.blazored-modal {
+    margin-top: 63px !important;
+    border-radius: 10px !important;
 }
 
 .valid.modified:not([type=checkbox]) {

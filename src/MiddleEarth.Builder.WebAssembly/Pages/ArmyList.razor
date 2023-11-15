@@ -1,10 +1,8 @@
 ﻿@page "/{Side}/army-lists"
 @page "/{Side}/army-lists/{ArmyListName}"
-@using MiddleEarth.Builder.Application
-@using MiddleEarth.Builder.Infrastructure
-@using MiddleEarth.Models
 @inject NavigationManager NavigationManager
 @inject BuilderContext Context
+@inject IModalService ModalService
 
 <header>
     <h3>Army List</h3>
@@ -34,6 +32,10 @@
                     <dt>@rule.FullName</dt>
                     <dd>@rule.Rule.Description</dd>
                 }
+                <button @onclick="@ShowProfileSpecialRuleForm"
+                        class="btn btn-primary">
+                    +
+                </button>
             </dl>
         </div>
         <div>
@@ -92,5 +94,18 @@
     private class ArmyListNameForm
     {
         public string Name { get; set; } = string.Empty;
+    }
+
+    private async Task ShowProfileSpecialRuleForm()
+    {
+        var reference = ModalService.Show<ProfileSpecialRuleForm>("Add army bonus");
+        var result = await reference.Result;
+
+        if (result is { Confirmed: true, Data: ProfileSpecialRuleForm.Form form })
+        {
+            ArgumentException.ThrowIfNullOrEmpty(form.NameWithTarget);
+            ArgumentException.ThrowIfNullOrEmpty(form.Description);
+            Army?.ArmyBonuses.Add(new ProfileSpecialRule(form.NameWithTarget, form.Description));
+        }
     }
 }

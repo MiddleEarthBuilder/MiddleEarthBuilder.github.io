@@ -9,4 +9,10 @@ public class SpecialRule
     {
         Name = name;
     }
+
+    public SpecialRule(string name, string description)
+    {
+        Name = name;
+        Description = description;
+    }
 }
