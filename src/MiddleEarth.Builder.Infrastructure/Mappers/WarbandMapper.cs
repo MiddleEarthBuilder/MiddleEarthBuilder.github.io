@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class WarbandMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public WarbandMapper(BuilderContext context, Mapper mapper)
+    public WarbandMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;

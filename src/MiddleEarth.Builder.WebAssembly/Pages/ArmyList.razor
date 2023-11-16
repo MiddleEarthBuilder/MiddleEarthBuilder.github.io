@@ -1,7 +1,7 @@
 ﻿@page "/{Side}/army-lists"
 @page "/{Side}/army-lists/{ArmyListName}"
 @inject NavigationManager NavigationManager
-@inject BuilderContext Context
+@inject Context Context
 @inject IModalService ModalService
 @inject ILogger<ArmyList> Logger
 
@@ -106,7 +106,7 @@
         if (string.IsNullOrEmpty(ArmyListName) || Army?.Name == ArmyListName)
             return;
 
-        Army = await Context.ArmyLists.GetOrCreateAsync(ArmyListName, CancellationToken.None);
+        Army = Context.GetOrCreateArmyList(ArmyListName);
         Army.Side = SideEnum;
     }
 

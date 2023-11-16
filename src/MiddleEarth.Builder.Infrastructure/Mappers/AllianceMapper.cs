@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class AllianceMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public AllianceMapper(BuilderContext context, Mapper mapper)
+    public AllianceMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -19,6 +19,6 @@ public class AllianceMapper
         value.Level);
 
     public Alliance Map(AllianceRaw raw) => new(
-        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        _context.GetOrCreateArmyList(raw.ArmyList),
         raw.Level);
 }

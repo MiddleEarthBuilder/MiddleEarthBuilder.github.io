@@ -17,10 +17,10 @@ public class Mapper
     public readonly WarriorMapper WarriorMapper;
     public readonly WarriorProfileMapper WarriorProfileMapper;
 
-    public Mapper(BuilderContext context)
+    public Mapper(Context context)
     {
         AllianceMapper = new AllianceMapper(context, this);
-        ArmyListMapper = new ArmyListMapper(context, this);
+        ArmyListMapper = new ArmyListMapper(this);
         ArmyMapper = new ArmyMapper(context, this);
         CharacteristicsMapper = new CharacteristicsMapper(context, this);
         EquipmentMapper = new EquipmentMapper(context, this);

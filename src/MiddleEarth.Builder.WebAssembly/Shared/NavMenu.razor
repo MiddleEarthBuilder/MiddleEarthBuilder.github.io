@@ -18,8 +18,8 @@
 
     private async Task Export()
     {
-        var fileStream = await Exporter.GetDataStream(CancellationToken.None);
-        var fileName = $"Middle-Earth_Builder_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.zip";
+        await using var fileStream = await Exporter.GetStream();
+        var fileName = $"MiddleEarth_Builder_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json";
 
         using var streamRef = new DotNetStreamReference(stream: fileStream);
 

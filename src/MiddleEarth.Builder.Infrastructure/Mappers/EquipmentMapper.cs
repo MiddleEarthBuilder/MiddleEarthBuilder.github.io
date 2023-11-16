@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class EquipmentMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public EquipmentMapper(BuilderContext context, Mapper mapper)
+    public EquipmentMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;

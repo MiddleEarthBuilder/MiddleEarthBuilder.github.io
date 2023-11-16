@@ -5,9 +5,9 @@ namespace MiddleEarth.Builder.Infrastructure.Configuration;
 
 public static class ConfigurationExtensions
 {
-    public static IServiceCollection AddRepositories(this IServiceCollection services) =>
+    public static IServiceCollection AddContext(this IServiceCollection services) =>
         services
-            .AddSingleton<BuilderContext>()
+            .AddSingleton<Context>()
             .AddScoped<ContextExporter>()
             .AddScoped<ContextImporter>();
 }

@@ -1,16 +1,44 @@
-﻿@inject ILogger<Import> Logger
+﻿@using MiddleEarth.Builder.Infrastructure.Files
+@using MiddleEarth.Builder.Infrastructure.Entities
+@using Microsoft.Extensions.Options
+@using MiddleEarth.Builder.Infrastructure.Configuration
+@inject ContextImporter Importer
+@inject Context Context
+@inject IOptions<ServiceOptions> Options
+@inject ILogger<Import> Logger
 
 <lead>When you confirm loading files, all data in the application will be overriden until you close the browser or refresh the page.</lead>
-
-<InputFile class="btn btn-link text-inherit" OnChange="@ImportData"><i class="bi bi-cloud-arrow-up"></i> load</InputFile>
+<EditForm Model="@_model" OnValidSubmit="@SubmitForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputFile class="btn btn-link text-inherit" OnChange="@ImportData"><i class="bi bi-cloud-arrow-up"></i> load</InputFile>
+    @if (_contextRaw != null)
+    {
+        <dl>
+            <dt class="float-start" style="width: 120px">Army Lists: </dt>
+            <dd class="m-0">@($"{_model.ArmyLists} (currently: {_model.LoadedArmyLists})")</dd>
+            <dt class="float-start" style="width: 120px">Equipment: </dt>
+            <dd class="m-0">@($"{_model.Equipments} (currently: {_model.LoadedEquipments})")</dd>
+            <dt class="float-start" style="width: 120px">Special Rules: </dt>
+            <dd class="m-0">@($"{_model.SpecialRules} (currently: {_model.LoadedSpecialRules})")</dd>
+            <dt class="float-start" style="width: 120px">Armies: </dt>
+            <dd class="m-0">@($"{_model.Armies} (currently: {_model.LoadedArmies})")</dd>
+        </dl>
+        <button type="submit" class="btn btn-primary">Load</button>
+    }
+</EditForm>
 
 @code {
+    private ContextRaw? _contextRaw;
+    private readonly Model _model = new();
+
     [CascadingParameter]
     BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
     protected override Task OnInitializedAsync()
     {
         BlazoredModal.Title = "Load data";
+        _model.Initialize(Context);
 
         return base.OnInitializedAsync();
     }
@@ -18,5 +46,45 @@
     private async Task ImportData(InputFileChangeEventArgs e)
     {
         Logger.LogInformation("File {name} of size {size} kB imported.", e.File.Name, e.File.Size / 1024);
+        _contextRaw = await Importer.GetFromStream(e.File.OpenReadStream(Options.Value.MaxFileUploadSize), CancellationToken.None);
+        _model.Update(_contextRaw);
+    }
+
+    private async Task SubmitForm()
+    {
+        ArgumentNullException.ThrowIfNull(_contextRaw);
+        await Context.Load(_contextRaw);
+        await BlazoredModal.CloseAsync(ModalResult.Ok(Context));
+    }
+
+    private class Model
+    {
+        public int ArmyLists { get; private set; }
+        public int SpecialRules { get; private set; }
+        public int Equipments { get; private set; }
+        public int Armies { get; private set; }
+
+        public int LoadedArmyLists { get; private set; }
+        public int LoadedSpecialRules { get; private set; }
+        public int LoadedEquipments { get; private set; }
+        public int LoadedArmies { get; private set; }
+
+        public Model() { }
+
+        public void Update(ContextRaw raw)
+        {
+            ArmyLists = raw.ArmyLists.Length;
+            SpecialRules = raw.SpecialRules.Length;
+            Equipments = raw.Equipments.Length;
+            Armies = raw.Armies.Length;
+        }
+
+        public void Initialize(Context context)
+        {
+            LoadedArmyLists = context.GetArmyLists().Count;
+            LoadedSpecialRules = context.GetSpecialRules().Count;
+            LoadedEquipments = context.GetEquipments().Count;
+            LoadedArmies = context.GetArmies().Count;
+        }
     }
 }

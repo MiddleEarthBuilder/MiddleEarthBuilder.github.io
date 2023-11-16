@@ -1,5 +1,5 @@
 ﻿@page "/armies/{ArmyListName}/builder"
-@inject BuilderContext Context
+@inject Context Context
 
 <h3>@ArmyListName</h3>
 <h4>Builder</h4>
@@ -14,6 +14,6 @@
     {
         if (string.IsNullOrEmpty(ArmyListName))
             return;
-        Army = await Context.CreateArmy(ArmyListName);
+        Army = await Context.CreateArmy(Guid.NewGuid().ToString(), ArmyListName); // TODO: Set name
     }
 }

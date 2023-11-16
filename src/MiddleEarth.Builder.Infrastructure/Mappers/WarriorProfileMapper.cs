@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class WarriorProfileMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public WarriorProfileMapper(BuilderContext context, Mapper mapper)
+    public WarriorProfileMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -25,7 +25,7 @@ public class WarriorProfileMapper
         value.Note);
 
     public WarriorProfile Map(WarriorProfileRaw raw) => new(
-        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        _context.GetOrCreateArmyList(raw.ArmyList),
         raw.Name)
     {
         Keywords = raw.Keywords.ToList(),

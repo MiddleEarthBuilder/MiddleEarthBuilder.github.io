@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class CharacteristicsMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public CharacteristicsMapper(BuilderContext context, Mapper mapper)
+    public CharacteristicsMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;

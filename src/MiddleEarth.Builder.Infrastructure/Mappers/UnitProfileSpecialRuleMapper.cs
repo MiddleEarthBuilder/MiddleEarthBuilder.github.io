@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class ProfileSpecialRuleMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public ProfileSpecialRuleMapper(BuilderContext context, Mapper mapper)
+    public ProfileSpecialRuleMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -19,7 +19,7 @@ public class ProfileSpecialRuleMapper
         value.Target,
         value.Rule.Description!);
 
-    public ProfileSpecialRule Map(ProfileSpecialRuleRaw raw) => new(_context.SpecialRules.GetOrCreate(raw.Name))
+    public ProfileSpecialRule Map(ProfileSpecialRuleRaw raw) => new(_context.GetOrCreateSpecialRule(raw.Name))
     {
         Target = raw.Target
     };

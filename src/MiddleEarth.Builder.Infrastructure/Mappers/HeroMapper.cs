@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class HeroMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public HeroMapper(BuilderContext context, Mapper mapper)
+    public HeroMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -21,7 +21,7 @@ public class HeroMapper
 
     public Hero? Map(HeroRaw raw)
     {
-        var armyList = _context.ArmyLists.GetOrCreate(raw.ArmyList);
+        var armyList = _context.GetOrCreateArmyList(raw.ArmyList);
         var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == raw.Name);
         return hero == null ?
             null :

@@ -1,10 +1,10 @@
 ﻿@page "/armies"
 @page "/armies/{Side}"
-@inject BuilderContext Context
+@inject Context Context
 
 <h3>@(SideEnum == Models.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
 
-@if (FilteredArmiesList == null)
+@if (ArmyLists == null)
 {
     <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -13,7 +13,7 @@
 else
 {
     <div class="container-fluid">
-        @foreach (var armyList in FilteredArmiesList)
+        @foreach (var armyList in ArmyLists)
         {
             <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Models.Side.Good ? "btn-primary" : "btn-danger") mb-2">@armyList.Name</a>
         }
@@ -28,22 +28,21 @@ else
     [Parameter]
     public string? Side { get; set; }
 
-    private List<Models.ArmyList>? ArmiesList { get; set; }
-    private IEnumerable<Models.ArmyList>? FilteredArmiesList { get; set; }
+    private IReadOnlyCollection<Models.ArmyList>? ArmyLists { get; set; }
 
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
 
     protected override Task OnParametersSetAsync()
     {
-        FilteredArmiesList = SideEnum == Models.Side.Undefined ?
-            ArmiesList :
-            ArmiesList?.Where(armyList => armyList.Side == SideEnum);
+        ArmyLists = Context.GetArmyLists(SideEnum);
 
         return Task.CompletedTask;
     }
 
     protected override async Task OnInitializedAsync()
     {
-        ArmiesList = (await Context.ArmyLists.GetAllAsync(CancellationToken.None)).ToList();
+        ArmyLists = Context.GetArmyLists(SideEnum);
+
+        await base.OnInitializedAsync();
     }
 }

@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class ProfileEquipmentMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public ProfileEquipmentMapper(BuilderContext context, Mapper mapper)
+    public ProfileEquipmentMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -21,16 +21,11 @@ public class ProfileEquipmentMapper
         value.IsAllowedOnce,
         value.ReplacedEquipment.ToArray());
 
-    public ProfileEquipment Map(ProfileEquipmentRaw raw)
+    public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.GetOrCreateEquipment(raw.Name))
     {
-        var equipment = _context.Equipments.GetOrCreate(raw.Name);
-
-        return new ProfileEquipment(equipment)
-        {
-            DefaultCount = raw.DefaultCount,
-            Cost = raw.Cost,
-            IsAllowedOnce = raw.IsAllowedOnce,
-            ReplacedEquipment = raw.ReplacedEquipment.ToList()
-        };
-    }
+        DefaultCount = raw.DefaultCount,
+        Cost = raw.Cost,
+        IsAllowedOnce = raw.IsAllowedOnce,
+        ReplacedEquipment = raw.ReplacedEquipment.ToList()
+    };
 }

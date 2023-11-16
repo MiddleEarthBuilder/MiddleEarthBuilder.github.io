@@ -2,6 +2,7 @@
 
 public class Army
 {
+    public string Name { get; set; }
     public ArmyList List { get; set; }
     public Hero? Leader { get; set; }
     public List<Warband> Warbands { get; set; } = new();
@@ -24,8 +25,9 @@ public class Army
         }
     }
 
-    public Army(ArmyList list)
+    public Army(string name, ArmyList list)
     {
+        Name = name;
         List = list;
     }
 }

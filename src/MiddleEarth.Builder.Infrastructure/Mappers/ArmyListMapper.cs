@@ -5,12 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class ArmyListMapper
 {
-    private readonly BuilderContext _context;
     private readonly Mapper _mapper;
 
-    public ArmyListMapper(BuilderContext context, Mapper mapper)
+    public ArmyListMapper(Mapper mapper)
     {
-        _context = context;
         _mapper = mapper;
     }
 
@@ -22,11 +20,12 @@ public class ArmyListMapper
         value.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
         value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray());
 
-    public void Map(ArmyListRaw raw, ArmyList value)
+    public ArmyList Map(ArmyListRaw raw) => new(raw.Name)
     {
-        value.ArmyBonuses = raw.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList();
-        value.Heroes = raw.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList();
-        value.Warriors = raw.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList();
-        value.Alliances = raw.Alliances.Select(_mapper.AllianceMapper.Map).ToList();
-    }
+        Side = raw.Side,
+        ArmyBonuses = raw.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList(),
+        Heroes = raw.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList(),
+        Warriors = raw.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList(),
+        Alliances = raw.Alliances.Select(_mapper.AllianceMapper.Map).ToList()
+    };
 }

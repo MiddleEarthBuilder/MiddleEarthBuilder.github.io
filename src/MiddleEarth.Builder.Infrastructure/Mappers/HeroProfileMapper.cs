@@ -5,10 +5,10 @@ namespace MiddleEarth.Builder.Infrastructure.Mappers;
 
 public class HeroProfileMapper
 {
-    private readonly BuilderContext _context;
+    private readonly Context _context;
     private readonly Mapper _mapper;
 
-    public HeroProfileMapper(BuilderContext context, Mapper mapper)
+    public HeroProfileMapper(Context context, Mapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -26,7 +26,7 @@ public class HeroProfileMapper
         value.Note);
 
     public HeroProfile Map(HeroProfileRaw raw) => new(
-        _context.ArmyLists.GetOrCreate(raw.ArmyList),
+        _context.GetOrCreateArmyList(raw.ArmyList),
         raw.Name,
         Tier.GetTier(raw.Tier))
     {
