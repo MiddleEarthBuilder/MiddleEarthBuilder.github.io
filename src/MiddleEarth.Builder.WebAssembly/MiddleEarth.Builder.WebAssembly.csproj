@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MiddleEarth.Builder.Infrastructure\MiddleEarth.Builder.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Pages\ArmyBuilder.razor" />
   </ItemGroup>
 
@@ -34,6 +30,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\WarriorProfileForm.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MiddleEarth.Builder.Application\MiddleEarth.Builder.Application.csproj" />
   </ItemGroup>
 
 </Project>

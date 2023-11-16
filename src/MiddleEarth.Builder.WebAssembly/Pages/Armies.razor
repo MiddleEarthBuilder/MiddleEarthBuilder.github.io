@@ -1,8 +1,9 @@
 ﻿@page "/armies"
 @page "/armies/{Side}"
+@using MiddleEarth.Builder.Application.Domain
 @inject Context Context
 
-<h3>@(SideEnum == Models.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
+<h3>@(SideEnum == Application.Domain.Side.Undefined ? "Armies" : $"{SideEnum} Armies")</h3>
 
 @if (ArmyLists == null)
 {
@@ -15,7 +16,7 @@ else
     <div class="container-fluid">
         @foreach (var armyList in ArmyLists)
         {
-            <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Models.Side.Good ? "btn-primary" : "btn-danger") mb-2">@armyList.Name</a>
+            <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Application.Domain.Side.Good ? "btn-primary" : "btn-danger") mb-2">@armyList.Name</a>
         }
     </div>
 
@@ -28,9 +29,9 @@ else
     [Parameter]
     public string? Side { get; set; }
 
-    private IReadOnlyCollection<Models.ArmyList>? ArmyLists { get; set; }
+    private IReadOnlyCollection<Application.Domain.ArmyList>? ArmyLists { get; set; }
 
-    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
+    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Application.Domain.Side.Undefined;
 
     protected override Task OnParametersSetAsync()
     {

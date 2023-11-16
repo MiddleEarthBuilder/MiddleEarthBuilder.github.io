@@ -1,5 +1,6 @@
 ﻿@page "/{Side}/army-lists"
 @page "/{Side}/army-lists/{ArmyListName}"
+@using MiddleEarth.Builder.Application.Domain
 @inject NavigationManager NavigationManager
 @inject Context Context
 @inject IModalService ModalService
@@ -91,9 +92,9 @@
 
     [Parameter]
     public string? Side { get; set; }
-    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Models.Side.Undefined;
+    private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Application.Domain.Side.Undefined;
 
-    private Models.ArmyList? Army { get; set; }
+    private Application.Domain.ArmyList? Army { get; set; }
 
     private readonly ArmyListNameForm _armyListNameForm = new();
 

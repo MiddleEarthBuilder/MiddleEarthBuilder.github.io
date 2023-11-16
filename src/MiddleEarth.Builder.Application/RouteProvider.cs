@@ -1,4 +1,4 @@
-﻿using MiddleEarth.Models;
+﻿using MiddleEarth.Builder.Application.Domain;
 
 namespace MiddleEarth.Builder.Application;
 

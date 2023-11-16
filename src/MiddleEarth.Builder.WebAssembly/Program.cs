@@ -2,9 +2,9 @@ using Blazored.Modal;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using MiddleEarth.Builder.Infrastructure;
-using MiddleEarth.Builder.Infrastructure.Configuration;
-using MiddleEarth.Builder.Infrastructure.Files;
+using MiddleEarth.Builder.Application;
+using MiddleEarth.Builder.Application.Configuration;
+using MiddleEarth.Builder.Application.Files;
 using MiddleEarth.Builder.WebAssembly;
 using MiddleEarth.Builder.WebAssembly.Http;
 

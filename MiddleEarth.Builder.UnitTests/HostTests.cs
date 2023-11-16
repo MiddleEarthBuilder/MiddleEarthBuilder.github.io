@@ -2,9 +2,9 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MiddleEarth.Builder.Infrastructure;
-using MiddleEarth.Builder.Infrastructure.Configuration;
-using MiddleEarth.Builder.Infrastructure.Files;
+using MiddleEarth.Builder.Application;
+using MiddleEarth.Builder.Application.Configuration;
+using MiddleEarth.Builder.Application.Files;
 using MiddleEarth.Builder.WebAssembly.Http;
 
 namespace MiddleEarth.Builder.UnitTests;

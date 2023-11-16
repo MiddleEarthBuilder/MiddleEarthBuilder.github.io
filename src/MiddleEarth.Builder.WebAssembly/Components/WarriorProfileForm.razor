@@ -1,4 +1,5 @@
-﻿<EditForm Model="@Model" OnValidSubmit="@SubmitForm">
+﻿@using MiddleEarth.Builder.Application.Domain
+<EditForm Model="@Model" OnValidSubmit="@SubmitForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="mb-3">
