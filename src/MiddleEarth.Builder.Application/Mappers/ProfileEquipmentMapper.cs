@@ -14,12 +14,16 @@ public class ProfileEquipmentMapper
         _mapper = mapper;
     }
 
-    public ProfileEquipmentRaw Map(ProfileEquipment value) => new(
-        value.Profile.Name,
-        value.DefaultCount,
-        value.Cost,
-        value.IsAllowedOnce,
-        value.ReplacedEquipment.ToArray());
+    public ProfileEquipmentRaw Map(ProfileEquipment value)
+    {
+        _context.GetOrCreateEquipment(value.Profile.Name).Update(value.Profile);
+        return new ProfileEquipmentRaw(
+            value.Profile.Name,
+            value.DefaultCount,
+            value.Cost,
+            value.IsAllowedOnce,
+            value.ReplacedEquipment.ToArray());
+    }
 
     public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.GetOrCreateEquipment(raw.Name))
     {

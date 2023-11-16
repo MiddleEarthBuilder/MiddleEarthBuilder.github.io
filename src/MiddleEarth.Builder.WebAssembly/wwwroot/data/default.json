@@ -5,16 +5,15 @@
       "Side": "Good",
       "Heroes": [],
       "Warriors": [],
-      "ArmyBonuses": [
-        {
-          "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022",
-          "Description": "Friendly Gondor models from this army list increase their Courage value by 1."
-        }
-      ],
+      "ArmyBonuses": [ { "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022" } ],
       "Alliances": []
     }
   ],
   "SpecialRules": [
+    {
+      "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022",
+      "Description": "Friendly Gondor models from this army list increase their Courage value by 1."
+    },
     {
       "Name": "Ancient Enemies",
       "Description": "1s To Wound re-roll against models in the brackets"

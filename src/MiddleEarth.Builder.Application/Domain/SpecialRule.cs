@@ -22,4 +22,9 @@ public class SpecialRule
         Name = name;
         Description = description;
     }
+
+    public void Update(SpecialRule value)
+    {
+        Description = value.Description;
+    }
 }

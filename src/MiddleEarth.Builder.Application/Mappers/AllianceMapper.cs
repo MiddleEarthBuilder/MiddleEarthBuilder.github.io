@@ -6,12 +6,10 @@ namespace MiddleEarth.Builder.Application.Mappers;
 public class AllianceMapper
 {
     private readonly Context _context;
-    private readonly Mapper _mapper;
 
-    public AllianceMapper(Context context, Mapper mapper)
+    public AllianceMapper(Context context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public AllianceRaw Map(Alliance value) => new(

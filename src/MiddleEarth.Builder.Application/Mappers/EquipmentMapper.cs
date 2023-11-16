@@ -6,14 +6,14 @@ namespace MiddleEarth.Builder.Application.Mappers;
 public class EquipmentMapper
 {
     private readonly Context _context;
-    private readonly Mapper _mapper;
 
-    public EquipmentMapper(Context context, Mapper mapper)
+    public EquipmentMapper(Context context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public EquipmentRaw Map(Equipment value) =>
         new(value.ProfileEquipment.Profile.Name, value.Count);
+
+    public Equipment Map(EquipmentRaw value) => throw new NotImplementedException();
 }

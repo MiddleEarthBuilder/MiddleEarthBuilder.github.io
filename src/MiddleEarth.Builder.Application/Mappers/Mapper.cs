@@ -19,11 +19,11 @@ public class Mapper
 
     public Mapper(Context context)
     {
-        AllianceMapper = new AllianceMapper(context, this);
+        AllianceMapper = new AllianceMapper(context);
         ArmyListMapper = new ArmyListMapper(this);
         ArmyMapper = new ArmyMapper(context, this);
         CharacteristicsMapper = new CharacteristicsMapper(context, this);
-        EquipmentMapper = new EquipmentMapper(context, this);
+        EquipmentMapper = new EquipmentMapper(context);
         EquipmentProfileMapper = new EquipmentProfileMapper(this);
         HeroMapper = new HeroMapper(context, this);
         HeroProfileMapper = new HeroProfileMapper(context, this);

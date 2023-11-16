@@ -9,7 +9,7 @@ public class ProfileSpecialRule
     public SpecialRule Rule { get; set; } = new();
     public string? Target { get; set; }
 
-    public string FullName => string.IsNullOrEmpty(Target) ? Rule.Name : $"{Rule.Name} ({Target})";
+    public string FullName => string.IsNullOrEmpty(Target) ? Rule.Name! : $"{Rule.Name} ({Target})";
 
     public ProfileSpecialRule() { }
 

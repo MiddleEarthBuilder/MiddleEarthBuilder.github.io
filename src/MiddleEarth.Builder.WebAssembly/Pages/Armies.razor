@@ -17,6 +17,9 @@ else
         @foreach (var armyList in ArmyLists)
         {
             <a href="@RouteProvider.GetArmyBuilderRoute(armyList.Name)" class="btn @(armyList.Side == Application.Domain.Side.Good ? "btn-primary" : "btn-danger") mb-2">@armyList.Name</a>
+            <a href="@RouteProvider.GetArmyListRoute(SideEnum, armyList.Name)" class="btn btn-secondary mb-2">
+                <i class="bi bi-pencil-square"></i>
+            </a>
         }
     </div>
 

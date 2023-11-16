@@ -12,4 +12,12 @@ public class EquipmentProfile
     {
         Name = name;
     }
+
+    public void Update(EquipmentProfile value)
+    {
+        CharacteristicsBonus = value.CharacteristicsBonus;
+        DeniedEquipment = value.DeniedEquipment;
+        Description = value.Description;
+        IsBow = value.IsBow;
+    }
 }

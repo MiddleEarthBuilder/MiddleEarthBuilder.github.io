@@ -35,7 +35,7 @@
                     <h6>
                         @rule.FullName
                     </h6>
-                    <div>
+                    <div class="ms-3">
                         @rule.Rule.Description
                     </div>
                 </button>
@@ -121,28 +121,32 @@
         public string Name { get; set; } = string.Empty;
     }
 
-    private Task ShowSpecialRuleForm(ProfileSpecialRule? source = null, int? idx = null) =>
-        ShowForm<ProfileSpecialRule, ProfileSpecialRuleForm>(
+    private async Task ShowSpecialRuleForm(ProfileSpecialRule? source = null, int? idx = null)
+    {
+        var data = await ShowForm<ProfileSpecialRule, ProfileSpecialRuleForm>(
             "Add army bonus",
             source ?? new ProfileSpecialRule(),
-            Army!.ArmyBonuses,
-            idx);
+            Army!.ArmyBonuses, idx);
+        if (data is { Rule.Name: { } })
+        {
+            var rule = Context.GetOrCreateSpecialRule(data.Rule.Name);
+            rule.Description = data.Rule.Description;
+        }
+    }
 
     private Task ShowHeroForm(HeroProfile? source = null, int? idx = null) =>
         ShowForm<HeroProfile, HeroProfileForm>(
             "Add hero profile",
             source ?? new HeroProfile(Army!, "", Tier.IndependentHero),
-            Army!.Heroes,
-            idx);
+            Army!.Heroes, idx);
 
     private Task ShowWarriorForm(WarriorProfile? source = null, int? idx = null) =>
         ShowForm<WarriorProfile, WarriorProfileForm>(
             "Add warrior profile",
             source ?? new WarriorProfile(Army!, ""),
-            Army!.Warriors,
-            idx);
+            Army!.Warriors, idx);
 
-    private async Task ShowForm<T, TFormComponent>(string title, T source,
+    private async Task<T?> ShowForm<T, TFormComponent>(string title, T source,
         IList<T> list, int? idx)
      where T : class where TFormComponent : IComponent
     {
@@ -157,13 +161,14 @@
                 list[idx.Value] = data;
             else
                 list.Add(data);
+
+            return data;
         }
+        if (result.Confirmed)
+            Logger.LogError("Wrong Data type.");
         else
-        {
-            if (result.Confirmed)
-                Logger.LogError("Wrong Data type.");
-            else
-                Logger.LogDebug("Result is not confirmed.");
-        }
+            Logger.LogDebug("Result is not confirmed.");
+
+        return null;
     }
 }

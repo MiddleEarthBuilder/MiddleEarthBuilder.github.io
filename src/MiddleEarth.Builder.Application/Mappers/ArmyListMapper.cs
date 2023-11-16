@@ -18,7 +18,7 @@ public class ArmyListMapper
         value.Heroes.Select(_mapper.HeroProfileMapper.Map).ToArray(),
         value.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToArray(),
         value.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
-        value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray());
+        value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray()); // TODO: Skip until all army lists are loaded
 
     public ArmyList Map(ArmyListRaw raw) => new(raw.Name)
     {

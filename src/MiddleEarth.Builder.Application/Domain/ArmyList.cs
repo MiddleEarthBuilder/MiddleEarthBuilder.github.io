@@ -13,4 +13,13 @@ public class ArmyList
     {
         Name = name;
     }
+
+    public void Update(ArmyList value)
+    {
+        Side = value.Side;
+        Heroes = value.Heroes;
+        Warriors = value.Warriors;
+        ArmyBonuses = value.ArmyBonuses;
+        Alliances = value.Alliances;
+    }
 }
