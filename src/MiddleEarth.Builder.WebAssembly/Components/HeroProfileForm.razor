@@ -1,5 +1,4 @@
-﻿@using MiddleEarth.Builder.Application.Domain
-@inject Context Context
+﻿@inject Context Context
 
 @if (Model != null)
 {
@@ -44,21 +43,21 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><InputNumber id="move" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Move" /></td>
+                        <td><InputNumber id="move" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Move" /></td>
                         <td>
                             <div class="d-flex justify-content-center m-auto">
-                                <InputNumber id="fight" class="form-control form-single" @bind-Value="Model.Characteristics.Fight" />/<InputNumber id="shoot" class="form-control form-single" @bind-Value="Model.Characteristics.Shoot" />+
+                                <InputNumber id="fight" class="form-control form-sm" @bind-Value="Model.Characteristics.Fight" />/<InputNumber id="shoot" class="form-control form-sm" @bind-Value="Model.Characteristics.Shoot" />+
                             </div>
                         </td>
-                        <td><InputNumber id="strength" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Strength" /></td>
-                        <td><InputNumber id="defense" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Defense" /></td>
-                        <td><InputNumber id="attack" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Attacks" /></td>
-                        <td><InputNumber id="wound" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Wounds" /></td>
-                        <td><InputNumber id="courage" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Courage" /></td>
-                        <td><InputNumber id="might" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Might" /></td>
-                        <td><InputNumber id="will" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Will" /></td>
-                        <td><InputNumber id="fate" class="form-control form-single m-auto" @bind-Value="Model.Characteristics.Fate" /></td>
-                        <td><InputNumber id="cost" class="form-control form-single m-auto" @bind-Value="Model.Cost" /></td>
+                        <td><InputNumber id="strength" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Strength" /></td>
+                        <td><InputNumber id="defense" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Defense" /></td>
+                        <td><InputNumber id="attack" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Attacks" /></td>
+                        <td><InputNumber id="wound" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Wounds" /></td>
+                        <td><InputNumber id="courage" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Courage" /></td>
+                        <td><InputNumber id="might" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Might" /></td>
+                        <td><InputNumber id="will" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Will" /></td>
+                        <td><InputNumber id="fate" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Fate" /></td>
+                        <td><InputNumber id="cost" class="form-control m-auto" @bind-Value="Model.Cost" /></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,7 +74,7 @@
                         <th><label class="form-label">Count</label></th>
                         <th><label class="form-label">Cost</label></th>
                         <th><label class="form-label">Replaces</label></th>
-                        <th></th>
+                        <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,15 +85,31 @@
                             <td><InputText id="@($"equipment-{i}-description")" class="form-control m-auto" @bind-Value="equipment.Profile.Description" /></td>
                             <td><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsBow" /></td>
                             <td><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsAllowedOnce" /></td>
-                            <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-single m-auto" @bind-Value="equipment.DefaultCount" /></td>
-                            <td><InputNumber id="@($"equipment-{i}-cost")" class="form-control form-single m-auto" @bind-Value="equipment.Cost" /></td>
+                            <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto" @bind-Value="equipment.DefaultCount" /></td>
+                            <td><InputNumber id="@($"equipment-{i}-cost")" class="form-control m-auto" @bind-Value="equipment.Cost" /></td>
                             <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control m-auto" @bind-Value="equipment.ReplacedEquipmentString" /></td>
-                            <td></td>
+                            <td>
+                                @if (i > 0)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.Equipment.Swap(i, i - 1)">
+                                        <i class="bi bi-caret-up"></i>
+                                    </button>
+                                }
+                                @if (i < Model.Equipment.Count - 1)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.Equipment.Swap(i, i + 1)">
+                                        <i class="bi bi-caret-down"></i>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-light p-0" @onclick="() => Model.Equipment.RemoveAt(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <BlazoredTypeahead SearchMethod="@SearchEquipment" MinimumLength="3" Debounce="100"
+            <BlazoredTypeahead SearchMethod="@SearchEquipment" Debounce="100"
             @bind-Value="NewEquipment">
                 <SelectedTemplate Context="equipment">
                     @equipment.Name
@@ -112,28 +127,142 @@
                         <th><label class="form-label">Name</label></th>
                         <th><label class="form-label">Target</label></th>
                         <th><label class="form-label">Description</label></th>
-                        <th></th>
+                        <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var (specialRule, i) in Model.SpecialRules.Select((e, i) => (e, i)))
+                    @foreach (var (specialRule, i) in Model.SpecialRules.Select((r, i) => (r, i)))
                     {
                         <tr>
                             <th><InputText id="@($"rule-{i}-name")" class="form-control m-auto" @bind-Value="specialRule.Rule.Name" /></th>
-                            <th><InputText id="@($"rule-{i}-target")" class="form-control m-auto" @bind-Value="specialRule.Target" /></th>
-                            <th><InputText id="@($"rule-{i}-description")" class="form-control m-auto" @bind-Value="specialRule.Rule.Description" /></th>
-                            <td></td>
+                            <td><InputText id="@($"rule-{i}-target")" class="form-control m-auto" @bind-Value="specialRule.Target" /></td>
+                            <td><InputText id="@($"rule-{i}-description")" class="form-control m-auto" @bind-Value="specialRule.Rule.Description" /></td>
+                            <td>
+                                @if (i > 0)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.SpecialRules.Swap(i, i - 1)">
+                                        <i class="bi bi-caret-up"></i>
+                                    </button>
+                                }
+                                @if (i < Model.SpecialRules.Count - 1)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.SpecialRules.Swap(i, i + 1)">
+                                        <i class="bi bi-caret-down"></i>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-light p-0" @onclick="() => Model.SpecialRules.RemoveAt(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <BlazoredTypeahead SearchMethod="@SearchRule" MinimumLength="3" Debounce="100"
+            <BlazoredTypeahead SearchMethod="@SearchRule" Debounce="100"
             @bind-Value="NewRule">
                 <SelectedTemplate Context="rule">
                     @rule.Name
                 </SelectedTemplate>
                 <ResultTemplate Context="rule">
                     @rule.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
+        <div class="mb-3">
+            <label class="form-label m-0 me-2">Heroic Actions</label>
+            <table class="table-bordered border-input text-center w-100">
+                <thead>
+                    <tr>
+                        <th><label class="form-label">Name</label></th>
+                        <th><label class="form-label">Description</label></th>
+                        <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (heroicAction, i) in Model.HeroicActions.Select((a, i) => (a, i)))
+                    {
+                        <tr>
+                            <th><InputText id="@($"heroicAction-{i}-name")" class="form-control m-auto" @bind-Value="heroicAction.Name" /></th>
+                            <td><InputText id="@($"heroicAction-{i}-description")" class="form-control m-auto" @bind-Value="heroicAction.Description" /></td>
+                            <td>
+                                @if (i > 0)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.HeroicActions.Swap(i, i - 1)">
+                                        <i class="bi bi-caret-up"></i>
+                                    </button>
+                                }
+                                @if (i < Model.HeroicActions.Count - 1)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.HeroicActions.Swap(i, i + 1)">
+                                        <i class="bi bi-caret-down"></i>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-light p-0" @onclick="() => Model.HeroicActions.RemoveAt(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <BlazoredTypeahead SearchMethod="@SearchHeroicAction" Debounce="100"
+            @bind-Value="NewHeroicAction">
+                <SelectedTemplate Context="heroicAction">
+                    @heroicAction.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="heroicAction">
+                    @heroicAction.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
+        <div class="mb-3">
+            <label class="form-label m-0 me-2">Magical Powers</label>
+            <table class="table-bordered border-input text-center w-100">
+                <thead>
+                    <tr>
+                        <th><label class="form-label">Name</label></th>
+                        <th><label class="form-label">Range</label></th>
+                        <th><label class="form-label">Casting</label></th>
+                        <th><label class="form-label">Description</label></th>
+                        <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (magicalPower, i) in Model.MagicalPowers.Select((p, i) => (p, i)))
+                    {
+                        <tr>
+                            <th><InputText id="@($"magicalPower-{i}-name")" class="form-control m-auto" @bind-Value="magicalPower.Power.Name" /></th>
+                            <td><InputNumber id="@($"magicalPower-{i}-range")" class="form-control form-sm m-auto" @bind-Value="magicalPower.Range" /></td>
+                            <td><InputNumber id="@($"magicalPower-{i}-casting")" class="form-control form-sm m-auto" @bind-Value="magicalPower.Casting" /></td>
+                            <th><InputText id="@($"magicalPower-{i}-description")" class="form-control m-auto" @bind-Value="magicalPower.Power.Description" /></th>
+                            <td>
+                                @if (i > 0)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.MagicalPowers.Swap(i, i - 1)">
+                                        <i class="bi bi-caret-up"></i>
+                                    </button>
+                                }
+                                @if (i < Model.MagicalPowers.Count - 1)
+                                {
+                                    <button type="button" class="btn btn-light p-0" @onclick="() => Model.MagicalPowers.Swap(i, i + 1)">
+                                        <i class="bi bi-caret-down"></i>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-light p-0" @onclick="() => Model.MagicalPowers.RemoveAt(i)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <BlazoredTypeahead SearchMethod="@SearchMagicalPower" Debounce="100"
+            @bind-Value="NewMagicalPower">
+                <SelectedTemplate Context="magicalPower">
+                    @magicalPower.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="magicalPower">
+                    @magicalPower.Name
                 </ResultTemplate>
             </BlazoredTypeahead>
         </div>
@@ -160,7 +289,7 @@ else
         get => _defaultEquipment;
         set
         {
-            if (!string.IsNullOrEmpty(value?.Name))
+            if (!string.IsNullOrEmpty(value?.Name) && (Model?.Equipment.All(equipment => equipment.Profile.Name != value.Name) ?? false))
                 Model?.Equipment.Add(new ProfileEquipment(value));
         }
     }
@@ -171,8 +300,30 @@ else
         get => _defaultRule;
         set
         {
-            if (!string.IsNullOrEmpty(value?.Name))
+            if (!string.IsNullOrEmpty(value?.Name) && (Model?.SpecialRules.All(rule => rule.Rule.Name != value.Name) ?? false))
                 Model?.SpecialRules.Add(new ProfileSpecialRule(value));
+        }
+    }
+
+    private readonly HeroicAction _defaultHeroicAction = new("Find heroic action by name...");
+    private HeroicAction? NewHeroicAction
+    {
+        get => _defaultHeroicAction;
+        set
+        {
+            if (!string.IsNullOrEmpty(value?.Name) && (Model?.HeroicActions.All(action => action.Name != value.Name) ?? false))
+                Model?.HeroicActions.Add(value);
+        }
+    }
+
+    private readonly MagicalPower _defaultMagicalPower = new("Find magical power by name...");
+    private MagicalPower? NewMagicalPower
+    {
+        get => _defaultMagicalPower;
+        set
+        {
+            if (!string.IsNullOrEmpty(value?.Name) && (Model?.MagicalPowers.All(power => power.Power.Name != value.Name) ?? false))
+                Model?.MagicalPowers.Add(new ProfileMagicalPower(value));
         }
     }
 
@@ -185,11 +336,25 @@ else
     private async Task<IEnumerable<EquipmentProfile>> SearchEquipment(string searchText) => await Task.FromResult(
         Context.GetEquipments()
             .Where(profile => profile.Name.ToLower().Contains(searchText.ToLower()))
+            .Where(profile => Model?.Equipment.All(equipment => equipment.Profile.Name != profile.Name) ?? false)
             .Append(new EquipmentProfile(searchText)).ToList());
 
     private async Task<IEnumerable<SpecialRule>> SearchRule(string searchText) => await Task.FromResult(
         Context.GetSpecialRules()
             .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
+            .Where(profile => Model?.SpecialRules.All(rule => rule.Rule.Name != profile.Name) ?? false)
             .Append(new SpecialRule(searchText)).ToList());
+
+    private async Task<IEnumerable<HeroicAction>> SearchHeroicAction(string searchText) => await Task.FromResult(
+        Context.GetHeroicActions()
+            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
+            .Where(profile => Model?.HeroicActions.All(action => action.Name != profile.Name) ?? false)
+            .Append(new HeroicAction(searchText)).ToList());
+
+    private async Task<IEnumerable<MagicalPower>> SearchMagicalPower(string searchText) => await Task.FromResult(
+        Context.GetMagicalPowers()
+            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
+            .Where(profile => Model?.MagicalPowers.All(power => power.Power.Name != profile.Name) ?? false)
+            .Append(new MagicalPower(searchText)).ToList());
 
 }

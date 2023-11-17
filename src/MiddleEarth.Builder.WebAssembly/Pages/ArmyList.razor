@@ -1,6 +1,5 @@
 ﻿@page "/{Side}/army-lists"
 @page "/{Side}/army-lists/{ArmyListName}"
-@using MiddleEarth.Builder.Application.Domain
 @inject NavigationManager NavigationManager
 @inject Context Context
 @inject IModalService ModalService
@@ -41,7 +40,7 @@
                 </button>
             }
             <button @onclick="() => ShowSpecialRuleForm()"
-                    class="btn btn-primary w-100 p-0">
+                    class="btn btn-secondary w-100 p-0">
                 +
             </button>
         </div>
@@ -60,8 +59,8 @@
                     <h7>
                         @($"{string.Join(", ", hero.Keywords)} - {hero.Tier.Name}")
                     </h7>
-                    <table class="table-bordered border-header text-center w-100">
-                        <thead>
+                    <table class="table text-center w-100">
+                        <thead class="table-secondary">
                             <tr>
                                 <th>Mv</th>
                                 <th>F</th>
@@ -92,34 +91,73 @@
                             </tr>
                         </tbody>
                     </table>
-                    <h7>Wargear</h7>
-                    <div>@string.Join(", ", hero.DefaultEquipment.Select(equipment => equipment.Profile.Name))</div>
-                    <h7>Options</h7>
-                    <dl class="m-0">
-                        @foreach (var equipment in hero.OptionalEquipment)
-                        {
-                            <div class="d-flex justify-content-between">
-                                <span>
-                                    @equipment.Profile.Name
-                                </span>
-                                <span>@($"{equipment.Cost} pts")</span>
-                            </div>
-                        }
-                    </dl>
-                    <h7>Special Rules</h7>
-                    <dl class="m-0">
-                        @foreach (var rule in hero.SpecialRules)
-                        {
-                            <dt>@rule.FullName</dt>
-                            <dd class="ms-3">@rule.Rule.Description</dd>
-                        }
-                    </dl>
-                    <h7>Heroic Actions</h7>
-                    <h7>Magical Powers</h7>
+                    @if (hero.DefaultEquipment.Any())
+                    {
+                        <h7>Wargear</h7>
+                        <div>@string.Join(", ", hero.DefaultEquipment.Select(equipment => equipment.Profile.Name))</div>
+                    }
+                    @if (hero.OptionalEquipment.Any())
+                    {
+                        <h7>Options</h7>
+                        <dl class="m-0">
+                            @foreach (var equipment in hero.OptionalEquipment)
+                            {
+                                <div class="d-flex justify-content-between">
+                                    <span>
+                                        @equipment.Profile.Name
+                                    </span>
+                                    <span>@($"{equipment.Cost} pts")</span>
+                                </div>
+                            }
+                        </dl>
+                    }
+                    @if (hero.SpecialRules.Any())
+                    {
+                        <h7>Special Rules</h7>
+                        <dl class="m-0">
+                            @foreach (var rule in hero.SpecialRules)
+                            {
+                                <dt>@rule.FullName</dt>
+                                <dd class="ms-3">@rule.Rule.Description</dd>
+                            }
+                        </dl>
+                    }
+                    @if (hero.HeroicActions.Any())
+                    {
+                        <h7>Heroic Actions</h7>
+                        <ul>
+                            @foreach (var action in hero.HeroicActions)
+                            {
+                                <li>@action.Name</li>
+                            }
+                        </ul>
+                    }
+                    @if (hero.MagicalPowers.Any())
+                    {
+                        <table class="table table-striped text-center w-100">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th class="text-start"><h7>Magical Powers</h7></th>
+                                    <th>Range</th>
+                                    <th>Casting</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var power in hero.MagicalPowers)
+                                {
+                                    <tr>
+                                        <td class="text-start">@power.Power.Name</td>
+                                        <td>@(power.Range == 0 ? "-" : $"{power.Range}\"")</td>
+                                        <td>@($"{power.Casting}+")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </button>
             }
             <button @onclick="() => ShowHeroForm()"
-                    class="btn btn-primary w-100 p-0">
+                    class="btn btn-secondary w-100 p-0">
                 +
             </button>
         </div>
@@ -138,7 +176,7 @@
                 </button>
             }
             <button @onclick="() => ShowWarriorForm()"
-                    class="btn btn-primary w-100 p-0">
+                    class="btn btn-secondary w-100 p-0">
                 +
             </button>
         </div>
@@ -204,6 +242,12 @@
 
         foreach (var profileSpecialRule in data.SpecialRules)
             Context.GetOrCreateSpecialRule(profileSpecialRule.Rule.Name!).Update(profileSpecialRule.Rule);
+
+        foreach (var heroicAction in data.HeroicActions)
+            Context.GetOrCreateHeroicAction(heroicAction.Name).Update(heroicAction);
+
+        foreach (var magicalPower in data.MagicalPowers)
+            Context.GetOrCreateMagicalPower(magicalPower.Power.Name).Update(magicalPower.Power);
     }
 
     private Task ShowWarriorForm(WarriorProfile? source = null, int? idx = null) =>

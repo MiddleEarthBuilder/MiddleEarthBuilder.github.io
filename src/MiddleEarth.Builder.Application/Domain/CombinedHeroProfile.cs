@@ -8,9 +8,11 @@ public record CombinedHeroProfileRaw(
     CharacteristicsRaw Characteristics,
     ProfileEquipmentRaw[] Equipment,
     ProfileSpecialRuleRaw[] SpecialRules,
+    HeroicActionRaw[] HeroicActions,
+    ProfileMagicalPowerRaw[] MagicalPowers,
     int Cost,
     string? Note,
     WarriorProfileRaw[] AdditionalUnits,
     bool CountsAsOne) :
     HeroProfileRaw(ArmyList, Name, Tier, Keywords, Characteristics,
-        Equipment, SpecialRules, Cost, Note);
+        Equipment, SpecialRules, HeroicActions, MagicalPowers, Cost, Note);

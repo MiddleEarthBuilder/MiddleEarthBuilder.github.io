@@ -15,6 +15,7 @@ body {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, .h7, h1, h2, h3, h4, h5, h6, h7 {
+    display: block;
     margin-top: 0.5rem;
 }
 
@@ -29,7 +30,6 @@ body {
     }
 
 .h2, .h3, .h4, .h5, h2, h3, h4, h5, .h6, h6, .h7, h7 {
-    display: block;
     top: 0.5rem;
     color: #a61c00;
     text-transform: uppercase;
@@ -175,17 +175,23 @@ article {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 
-.form-single {
-    width: 20px;
+th .form-control, td .form-control {
     border: 0;
     outline: none;
     border-bottom: 1px solid #ced4da;
-    padding: 0;
+    padding: 0 5px;
     text-align: center;
 }
 
-input.form-single::-webkit-outer-spin-button,
-input.form-single::-webkit-inner-spin-button {
+.form-sm {
+    width: 20px;
+    padding: 0;
+}
+
+th .form-control::-webkit-outer-spin-button,
+th .form-control::-webkit-inner-spin-button,
+td .form-control::-webkit-outer-spin-button,
+td .form-control::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }

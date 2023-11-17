@@ -33,6 +33,8 @@ public class HeroProfile
         .Where(equipment => equipment.DefaultCount == 0);
 
     public List<ProfileSpecialRule> SpecialRules { get; set; } = new();
+    public List<HeroicAction> HeroicActions { get; set; } = new();
+    public List<ProfileMagicalPower> MagicalPowers { get; set; } = new();
     public int Cost { get; set; }
     public string? Note { get; set; }
 
@@ -50,8 +52,10 @@ public record HeroProfileRaw(
     string Tier,
     string[] Keywords,
     CharacteristicsRaw Characteristics,
-    ProfileEquipmentRaw[] Equipment,
-    ProfileSpecialRuleRaw[] SpecialRules,
+    ProfileEquipmentRaw[]? Equipment,
+    ProfileSpecialRuleRaw[]? SpecialRules,
+    HeroicActionRaw[]? HeroicActions,
+    ProfileMagicalPowerRaw[]? MagicalPowers,
     int Cost,
     string? Note);
 
@@ -74,6 +78,8 @@ public class HeroProfileMapper
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
         value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray(),
         value.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
+        value.HeroicActions.Select(_mapper.HeroicActionMapper.Map).ToArray(),
+        value.MagicalPowers.Select(_mapper.ProfileMagicalPowerMapper.Map).ToArray(),
         value.Cost,
         value.Note);
 
@@ -84,8 +90,10 @@ public class HeroProfileMapper
     {
         Keywords = raw.Keywords.ToList(),
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
-        Equipment = raw.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToList(),
-        SpecialRules = raw.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList(),
+        Equipment = raw.Equipment?.Select(_mapper.ProfileEquipmentMapper.Map).ToList() ?? new List<ProfileEquipment>(),
+        SpecialRules = raw.SpecialRules?.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList() ?? new List<ProfileSpecialRule>(),
+        HeroicActions = raw.HeroicActions?.Select(_mapper.HeroicActionMapper.Map).ToList() ?? new List<HeroicAction>(),
+        MagicalPowers = raw.MagicalPowers?.Select(_mapper.ProfileMagicalPowerMapper.Map).ToList() ?? new List<ProfileMagicalPower>(),
         Cost = raw.Cost,
         Note = raw.Note
     };

@@ -1,5 +1,4 @@
 ﻿@using MiddleEarth.Builder.Application.Files
-@using MiddleEarth.Builder.Application.Domain
 @using MiddleEarth.Builder.Application.Configuration
 @using Microsoft.Extensions.Options
 @inject ContextImporter Importer
@@ -14,16 +13,38 @@
     <InputFile class="btn btn-link text-inherit" OnChange="@ImportData"><i class="bi bi-cloud-arrow-up"></i> load</InputFile>
     @if (_contextRaw != null)
     {
-        <dl>
-            <dt class="float-start" style="width: 120px">Army Lists: </dt>
-            <dd class="m-0">@($"{_model.ArmyLists} (currently: {_model.LoadedArmyLists})")</dd>
-            <dt class="float-start" style="width: 120px">Equipment: </dt>
-            <dd class="m-0">@($"{_model.Equipments} (currently: {_model.LoadedEquipments})")</dd>
-            <dt class="float-start" style="width: 120px">Special Rules: </dt>
-            <dd class="m-0">@($"{_model.SpecialRules} (currently: {_model.LoadedSpecialRules})")</dd>
-            <dt class="float-start" style="width: 120px">Armies: </dt>
-            <dd class="m-0">@($"{_model.Armies} (currently: {_model.LoadedArmies})")</dd>
-        </dl>
+        <table>
+            <tr>
+                <td>Equipment: </td>
+                <td>@_model.Equipments</td>
+                <td>@($"(currently: {_model.LoadedEquipments})")</td>
+            </tr>
+            <tr>
+                <td>Special Rules: </td>
+                <td>@_model.SpecialRules</td>
+                <td>@($"(currently: {_model.LoadedSpecialRules})")</td>
+            </tr>
+            <tr>
+                <td>Heroic Actions: </td>
+                <td>@_model.HeroicActions</td>
+                <td>@($"(currently: {_model.LoadedHeroicActions})")</td>
+            </tr>
+            <tr>
+                <td>Magical Powers: </td>
+                <td>@_model.MagicalPowers</td>
+                <td>@($"(currently: {_model.LoadedMagicalPowers})")</td>
+            </tr>
+            <tr>
+                <td>Army Lists: </td>
+                <td>@_model.ArmyLists</td>
+                <td>@($"(currently: {_model.LoadedArmyLists})")</td>
+            </tr>
+            <tr>
+                <td>Armies: </td>
+                <td>@_model.Armies</td>
+                <td>@($"(currently: {_model.LoadedArmies})")</td>
+            </tr>
+        </table>
         <button type="submit" class="btn btn-primary">Load</button>
     }
 </EditForm>
@@ -59,31 +80,39 @@
 
     private class Model
     {
-        public int ArmyLists { get; private set; }
-        public int SpecialRules { get; private set; }
         public int Equipments { get; private set; }
+        public int SpecialRules { get; private set; }
+        public int HeroicActions { get; private set; }
+        public int MagicalPowers { get; private set; }
+        public int ArmyLists { get; private set; }
         public int Armies { get; private set; }
 
-        public int LoadedArmyLists { get; private set; }
-        public int LoadedSpecialRules { get; private set; }
         public int LoadedEquipments { get; private set; }
+        public int LoadedSpecialRules { get; private set; }
+        public int LoadedHeroicActions { get; private set; }
+        public int LoadedMagicalPowers { get; private set; }
+        public int LoadedArmyLists { get; private set; }
         public int LoadedArmies { get; private set; }
 
         public Model() { }
 
         public void Update(ContextRaw raw)
         {
-            ArmyLists = raw.ArmyLists.Length;
-            SpecialRules = raw.SpecialRules.Length;
-            Equipments = raw.Equipments.Length;
-            Armies = raw.Armies.Length;
+            Equipments = raw.Equipments?.Length ?? 0;
+            SpecialRules = raw.SpecialRules?.Length ?? 0;
+            HeroicActions = raw.HeroicActions?.Length ?? 0;
+            MagicalPowers = raw.MagicalPowers?.Length ?? 0;
+            ArmyLists = raw.ArmyLists?.Length ?? 0;
+            Armies = raw.Armies?.Length ?? 0;
         }
 
         public void Initialize(Context context)
         {
-            LoadedArmyLists = context.GetArmyLists().Count;
-            LoadedSpecialRules = context.GetSpecialRules().Count;
             LoadedEquipments = context.GetEquipments().Count;
+            LoadedSpecialRules = context.GetSpecialRules().Count;
+            LoadedHeroicActions = context.GetHeroicActions().Count;
+            LoadedMagicalPowers = context.GetMagicalPowers().Count;
+            LoadedArmyLists = context.GetArmyLists().Count;
             LoadedArmies = context.GetArmies().Count;
         }
     }
