@@ -58,3 +58,62 @@ public class Characteristics
     public override string ToString() =>
         $"Mv {Move}\", F{FightString}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}, M{Might}, W{Will}, F{Fate}";
 }
+
+public record CharacteristicsRaw(
+    int Move,
+    int Fight,
+    int? Shoot,
+    int Strength,
+    int Defense,
+    int Attacks,
+    int Wounds,
+    int Courage,
+    int? Might = null,
+    int? Will = null,
+    int? Fate = null)
+{
+    private string FightString => Shoot == null ? $"{Fight}/-" : $"{Fight}/{Shoot}+";
+
+    public override string ToString() =>
+        $"Mv {Move}\", F{FightString}, S{Strength}, D{Defense}, A{Attacks}, W{Wounds}, C{Courage}, M{Might}, W{Will}, F{Fate}";
+}
+
+public class CharacteristicsMapper
+{
+    private readonly Context _context;
+    private readonly Mapper _mapper;
+
+    public CharacteristicsMapper(Context context, Mapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public CharacteristicsRaw Map(Characteristics value) => new(
+        value.Move!.Value,
+        value.Fight!.Value,
+        value.Shoot,
+        value.Strength!.Value,
+        value.Defense!.Value,
+        value.Attacks!.Value,
+        value.Wounds!.Value,
+        value.Courage!.Value,
+        value.Might,
+        value.Will,
+        value.Fate);
+
+    public Characteristics Map(CharacteristicsRaw raw) => new()
+    {
+        Move = raw.Move,
+        Fight = raw.Fight,
+        Shoot = raw.Shoot,
+        Strength = raw.Strength,
+        Defense = raw.Defense,
+        Attacks = raw.Attacks,
+        Wounds = raw.Wounds,
+        Courage = raw.Courage,
+        Might = raw.Might,
+        Will = raw.Will,
+        Fate = raw.Fate
+    };
+}

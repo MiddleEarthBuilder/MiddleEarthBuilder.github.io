@@ -1,9 +1,6 @@
-﻿using MiddleEarth.Builder.Application.Domain;
-using MiddleEarth.Builder.Application.Entities;
-using MiddleEarth.Builder.Application.Mappers;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace MiddleEarth.Builder.Application;
+namespace MiddleEarth.Builder.Application.Domain;
 
 public class Context
 {
@@ -114,5 +111,43 @@ public class Context
         value = new Army(name, armyList);
         Armies.Add(name, value);
         return value;
+    }
+}
+
+public record ContextRaw(ArmyListRaw[] ArmyLists, SpecialRuleRaw[] SpecialRules, EquipmentProfileRaw[] Equipments, ArmyRaw[] Armies);
+
+public class Mapper
+{
+    public readonly AllianceMapper AllianceMapper;
+    public readonly ArmyListMapper ArmyListMapper;
+    public readonly ArmyMapper ArmyMapper;
+    public readonly CharacteristicsMapper CharacteristicsMapper;
+    public readonly EquipmentMapper EquipmentMapper;
+    public readonly EquipmentProfileMapper EquipmentProfileMapper;
+    public readonly HeroMapper HeroMapper;
+    public readonly HeroProfileMapper HeroProfileMapper;
+    public readonly ProfileEquipmentMapper ProfileEquipmentMapper;
+    public readonly ProfileSpecialRuleMapper ProfileSpecialRuleMapper;
+    public readonly SpecialRuleMapper SpecialRuleMapper;
+    public readonly WarbandMapper WarbandMapper;
+    public readonly WarriorMapper WarriorMapper;
+    public readonly WarriorProfileMapper WarriorProfileMapper;
+
+    public Mapper(Context context)
+    {
+        AllianceMapper = new AllianceMapper(context);
+        ArmyListMapper = new ArmyListMapper(this);
+        ArmyMapper = new ArmyMapper(context, this);
+        CharacteristicsMapper = new CharacteristicsMapper(context, this);
+        EquipmentMapper = new EquipmentMapper(context);
+        EquipmentProfileMapper = new EquipmentProfileMapper(this);
+        HeroMapper = new HeroMapper(context, this);
+        HeroProfileMapper = new HeroProfileMapper(context, this);
+        ProfileEquipmentMapper = new ProfileEquipmentMapper(context, this);
+        ProfileSpecialRuleMapper = new ProfileSpecialRuleMapper(context, this);
+        SpecialRuleMapper = new SpecialRuleMapper();
+        WarbandMapper = new WarbandMapper(context, this);
+        WarriorMapper = new WarriorMapper(context, this);
+        WarriorProfileMapper = new WarriorProfileMapper(context, this);
     }
 }

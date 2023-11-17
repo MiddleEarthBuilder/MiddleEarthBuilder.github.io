@@ -18,3 +18,42 @@ public class ProfileEquipment
         Profile = profile;
     }
 }
+
+public record ProfileEquipmentRaw(
+    string Name,
+    int DefaultCount,
+    int Cost,
+    string[]? ReplacedEquipment = null)
+{
+    public string[] ReplacedEquipment { get; set; } = ReplacedEquipment ??
+                                                      Array.Empty<string>();
+}
+
+public class ProfileEquipmentMapper
+{
+    private readonly Context _context;
+    private readonly Mapper _mapper;
+
+    public ProfileEquipmentMapper(Context context, Mapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public ProfileEquipmentRaw Map(ProfileEquipment value)
+    {
+        _context.GetOrCreateEquipment(value.Profile.Name).Update(value.Profile);
+        return new ProfileEquipmentRaw(
+            value.Profile.Name,
+            value.DefaultCount,
+            value.Cost,
+            value.ReplacedEquipment.ToArray());
+    }
+
+    public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.GetOrCreateEquipment(raw.Name))
+    {
+        DefaultCount = raw.DefaultCount,
+        Cost = raw.Cost,
+        ReplacedEquipment = raw.ReplacedEquipment.ToList()
+    };
+}

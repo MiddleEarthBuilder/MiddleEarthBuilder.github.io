@@ -2,8 +2,8 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MiddleEarth.Builder.Application;
 using MiddleEarth.Builder.Application.Configuration;
+using MiddleEarth.Builder.Application.Domain;
 using MiddleEarth.Builder.Application.Files;
 using MiddleEarth.Builder.WebAssembly.Http;
 

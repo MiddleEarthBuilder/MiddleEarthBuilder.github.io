@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using MiddleEarth.Builder.Application.Entities;
+using MiddleEarth.Builder.Application.Domain;
 using System.Net.Http.Json;
 using System.Text.Json;
 

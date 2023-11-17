@@ -1,4 +1,6 @@
-﻿namespace MiddleEarth.Builder.Application.Domain;
+﻿using System.Text.Json.Serialization;
+
+namespace MiddleEarth.Builder.Application.Domain;
 
 public class Alliance
 {
@@ -10,4 +12,32 @@ public class Alliance
         ArmyList = armyList;
         Level = level;
     }
+}
+
+public record AllianceRaw(
+    string ArmyList,
+    AllianceLevel Level);
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum AllianceLevel
+{
+    Impossible, Convenient, Historical
+}
+
+public class AllianceMapper
+{
+    private readonly Context _context;
+
+    public AllianceMapper(Context context)
+    {
+        _context = context;
+    }
+
+    public AllianceRaw Map(Alliance value) => new(
+        value.ArmyList.Name,
+        value.Level);
+
+    public Alliance Map(AllianceRaw raw) => new(
+        _context.GetOrCreateArmyList(raw.ArmyList),
+        raw.Level);
 }

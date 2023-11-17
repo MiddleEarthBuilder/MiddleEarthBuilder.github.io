@@ -28,3 +28,19 @@ public class SpecialRule
         Description = value.Description;
     }
 }
+
+public record SpecialRuleRaw(
+    string Name,
+    string Description);
+
+public class SpecialRuleMapper
+{
+    public SpecialRuleRaw Map(SpecialRule value) => new(
+        value.Name!,
+        value.Description!);
+
+    public SpecialRule Map(SpecialRuleRaw raw) => new(raw.Name)
+    {
+        Description = raw.Description
+    };
+}
