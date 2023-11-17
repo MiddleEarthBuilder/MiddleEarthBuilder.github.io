@@ -1,4 +1,6 @@
 ﻿@using MiddleEarth.Builder.Application.Domain
+@inject Context Context
+
 @if (Model != null)
 {
     <EditForm Model="@Model" OnValidSubmit="@SubmitForm">
@@ -23,6 +25,7 @@
             </InputSelect>
         </div>
         <div class="mb-3">
+            <label class="form-label m-0 me-2">Characteristics</label>
             <table class="table-bordered border-input text-center w-100">
                 <thead>
                     <tr>
@@ -61,6 +64,7 @@
             </table>
         </div>
         <div class="mb-3">
+            <label class="form-label m-0 me-2">Equipment</label>
             <table class="table-bordered border-input text-center w-100">
                 <thead>
                     <tr>
@@ -71,6 +75,7 @@
                         <th><label class="form-label">Count</label></th>
                         <th><label class="form-label">Cost</label></th>
                         <th><label class="form-label">Replaces</label></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,18 +86,56 @@
                             <td><InputText id="@($"equipment-{i}-description")" class="form-control m-auto" @bind-Value="equipment.Profile.Description" /></td>
                             <td><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsBow" /></td>
                             <td><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsAllowedOnce" /></td>
-                            <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-single m-auto" disabled="@equipment.Profile.IsAllowedOnce" @bind-Value="equipment.DefaultCount" /></td>
+                            <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-single m-auto" @bind-Value="equipment.DefaultCount" /></td>
                             <td><InputNumber id="@($"equipment-{i}-cost")" class="form-control form-single m-auto" @bind-Value="equipment.Cost" /></td>
                             <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control m-auto" @bind-Value="equipment.ReplacedEquipmentString" /></td>
                             <td></td>
                         </tr>
                     }
-                    <tr>
-                        <th><InputText id="equipment-name" class="form-control m-auto" @bind-Value="_newEquipmentName" /></th> <!--TODO: Typeahead-->
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
+            <BlazoredTypeahead SearchMethod="@SearchEquipment" MinimumLength="3" Debounce="100"
+            @bind-Value="NewEquipment">
+                <SelectedTemplate Context="equipment">
+                    @equipment.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="equipment">
+                    @equipment.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
+        <div class="mb-3">
+            <label class="form-label m-0 me-2">Special Rules</label>
+            <table class="table-bordered border-input text-center w-100">
+                <thead>
+                    <tr>
+                        <th><label class="form-label">Name</label></th>
+                        <th><label class="form-label">Target</label></th>
+                        <th><label class="form-label">Description</label></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (specialRule, i) in Model.SpecialRules.Select((e, i) => (e, i)))
+                    {
+                        <tr>
+                            <th><InputText id="@($"rule-{i}-name")" class="form-control m-auto" @bind-Value="specialRule.Rule.Name" /></th>
+                            <th><InputText id="@($"rule-{i}-target")" class="form-control m-auto" @bind-Value="specialRule.Target" /></th>
+                            <th><InputText id="@($"rule-{i}-description")" class="form-control m-auto" @bind-Value="specialRule.Rule.Description" /></th>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <BlazoredTypeahead SearchMethod="@SearchRule" MinimumLength="3" Debounce="100"
+            @bind-Value="NewRule">
+                <SelectedTemplate Context="rule">
+                    @rule.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="rule">
+                    @rule.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
         </div>
         <div class="mb-3">
             <label for="note" class="form-label m-0 me-2">Note</label>
@@ -111,12 +154,42 @@ else
     [CascadingParameter]
     BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
+    private readonly EquipmentProfile _defaultEquipment = new("Find equipment by name...");
+    private EquipmentProfile? NewEquipment
+    {
+        get => _defaultEquipment;
+        set
+        {
+            if (!string.IsNullOrEmpty(value?.Name))
+                Model?.Equipment.Add(new ProfileEquipment(value));
+        }
+    }
+
+    private readonly SpecialRule _defaultRule = new("Find special rule by name...");
+    private SpecialRule? NewRule
+    {
+        get => _defaultRule;
+        set
+        {
+            if (!string.IsNullOrEmpty(value?.Name))
+                Model?.SpecialRules.Add(new ProfileSpecialRule(value));
+        }
+    }
+
     [Parameter]
     public HeroProfile? Model { get; set; }
 
-    private string? _newEquipmentName;
-
     private async Task SubmitForm() =>
         await BlazoredModal.CloseAsync(ModalResult.Ok(Model));
+
+    private async Task<IEnumerable<EquipmentProfile>> SearchEquipment(string searchText) => await Task.FromResult(
+        Context.GetEquipments()
+            .Where(profile => profile.Name.ToLower().Contains(searchText.ToLower()))
+            .Append(new EquipmentProfile(searchText)).ToList());
+
+    private async Task<IEnumerable<SpecialRule>> SearchRule(string searchText) => await Task.FromResult(
+        Context.GetSpecialRules()
+            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
+            .Append(new SpecialRule(searchText)).ToList());
 
 }

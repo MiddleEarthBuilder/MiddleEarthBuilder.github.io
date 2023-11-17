@@ -14,7 +14,7 @@ body {
     height: 100vh;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+.h1, .h2, .h3, .h4, .h5, .h6, .h7, h1, h2, h3, h4, h5, h6, h7 {
     margin-top: 0.5rem;
 }
 
@@ -28,14 +28,14 @@ body {
         outline: none;
     }
 
-.h2, .h3, .h4, .h5, h2, h3, h4, h5 {
+.h2, .h3, .h4, .h5, h2, h3, h4, h5, .h6, h6, .h7, h7 {
+    display: block;
     top: 0.5rem;
     color: #a61c00;
     text-transform: uppercase;
 }
 
 .h6, h6 {
-    top: 0.5rem;
     font-weight: bold;
 }
 
@@ -192,4 +192,8 @@ input.form-single::-webkit-inner-spin-button {
 
 .border-input {
     border: #ced4da;
+}
+
+.border-header {
+    border: #a61c00;
 }

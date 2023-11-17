@@ -32,9 +32,9 @@
             {
                 <button @onclick="() => ShowSpecialRuleForm(rule, i)"
                         class="bg-transparent border-0 p-1 text-start">
-                    <h6>
+                    <div class="fw-bold">
                         @rule.FullName
-                    </h6>
+                    </div>
                     <div class="ms-3">
                         @rule.Rule.Description
                     </div>
@@ -51,12 +51,71 @@
             {
                 <button @onclick="() => ShowHeroForm(hero, i)"
                         class="bg-transparent border-0 p-1 text-start">
-                    <h6>
-                        @($"{hero.Name} ({hero.Cost}p)")
-                    </h6>
-                    <div>
-                        @string.Join(", ", hero.Keywords)
+                    <div class="d-flex justify-content-between">
+                        <h6>
+                            @hero.Name
+                        </h6>
+                        <h6>@($"{hero.Cost} pts")</h6>
                     </div>
+                    <h7>
+                        @($"{string.Join(", ", hero.Keywords)} - {hero.Tier.Name}")
+                    </h7>
+                    <table class="table-bordered border-header text-center w-100">
+                        <thead>
+                            <tr>
+                                <th>Mv</th>
+                                <th>F</th>
+                                <th>S</th>
+                                <th>D</th>
+                                <th>A</th>
+                                <th>W</th>
+                                <th>C</th>
+                                <th>M</th>
+                                <th>W</th>
+                                <th>F</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@hero.Characteristics.Move</td>
+                                <td>@hero.Characteristics.FightAndShoot</td>
+                                <td>@hero.Characteristics.Strength</td>
+                                <td>@hero.Characteristics.Defense</td>
+                                <td>@hero.Characteristics.Attacks</td>
+                                <td>@hero.Characteristics.Wounds</td>
+                                <td>@hero.Characteristics.Courage</td>
+                                <td>@hero.Characteristics.Might</td>
+                                <td>@hero.Characteristics.Will</td>
+                                <td>@hero.Characteristics.Fate</td>
+                                <td>@hero.Cost</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h7>Wargear</h7>
+                    <div>@string.Join(", ", hero.DefaultEquipment.Select(equipment => equipment.Profile.Name))</div>
+                    <h7>Options</h7>
+                    <dl class="m-0">
+                        @foreach (var equipment in hero.OptionalEquipment)
+                        {
+                            <div class="d-flex justify-content-between">
+                                <span>
+                                    @equipment.Profile.Name
+                                </span>
+                                <span>@($"{equipment.Cost} pts")</span>
+                            </div>
+                        }
+                    </dl>
+                    <h7>Special Rules</h7>
+                    <dl class="m-0">
+                        @foreach (var rule in hero.SpecialRules)
+                        {
+                            <dt>@rule.FullName</dt>
+                            <dd class="ms-3">@rule.Rule.Description</dd>
+                        }
+                    </dl>
+                    <h7>Heroic Actions</h7>
+                    <h7>Magical Powers</h7>
                 </button>
             }
             <button @onclick="() => ShowHeroForm()"
@@ -128,17 +187,24 @@
             source ?? new ProfileSpecialRule(),
             Army!.ArmyBonuses, idx);
         if (data is { Rule.Name: { } })
-        {
-            var rule = Context.GetOrCreateSpecialRule(data.Rule.Name);
-            rule.Description = data.Rule.Description;
-        }
+            Context.GetOrCreateSpecialRule(data.Rule.Name).Update(data.Rule);
     }
 
-    private Task ShowHeroForm(HeroProfile? source = null, int? idx = null) =>
-        ShowForm<HeroProfile, HeroProfileForm>(
+    private async Task ShowHeroForm(HeroProfile? source = null, int? idx = null)
+    {
+        var data = await ShowForm<HeroProfile, HeroProfileForm>(
             "Add hero profile",
             source ?? new HeroProfile(Army!, "", Tier.IndependentHero),
             Army!.Heroes, idx);
+        if (data == null)
+            return;
+
+        foreach (var profileEquipment in data.Equipment)
+            Context.GetOrCreateEquipment(profileEquipment.Profile.Name).Update(profileEquipment.Profile);
+
+        foreach (var profileSpecialRule in data.SpecialRules)
+            Context.GetOrCreateSpecialRule(profileSpecialRule.Rule.Name!).Update(profileSpecialRule.Rule);
+    }
 
     private Task ShowWarriorForm(WarriorProfile? source = null, int? idx = null) =>
         ShowForm<WarriorProfile, WarriorProfileForm>(

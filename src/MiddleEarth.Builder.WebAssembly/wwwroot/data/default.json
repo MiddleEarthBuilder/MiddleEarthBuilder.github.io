@@ -3,7 +3,50 @@
     {
       "Name": "Minas Tirith",
       "Side": "Good",
-      "Heroes": [],
+      "Heroes": [
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Aragorn, King Elessar",
+          "Tier": "Hero of legend",
+          "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 6,
+            "Shoot": 3,
+            "Strength": 4,
+            "Defense": 7,
+            "Attacks": 3,
+            "Wounds": 3,
+            "Courage": 6,
+            "Might": 3,
+            "Will": 3,
+            "Fate": 3
+          },
+          "Equipment": [
+            {
+              "Name": "Heavy Armour",
+              "DefaultCount": 1,
+              "ReplacedEquipment": []
+            },
+            {
+              "Name": "Anduril, Flame of the West",
+              "DefaultCount": 1,
+              "ReplacedEquipment": []
+            },
+            {
+              "Name": "Armoured horse",
+              "Cost": 15,
+              "ReplacedEquipment": []
+            }
+          ],
+          "SpecialRules": [
+            { "Name": "Horse Lord" },
+            { "Name": "Mighty Hero" },
+            { "Name": "Stand Men of the West!" }
+          ],
+          "Cost": 225
+        }
+      ],
       "Warriors": [],
       "ArmyBonuses": [ { "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022" } ],
       "Alliances": []
@@ -92,7 +135,7 @@
     },
     {
       "Name": "Horse Lord",
-      "Description": ""
+      "Description": "Fate can be spend to prevent mount\u0027s Wound."
     },
     {
       "Name": "Master of Battle",
@@ -104,7 +147,7 @@
     },
     {
       "Name": "Mighty Hero",
-      "Description": ""
+      "Description": "1 free point of Might each turn."
     },
     {
       "Name": "Monstrous Charge",
@@ -133,6 +176,10 @@
     {
       "Name": "Stalk Unseen",
       "Description": ""
+    },
+    {
+      "Name": "Stand Men of the West!",
+      "Description": "6\u0022 banner to all friendly models."
     },
     {
       "Name": "Survival Instinct",
@@ -167,6 +214,25 @@
       "Description": ""
     }
   ],
-  "Equipments": [],
+  "Equipments": [
+    {
+      "Name": "Anduril, Flame of the West",
+      "Description": "Elven-made hand-and-a-half sword. To Wound Roll: 4\u002B is always success. 3\u002B if used as a two-handed weapon.",
+      "IsAllowedOnce": true,
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Armoured horse",
+      "Description": "Mv 10\u0022 F3/6\u002B S3 D5 A0 W1 C3",
+      "IsAllowedOnce": true,
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Heavy Armour",
+      "Description": "Defense \u002B2",
+      "IsAllowedOnce": true,
+      "DeniedEquipment": []
+    }
+  ],
   "Armies": []
 }

@@ -1,0 +1,25 @@
+﻿@page "/Test"
+@using MiddleEarth.Builder.Application.Domain
+@inject Context Context
+
+<h3>Test</h3>
+
+<BlazoredTypeahead SearchMethod="@SearchEquipment"
+@bind-Value="_newEquipment">
+    <SelectedTemplate Context="equipment">
+        @equipment.Name
+    </SelectedTemplate>
+    <ResultTemplate Context="equipment">
+        @equipment.Name
+    </ResultTemplate>
+</BlazoredTypeahead>
+
+@code {
+    private EquipmentProfile? _newEquipment;
+
+    private async Task<IEnumerable<EquipmentProfile>> SearchEquipment(string searchText) => await Task.FromResult(
+        Context.GetEquipments()
+            .Where(profile => profile.Name.ToLower().Contains(searchText.ToLower()))
+            .Append(new EquipmentProfile(searchText)).ToList());
+
+}
