@@ -1,15 +1,37 @@
-﻿namespace MiddleEarth.Builder.Application.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MiddleEarth.Builder.Application.Domain;
 
 public class Characteristics
 {
-    public int Move { get; set; }
-    public int Fight { get; set; }
-    public int? Shoot { get; set; }
-    public int Strength { get; set; }
-    public int Defense { get; set; }
-    public int Attacks { get; set; }
-    public int Wounds { get; set; }
-    public int Courage { get; set; }
+    [Required]
+    public int? Move { get; set; }
+    public string FightAndShoot
+    {
+        get => FightString;
+        set
+        {
+            var values = value.Split('/');
+            int.TryParse(values[0].Trim(), out var fight);
+            Fight = fight;
+            if (int.TryParse(values[0].Replace("+", "").Trim(), out var shoot))
+                Shoot = shoot;
+        }
+    }
+
+    [Required]
+    public int? Fight { get; set; } = 3;
+    public int? Shoot { get; set; } = 4;
+    [Required]
+    public int? Strength { get; set; } = 3;
+    [Required]
+    public int? Defense { get; set; } = 3;
+    [Required]
+    public int? Attacks { get; set; } = 1;
+    [Required]
+    public int? Wounds { get; set; } = 1;
+    [Required]
+    public int? Courage { get; set; } = 3;
     public int? Might { get; set; }
     public int? Will { get; set; }
     public int? Fate { get; set; }

@@ -5,6 +5,7 @@ public record EquipmentProfileRaw(
     string Description,
     CharacteristicsRaw? CharacteristicsBonus,
     bool IsBow = false,
+    bool IsAllowedOnce = true,
     string[]? DeniedEquipment = null)
 {
     public string[] DeniedEquipment { get; set; } = DeniedEquipment ??

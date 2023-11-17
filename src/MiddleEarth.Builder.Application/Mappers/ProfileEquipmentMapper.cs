@@ -21,7 +21,6 @@ public class ProfileEquipmentMapper
             value.Profile.Name,
             value.DefaultCount,
             value.Cost,
-            value.IsAllowedOnce,
             value.ReplacedEquipment.ToArray());
     }
 
@@ -29,7 +28,6 @@ public class ProfileEquipmentMapper
     {
         DefaultCount = raw.DefaultCount,
         Cost = raw.Cost,
-        IsAllowedOnce = raw.IsAllowedOnce,
         ReplacedEquipment = raw.ReplacedEquipment.ToList()
     };
 }

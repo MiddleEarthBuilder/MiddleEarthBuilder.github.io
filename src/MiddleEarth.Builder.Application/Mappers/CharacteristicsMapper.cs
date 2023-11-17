@@ -15,14 +15,14 @@ public class CharacteristicsMapper
     }
 
     public CharacteristicsRaw Map(Characteristics value) => new(
-        value.Move,
-        value.Fight,
+        value.Move!.Value,
+        value.Fight!.Value,
         value.Shoot,
-        value.Strength,
-        value.Defense,
-        value.Attacks,
-        value.Wounds,
-        value.Courage,
+        value.Strength!.Value,
+        value.Defense!.Value,
+        value.Attacks!.Value,
+        value.Wounds!.Value,
+        value.Courage!.Value,
         value.Might,
         value.Will,
         value.Fate);

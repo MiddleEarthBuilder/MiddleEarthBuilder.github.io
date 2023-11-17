@@ -174,3 +174,22 @@ article {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+.form-single {
+    width: 20px;
+    border: 0;
+    outline: none;
+    border-bottom: 1px solid #ced4da;
+    padding: 0;
+    text-align: center;
+}
+
+input.form-single::-webkit-outer-spin-button,
+input.form-single::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.border-input {
+    border: #ced4da;
+}

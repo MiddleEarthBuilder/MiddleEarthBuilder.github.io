@@ -1,17 +1,24 @@
 ﻿@using MiddleEarth.Builder.Application.Domain
-<EditForm Model="@Model" OnValidSubmit="@SubmitForm">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="mb-3">
-        <label for="name" class="form-label m-0 me-2">Name</label>
-        <InputText id="name" class="form-control me-2" @bind-Value="Model.Name" />
-    </div>
-    <div class="mb-3">
-        <label for="keywords" class="form-label m-0 me-2">Keywords</label>
-        <InputText id="keywords" class="form-control me-2" @bind-Value="Model.KeywordsString" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</EditForm>
+@if (Model != null)
+{
+    <EditForm Model="@Model" OnValidSubmit="@SubmitForm">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label for="name" class="form-label m-0 me-2">Name</label>
+            <InputText id="name" class="form-control me-2" @bind-Value="Model.Name" />
+        </div>
+        <div class="mb-3">
+            <label for="keywords" class="form-label m-0 me-2">Keywords</label>
+            <InputText id="keywords" class="form-control me-2" @bind-Value="Model.KeywordsString" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
+else
+{
+    <lead>Model is not loaded correctly.</lead>
+}
 
 @code {
 
@@ -19,7 +26,7 @@
     BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
     [Parameter]
-    public WarriorProfile Model { get; set; }
+    public WarriorProfile? Model { get; set; }
 
     private async Task SubmitForm() =>
         await BlazoredModal.CloseAsync(ModalResult.Ok(Model));
