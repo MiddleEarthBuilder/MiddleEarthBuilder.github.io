@@ -3,19 +3,36 @@
     {
       "Name": "Anduril, Flame of the West",
       "Description": "Elven-made hand-and-a-half sword. To Wound Roll: 4\u002B is always success. 3\u002B if used as a two-handed weapon.",
-      "IsAllowedOnce": true,
       "DeniedEquipment": []
     },
     {
       "Name": "Armoured horse",
       "Description": "Mv 10\u0022 F3/6\u002B S3 D5 A0 W1 C3",
-      "IsAllowedOnce": true,
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Glamdring",
+      "Description": "Elven-made hand-and-a-half sword. Strength \u002B1.",
       "DeniedEquipment": []
     },
     {
       "Name": "Heavy Armour",
       "Description": "Defence \u002B2",
-      "IsAllowedOnce": true,
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Narya",
+      "Description": "Fate rolls re-roll.",
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Shadowfax",
+      "Description": "Mv12\u0022 F0 S4 D5 A0 W1 C5 M0 W2 F1",
+      "DeniedEquipment": []
+    },
+    {
+      "Name": "Staff of Power",
+      "Description": "",
       "DeniedEquipment": []
     }
   ],
@@ -183,11 +200,23 @@
   ],
   "HeroicActions": [
     { "Name": "Heroic Challenge" },
+    { "Name": "Heroic Channeling" },
     { "Name": "Heroic Defence" },
     { "Name": "Heroic March" },
     { "Name": "Heroic Resolve" },
     { "Name": "Heroic Strength" },
     { "Name": "Heroic Strike" }
+  ],
+  "MagicalPowers": [
+    { "Name": "Banishment" },
+    { "Name": "Blinding Light" },
+    { "Name": "Command" },
+    { "Name": "Fortify Spirit" },
+    { "Name": "Immobilise" },
+    { "Name": "Sorcerous Blast" },
+    { "Name": "Strengthen Will" },
+    { "Name": "Terrifying Aura" },
+    { "Name": "Your Staff is Broken" }
   ],
   "ArmyLists": [
     {
@@ -244,6 +273,99 @@
           ],
           "MagicalPowers": [],
           "Cost": 225
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Gandalf the White",
+          "Tier": "Hero of valour",
+          "Keywords": [ "Wizard", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 5,
+            "Shoot": 4,
+            "Strength": 4,
+            "Defense": 6,
+            "Attacks": 2,
+            "Wounds": 3,
+            "Courage": 7,
+            "Might": 3,
+            "Will": 6,
+            "Fate": 3
+          },
+          "Equipment": [
+            {
+              "Name": "Staff of Power",
+              "DefaultCount": 1,
+              "ReplacedEquipment": []
+            },
+            {
+              "Name": "Glamdring",
+              "DefaultCount": 1,
+              "ReplacedEquipment": []
+            },
+            {
+              "Name": "Narya",
+              "DefaultCount": 1,
+              "ReplacedEquipment": []
+            },
+            {
+              "Name": "Shadowfax",
+              "Cost": 20,
+              "ReplacedEquipment": []
+            }
+          ],
+          "SpecialRules": [],
+          "HeroicActions": [
+            { "Name": "Heroic Resolve" },
+            { "Name": "Heroic Channeling" },
+            { "Name": "Heroic Strike" }
+          ],
+          "MagicalPowers": [
+            {
+              "Name": "Blinding Light",
+              "Casting": 22
+            },
+            {
+              "Name": "Immobilise",
+              "Casting": 2,
+              "Range": 12
+            },
+            {
+              "Name": "Terrifying Aura",
+              "Casting": 2
+            },
+            {
+              "Name": "Command",
+              "Casting": 3,
+              "Range": 12
+            },
+            {
+              "Name": "Fortify Spirit",
+              "Casting": 3,
+              "Range": 12
+            },
+            {
+              "Name": "Strengthen Will",
+              "Casting": 3,
+              "Range": 12
+            },
+            {
+              "Name": "Banishment",
+              "Casting": 4,
+              "Range": 12
+            },
+            {
+              "Name": "Sorcerous Blast",
+              "Casting": 4,
+              "Range": 12
+            },
+            {
+              "Name": "Your Staff is Broken",
+              "Casting": 4,
+              "Range": 12
+            }
+          ],
+          "Cost": 220
         }
       ],
       "Warriors": [],

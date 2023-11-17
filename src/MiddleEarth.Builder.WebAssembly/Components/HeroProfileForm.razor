@@ -70,7 +70,7 @@
                         <th><label class="form-label">Name</label></th>
                         <th><label class="form-label">Description</label></th>
                         <th><label class="form-label">Bow?</label></th>
-                        <th><label class="form-label">Once only?</label></th>
+                        <th><label class="form-label">Multiple?</label></th>
                         <th><label class="form-label">Count</label></th>
                         <th><label class="form-label">Cost</label></th>
                         <th><label class="form-label">Replaces</label></th>
@@ -84,7 +84,7 @@
                             <th><InputText id="@($"equipment-{i}-name")" class="form-control m-auto" @bind-Value="equipment.Profile.Name" /></th>
                             <td><InputText id="@($"equipment-{i}-description")" class="form-control m-auto" @bind-Value="equipment.Profile.Description" /></td>
                             <td><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsBow" /></td>
-                            <td><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsAllowedOnce" /></td>
+                            <td><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsMultiple" /></td>
                             <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto" @bind-Value="equipment.DefaultCount" /></td>
                             <td><InputNumber id="@($"equipment-{i}-cost")" class="form-control m-auto" @bind-Value="equipment.Cost" /></td>
                             <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control m-auto" @bind-Value="equipment.ReplacedEquipmentString" /></td>
@@ -232,8 +232,8 @@
                     {
                         <tr>
                             <th><InputText id="@($"magicalPower-{i}-name")" class="form-control m-auto" @bind-Value="magicalPower.Power.Name" /></th>
-                            <td><InputNumber id="@($"magicalPower-{i}-range")" class="form-control form-sm m-auto" @bind-Value="magicalPower.Range" /></td>
-                            <td><InputNumber id="@($"magicalPower-{i}-casting")" class="form-control form-sm m-auto" @bind-Value="magicalPower.Casting" /></td>
+                            <td><InputNumber id="@($"magicalPower-{i}-range")" class="form-control m-auto" @bind-Value="magicalPower.Range" /></td>
+                            <td><InputNumber id="@($"magicalPower-{i}-casting")" class="form-control m-auto" @bind-Value="magicalPower.Casting" /></td>
                             <th><InputText id="@($"magicalPower-{i}-description")" class="form-control m-auto" @bind-Value="magicalPower.Power.Description" /></th>
                             <td>
                                 @if (i > 0)

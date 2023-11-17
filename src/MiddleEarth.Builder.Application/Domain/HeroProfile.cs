@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace MiddleEarth.Builder.Application.Domain;
+﻿namespace MiddleEarth.Builder.Application.Domain;
 
 public class HeroProfile
 {
@@ -14,7 +12,6 @@ public class HeroProfile
     }
 
     public List<string> Keywords { get; set; } = new();
-    [JsonIgnore]
     public string KeywordsString
     {
         get => string.Join(", ", Keywords);
@@ -25,10 +22,8 @@ public class HeroProfile
     public Characteristics Characteristics { get; set; } = new();
 
     public List<ProfileEquipment> Equipment { get; set; } = new();
-    [JsonIgnore]
     public IEnumerable<ProfileEquipment> DefaultEquipment => Equipment
         .Where(equipment => equipment.DefaultCount > 0);
-    [JsonIgnore]
     public IEnumerable<ProfileEquipment> OptionalEquipment => Equipment
         .Where(equipment => equipment.DefaultCount == 0);
 

@@ -29,8 +29,8 @@ public record WarriorProfileRaw(
     string Name,
     string[] Keywords,
     CharacteristicsRaw Characteristics,
-    ProfileEquipmentRaw[] Equipment,
-    ProfileSpecialRuleRaw[] SpecialRules,
+    ProfileEquipmentRaw[]? Equipment,
+    ProfileSpecialRuleRaw[]? SpecialRules,
     int Cost,
     string? Note);
 
@@ -50,8 +50,8 @@ public class WarriorProfileMapper
         value.Name,
         value.Keywords.ToArray(),
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
-        value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray(),
-        value.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
+        value.Equipment.Any() ? value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray() : null,
+        value.SpecialRules.Any() ? value.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray() : null,
         value.Cost,
         value.Note);
 
@@ -61,8 +61,8 @@ public class WarriorProfileMapper
     {
         Keywords = raw.Keywords.ToList(),
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
-        Equipment = raw.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToList(),
-        SpecialRules = raw.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList(),
+        Equipment = raw.Equipment?.Select(_mapper.ProfileEquipmentMapper.Map).ToList() ?? new List<ProfileEquipment>(),
+        SpecialRules = raw.SpecialRules?.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList() ?? new List<ProfileSpecialRule>(),
         Cost = raw.Cost,
         Note = raw.Note
     };

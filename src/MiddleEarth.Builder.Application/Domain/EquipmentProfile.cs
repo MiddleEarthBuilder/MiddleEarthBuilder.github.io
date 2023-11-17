@@ -6,7 +6,7 @@ public class EquipmentProfile
     public string Description { get; set; } = string.Empty;
     public Characteristics? CharacteristicsBonus { get; set; }
     public bool IsBow { get; set; }
-    public bool IsAllowedOnce { get; set; } = true;
+    public bool IsMultiple { get; set; }
     public List<string> DeniedEquipment { get; set; } = new();
     public string DeniedEquipmentString
     {
@@ -33,13 +33,9 @@ public record EquipmentProfileRaw(
     string Name,
     string Description,
     CharacteristicsRaw? CharacteristicsBonus,
-    bool IsBow = false,
-    bool IsAllowedOnce = true,
-    string[]? DeniedEquipment = null)
-{
-    public string[] DeniedEquipment { get; set; } = DeniedEquipment ??
-                                                    Array.Empty<string>();
-}
+    bool IsBow,
+    bool IsMultiple,
+    string[]? DeniedEquipment);
 
 public class EquipmentProfileMapper
 {
@@ -56,8 +52,8 @@ public class EquipmentProfileMapper
         value.CharacteristicsBonus == null ? null :
             _mapper.CharacteristicsMapper.Map(value.CharacteristicsBonus),
         value.IsBow,
-        value.IsAllowedOnce,
-        value.DeniedEquipment.ToArray());
+        value.IsMultiple,
+        value.DeniedEquipment.Any() ? value.DeniedEquipment.ToArray() : null);
 
     public EquipmentProfile Map(EquipmentProfileRaw raw) => new(raw.Name)
     {
@@ -65,7 +61,7 @@ public class EquipmentProfileMapper
         CharacteristicsBonus = raw.CharacteristicsBonus == null ? null :
             _mapper.CharacteristicsMapper.Map(raw.CharacteristicsBonus),
         IsBow = raw.IsBow,
-        IsAllowedOnce = raw.IsAllowedOnce,
-        DeniedEquipment = raw.DeniedEquipment.ToList()
+        IsMultiple = raw.IsMultiple,
+        DeniedEquipment = raw.DeniedEquipment?.ToList() ?? new List<string>()
     };
 }

@@ -23,11 +23,7 @@ public record ProfileEquipmentRaw(
     string Name,
     int DefaultCount,
     int Cost,
-    string[]? ReplacedEquipment = null)
-{
-    public string[] ReplacedEquipment { get; set; } = ReplacedEquipment ??
-                                                      Array.Empty<string>();
-}
+    string[]? ReplacedEquipment = null);
 
 public class ProfileEquipmentMapper
 {
@@ -47,13 +43,13 @@ public class ProfileEquipmentMapper
             value.Profile.Name,
             value.DefaultCount,
             value.Cost,
-            value.ReplacedEquipment.ToArray());
+            value.ReplacedEquipment.Any() ? value.ReplacedEquipment.ToArray() : null);
     }
 
     public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.GetOrCreateEquipment(raw.Name))
     {
         DefaultCount = raw.DefaultCount,
         Cost = raw.Cost,
-        ReplacedEquipment = raw.ReplacedEquipment.ToList()
+        ReplacedEquipment = raw.ReplacedEquipment?.ToList() ?? new List<string>()
     };
 }

@@ -3,13 +3,13 @@
 public record CombinedWarriorProfileRaw(
     string ArmyList,
     string Name,
-    string[] Keywords,
+    string[]? Keywords,
     CharacteristicsRaw Characteristics,
-    ProfileEquipmentRaw[] Equipment,
-    ProfileSpecialRuleRaw[] SpecialRules,
+    ProfileEquipmentRaw[]? Equipment,
+    ProfileSpecialRuleRaw[]? SpecialRules,
     int Cost,
     string? Note,
-    WarriorProfileRaw[] AdditionalUnits,
+    WarriorProfileRaw[]? AdditionalUnits,
     bool CountsAsOne) :
     WarriorProfileRaw(ArmyList, Name, Keywords, Characteristics,
         Equipment, SpecialRules, Cost, Note);

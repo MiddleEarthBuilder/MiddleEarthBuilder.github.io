@@ -26,13 +26,19 @@ public class ArmyList
     }
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum Side
+{
+    Undefined, Good, Evil
+}
+
 public record ArmyListRaw(
     string Name,
     [property: JsonConverter(typeof(JsonStringEnumConverter))] Side Side,
-    HeroProfileRaw[] Heroes,
-    WarriorProfileRaw[] Warriors,
-    ProfileSpecialRuleRaw[] ArmyBonuses,
-    AllianceRaw[] Alliances);
+    HeroProfileRaw[]? Heroes,
+    WarriorProfileRaw[]? Warriors,
+    ProfileSpecialRuleRaw[]? ArmyBonuses,
+    AllianceRaw[]? Alliances);
 
 public class ArmyListMapper
 {
@@ -46,17 +52,17 @@ public class ArmyListMapper
     public ArmyListRaw Map(ArmyList value) => new(
         value.Name,
         value.Side,
-        value.Heroes.Select(_mapper.HeroProfileMapper.Map).ToArray(),
-        value.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToArray(),
-        value.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
-        value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray()); // TODO: Skip until all army lists are loaded
+        value.Heroes.Any() ? value.Heroes.Select(_mapper.HeroProfileMapper.Map).ToArray() : null,
+        value.Warriors.Any() ? value.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToArray() : null,
+        value.ArmyBonuses.Any() ? value.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray() : null,
+        value.Alliances.Any() ? value.Alliances.Select(_mapper.AllianceMapper.Map).ToArray() : null);
 
     public ArmyList Map(ArmyListRaw raw) => new(raw.Name)
     {
         Side = raw.Side,
-        ArmyBonuses = raw.ArmyBonuses.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList(),
-        Heroes = raw.Heroes.Select(_mapper.HeroProfileMapper.Map).ToList(),
-        Warriors = raw.Warriors.Select(_mapper.WarriorProfileMapper.Map).ToList(),
-        Alliances = raw.Alliances.Select(_mapper.AllianceMapper.Map).ToList()
+        ArmyBonuses = raw.ArmyBonuses?.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList() ?? new List<ProfileSpecialRule>(),
+        Heroes = raw.Heroes?.Select(_mapper.HeroProfileMapper.Map).ToList() ?? new List<HeroProfile>(),
+        Warriors = raw.Warriors?.Select(_mapper.WarriorProfileMapper.Map).ToList() ?? new List<WarriorProfile>(),
+        Alliances = raw.Alliances?.Select(_mapper.AllianceMapper.Map).ToList() ?? new List<Alliance>() // TODO: Skip until all army lists are loaded
     };
 }

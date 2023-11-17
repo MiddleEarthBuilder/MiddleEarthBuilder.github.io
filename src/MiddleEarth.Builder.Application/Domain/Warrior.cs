@@ -23,7 +23,7 @@ public class Warrior
 public record WarriorRaw(
     string ArmyList,
     string Name,
-    EquipmentRaw[] Equipment,
+    EquipmentRaw[]? Equipment,
     int Count);
 
 public class WarriorMapper
@@ -40,7 +40,7 @@ public class WarriorMapper
     public WarriorRaw Map(Warrior value) => new(
         value.Profile.ArmyList.Name,
         value.Profile.Name,
-        value.Equipment.Select(_mapper.EquipmentMapper.Map).ToArray(),
+        value.Equipment.Any() ? value.Equipment.Select(_mapper.EquipmentMapper.Map).ToArray() : null,
         value.Count);
 
     public Warrior? Map(WarriorRaw raw)

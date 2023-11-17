@@ -43,7 +43,7 @@ public record ArmyRaw(
     string Name,
     string ArmyList,
     string? Leader,
-    WarbandRaw[] Warbands);
+    WarbandRaw[]? Warbands);
 
 public class ArmyMapper
 {
@@ -60,13 +60,13 @@ public class ArmyMapper
         value.Name,
         value.List.Name,
         value.Leader?.Profile.Name,
-        value.Warbands.Select(_mapper.WarbandMapper.Map).ToArray());
+        value.Warbands.Any() ? value.Warbands.Select(_mapper.WarbandMapper.Map).ToArray() : null);
 
     public Army Map(ArmyRaw raw)
     {
-        var army = new Army(raw.Name, _context.GetOrCreateArmyList(raw.Name))
+        var army = new Army(raw.Name, _context.GetOrCreateArmyList(raw.ArmyList))
         {
-            Warbands = raw.Warbands.Select(_mapper.WarbandMapper.Map).ToList()
+            Warbands = raw.Warbands?.Select(_mapper.WarbandMapper.Map).ToList() ?? new List<Warband>()
         };
         army.Leader = army.PotentialLeaders.FirstOrDefault(hero => hero.Profile.Name == raw.Leader);
         return army;

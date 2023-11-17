@@ -20,7 +20,7 @@ public class Hero
 public record HeroRaw(
     string ArmyList,
     string Name,
-    EquipmentRaw[] Equipment);
+    EquipmentRaw[]? Equipment);
 
 public class HeroMapper
 {
@@ -36,7 +36,7 @@ public class HeroMapper
     public HeroRaw Map(Hero value) => new(
         value.Profile.ArmyList.Name,
         value.Profile.Name,
-        value.Equipment.Select(_mapper.EquipmentMapper.Map).ToArray());
+        value.Equipment.Any() ? value.Equipment.Select(_mapper.EquipmentMapper.Map).ToArray() : null);
 
     public Hero? Map(HeroRaw raw)
     {
@@ -44,6 +44,9 @@ public class HeroMapper
         var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == raw.Name);
         return hero == null ?
             null :
-            new Hero(hero);
+            new Hero(hero)
+            {
+                Equipment = raw.Equipment?.Select(_mapper.EquipmentMapper.Map).ToList() ?? new List<Equipment>()
+            };
     }
 }

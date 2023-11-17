@@ -16,7 +16,7 @@ public class Alliance
 
 public record AllianceRaw(
     string ArmyList,
-    AllianceLevel Level);
+    [property: JsonConverter(typeof(JsonStringEnumConverter))] AllianceLevel Level);
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum AllianceLevel

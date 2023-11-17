@@ -3,11 +3,11 @@
 //[TypeConverter(typeof(TierConverter))]
 public record Tier(TierEnum Id, string Name, int FollowersLimit) : IComparable<Tier>
 {
-    public static readonly Tier HeroOfLegend = new(TierEnum.HeroOfLegend, "Hero of legend", 18);
-    public static readonly Tier HeroOfValour = new(TierEnum.HeroOfValour, "Hero of valour", 15);
-    public static readonly Tier HeroOfFortitude = new(TierEnum.HeroOfFortitude, "Hero of fortitude", 12);
-    public static readonly Tier MinorHero = new(TierEnum.MinorHero, "Minor hero", 6);
-    public static readonly Tier IndependentHero = new(TierEnum.IndependentHero, "Independent hero", 0);
+    public static readonly Tier HeroOfLegend = new(TierEnum.HeroOfLegend, "Hero of Legend", 18);
+    public static readonly Tier HeroOfValour = new(TierEnum.HeroOfValour, "Hero of Valour", 15);
+    public static readonly Tier HeroOfFortitude = new(TierEnum.HeroOfFortitude, "Hero of Fortitude", 12);
+    public static readonly Tier MinorHero = new(TierEnum.MinorHero, "Minor Hero", 6);
+    public static readonly Tier IndependentHero = new(TierEnum.IndependentHero, "Independent Hero", 0);
     public static readonly Tier Warrior = new(TierEnum.Warrior, "Warrior", 0);
     private static readonly IReadOnlyCollection<Tier> Tiers = new[] { HeroOfLegend, HeroOfValour, HeroOfFortitude, MinorHero, IndependentHero, Warrior };
 

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace MiddleEarth.Builder.Application.Domain;
 
@@ -7,7 +6,6 @@ public class Characteristics
 {
     [Required]
     public int? Move { get; set; }
-    [JsonIgnore]
     public string FightAndShoot
     {
         get => FightString;

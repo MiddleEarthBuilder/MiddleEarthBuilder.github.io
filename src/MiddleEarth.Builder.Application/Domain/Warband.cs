@@ -22,7 +22,7 @@ public class Warband
 /// <param name="Followers">Hero's followers.</param>
 public record WarbandRaw(
     HeroRaw? Hero,
-    WarriorRaw[] Followers);
+    WarriorRaw[]? Followers);
 
 public class WarbandMapper
 {
@@ -37,12 +37,12 @@ public class WarbandMapper
 
     public WarbandRaw Map(Warband value) => new(
         _mapper.HeroMapper.Map(value.Hero),
-        value.Followers.Select(_mapper.WarriorMapper.Map).ToArray());
+        value.Followers.Any() ? value.Followers.Select(_mapper.WarriorMapper.Map).ToArray() : null);
 
     public Warband Map(WarbandRaw raw) => new()
     {
         Hero = raw.Hero == null ? null :
             _mapper.HeroMapper.Map(raw.Hero),
-        Followers = raw.Followers.Select(_mapper.WarriorMapper.Map).OfType<Warrior>().ToList()
+        Followers = raw.Followers?.Select(_mapper.WarriorMapper.Map).OfType<Warrior>().ToList() ?? new List<Warrior>()
     };
 }
