@@ -45,7 +45,7 @@ public class WarriorMapper
 
     public Warrior? Map(WarriorRaw raw)
     {
-        var armyList = _context.GetOrCreateArmyList(raw.ArmyList);
+        var armyList = _context.ArmyLists.GetOrCreate(raw.ArmyList);
         var warrior = armyList.Warriors.FirstOrDefault(warrior => warrior.Name == raw.Name);
         return warrior == null ?
             null :

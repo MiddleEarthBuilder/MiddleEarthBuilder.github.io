@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace MiddleEarth.Builder.Application.Domain;
+﻿namespace MiddleEarth.Builder.Application.Domain;
 
 public class Context
 {
@@ -11,153 +9,32 @@ public class Context
         _mapper = new Mapper(this);
     }
 
-    private Dictionary<string, ArmyList> ArmyLists { get; set; } = new();
-    private Dictionary<string, SpecialRule> SpecialRules { get; set; } = new();
-    private Dictionary<string, EquipmentProfile> Equipments { get; set; } = new();
-    private Dictionary<string, HeroicAction> HeroicActions { get; set; } = new();
-    private Dictionary<string, MagicalPower> MagicalPowers { get; set; } = new();
-    private Dictionary<string, Army> Armies { get; set; } = new();
+    public Repository<EquipmentProfile> Equipments { get; } = new(key => new EquipmentProfile(key), profile => profile.Name.Trim());
+    public Repository<SpecialRule> SpecialRules { get; } = new(key => new SpecialRule(key), profile => profile.Name!.Trim());
+    public Repository<HeroicAction> HeroicActions { get; } = new(key => new HeroicAction(key), profile => profile.Name.Trim());
+    public Repository<MagicalPower> MagicalPowers { get; } = new(key => new MagicalPower(key), profile => profile.Name.Trim());
+    public Repository<ArmyList> ArmyLists { get; } = new(key => new ArmyList(key), profile => profile.Name.Trim());
+    public Repository<Army> Armies { get; } = new(key => new Army(key), profile => profile.Name.Trim());
 
-    public async Task Load(ContextRaw contextRaw)
+    public Task LoadAsync(ContextRaw contextRaw)
     {
-        Equipments = contextRaw.Equipments?.Select(_mapper.EquipmentProfileMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, EquipmentProfile>();
-        SpecialRules = contextRaw.SpecialRules?.Select(_mapper.SpecialRuleMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, SpecialRule>();
-        HeroicActions = contextRaw.HeroicActions?.Select(_mapper.HeroicActionMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, HeroicAction>();
-        MagicalPowers = contextRaw.MagicalPowers?.Select(_mapper.MagicalPowerMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, MagicalPower>();
-        ArmyLists = contextRaw.ArmyLists?.Select(_mapper.ArmyListMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, ArmyList>();
-        Armies = contextRaw.Armies?.Select(_mapper.ArmyMapper.Map)
-            .ToDictionary(rule => rule.Name!, rule => rule) ?? new Dictionary<string, Army>();
-    }
+        Equipments.Load(contextRaw.Equipments?.Select(_mapper.EquipmentProfileMapper.Map));
+        SpecialRules.Load(contextRaw.SpecialRules?.Select(_mapper.SpecialRuleMapper.Map));
+        HeroicActions.Load(contextRaw.HeroicActions?.Select(_mapper.HeroicActionMapper.Map));
+        MagicalPowers.Load(contextRaw.MagicalPowers?.Select(_mapper.MagicalPowerMapper.Map));
+        ArmyLists.Load(contextRaw.ArmyLists?.Select(_mapper.ArmyListMapper.Map));
+        Armies.Load(contextRaw.Armies?.Select(_mapper.ArmyMapper.Map));
 
-    public async Task<Army> CreateArmy(string name, string armyListName)
-    {
-        var army = new Army(name, ArmyLists[armyListName]);
-        Armies.Add(name, army);
-        return army;
+        return Task.CompletedTask;
     }
 
     public ContextRaw GetRaw() => new(
-        Equipments.Any() ?
-            Equipments.Values
-                .OrderBy(profile => profile.Name)
-                .Select(_mapper.EquipmentProfileMapper.Map)
-                .ToArray() : null,
-        SpecialRules.Any() ?
-            SpecialRules.Values
-                .OrderBy(rule => rule.Name)
-                .Select(_mapper.SpecialRuleMapper.Map)
-                .ToArray() : null,
-        HeroicActions.Any() ?
-            HeroicActions.Values
-                .OrderBy(rule => rule.Name)
-                .Select(_mapper.HeroicActionMapper.Map)
-                .ToArray() : null,
-        MagicalPowers.Any() ?
-            MagicalPowers.Values
-                .OrderBy(rule => rule.Name)
-                .Select(_mapper.MagicalPowerMapper.Map)
-                .ToArray() : null,
-        ArmyLists.Any() ?
-            ArmyLists.Values
-                .OrderBy(list => list.Side)
-                .ThenBy(list => list.Name)
-                .Select(_mapper.ArmyListMapper.Map)
-                .ToArray() : null,
-        Armies.Any() ?
-            Armies.Values
-                .OrderBy(army => army.Name)
-                .Select(_mapper.ArmyMapper.Map)
-                .ToArray() : null);
-
-    public IReadOnlyCollection<ArmyList> GetArmyLists(Side? side = null)
-    {
-        var values = ArmyLists.Values;
-        if (side is null or Side.Undefined)
-            return new ReadOnlyCollection<ArmyList>(values.ToList());
-
-        return new ReadOnlyCollection<ArmyList>(values
-            .Where(list => list.Side == side).ToList());
-    }
-
-    public ArmyList GetOrCreateArmyList(string name)
-    {
-        if (ArmyLists.TryGetValue(name, out var value))
-            return value;
-
-        value = new ArmyList(name);
-        ArmyLists.Add(name, value);
-        return value;
-    }
-
-    public IReadOnlyCollection<SpecialRule> GetSpecialRules() =>
-        new ReadOnlyCollection<SpecialRule>(SpecialRules.Values.ToList());
-
-    public SpecialRule GetOrCreateSpecialRule(string name)
-    {
-        if (SpecialRules.TryGetValue(name, out var value))
-            return value;
-
-        value = new SpecialRule(name);
-        SpecialRules.Add(name, value);
-        return value;
-    }
-
-    public IReadOnlyCollection<EquipmentProfile> GetEquipments() =>
-        new ReadOnlyCollection<EquipmentProfile>(Equipments.Values.ToList());
-
-    public EquipmentProfile GetOrCreateEquipment(string name)
-    {
-        if (Equipments.TryGetValue(name, out var value))
-            return value;
-
-        value = new EquipmentProfile(name);
-        Equipments.Add(name, value);
-        return value;
-    }
-
-    public IReadOnlyCollection<Army> GetArmies() =>
-        new ReadOnlyCollection<Army>(Armies.Values.ToList());
-
-    public Army GetOrCreateArmy(string name, ArmyList armyList)
-    {
-        if (Armies.TryGetValue(name, out var value))
-            return value;
-
-        value = new Army(name, armyList);
-        Armies.Add(name, value);
-        return value;
-    }
-
-    public IReadOnlyCollection<HeroicAction> GetHeroicActions() =>
-        new ReadOnlyCollection<HeroicAction>(HeroicActions.Values.ToList());
-
-    public HeroicAction GetOrCreateHeroicAction(string name)
-    {
-        if (HeroicActions.TryGetValue(name, out var value))
-            return value;
-
-        value = new HeroicAction(name);
-        HeroicActions.Add(name, value);
-        return value;
-    }
-
-    public IReadOnlyCollection<MagicalPower> GetMagicalPowers() =>
-        new ReadOnlyCollection<MagicalPower>(MagicalPowers.Values.ToList());
-
-    public MagicalPower GetOrCreateMagicalPower(string name)
-    {
-        if (MagicalPowers.TryGetValue(name, out var value))
-            return value;
-
-        value = new MagicalPower(name);
-        MagicalPowers.Add(name, value);
-        return value;
-    }
+        Equipments.IsEmpty ? null : Equipments.GetAll().Select(_mapper.EquipmentProfileMapper.Map).ToArray(),
+        SpecialRules.IsEmpty ? null : SpecialRules.GetAll().Select(_mapper.SpecialRuleMapper.Map).ToArray(),
+        HeroicActions.IsEmpty ? null : HeroicActions.GetAll().Select(_mapper.HeroicActionMapper.Map).ToArray(),
+        MagicalPowers.IsEmpty ? null : MagicalPowers.GetAll().Select(_mapper.MagicalPowerMapper.Map).ToArray(),
+        ArmyLists.IsEmpty ? null : ArmyLists.GetAll().Select(_mapper.ArmyListMapper.Map).ToArray(),
+        Armies.IsEmpty ? null : Armies.GetAll().Select(_mapper.ArmyMapper.Map).ToArray());
 }
 
 public record ContextRaw(
@@ -207,5 +84,64 @@ public class Mapper
         WarbandMapper = new WarbandMapper(context, this);
         WarriorMapper = new WarriorMapper(context, this);
         WarriorProfileMapper = new WarriorProfileMapper(context, this);
+    }
+}
+
+public class Repository<T>
+{
+    public bool IsEmpty => _dictionary.Count == 0;
+    public int Count => _dictionary.Count;
+
+    private readonly Func<string, T> _create;
+    private readonly Func<T, string> _getKey;
+    private Dictionary<string, T> _dictionary;
+
+    public Repository(Func<string, T> create, Func<T, string> getKey)
+    {
+        _create = create;
+        _getKey = getKey;
+        _dictionary = new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase);
+    }
+
+    public Repository<T> Load(IEnumerable<T>? items)
+    {
+        _dictionary = items?.ToDictionary(
+                          item => _getKey(item).ToLower().Trim(),
+                          item => item, StringComparer.InvariantCultureIgnoreCase)
+                      ?? new Dictionary<string, T>(StringComparer.InvariantCultureIgnoreCase);
+
+        return this;
+    }
+
+    public IEnumerable<T> GetAll(string? searchText = null, IEnumerable<string>? except = null, bool addItemFromSearchText = false)
+    {
+        if (searchText == null)
+            return _dictionary.Values;
+
+        var items = _dictionary
+            .Where(kv => kv.Key.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        if (addItemFromSearchText && !items.Any(kv => string.Equals(kv.Key, searchText, StringComparison.InvariantCultureIgnoreCase)))
+            items.Add(new KeyValuePair<string, T>(searchText.ToLower().Trim(), _create(searchText)));
+
+        if (except != null)
+        {
+            var set = except.ToHashSet(StringComparer.InvariantCultureIgnoreCase);
+            items = items.Where(kv => !set.Contains(kv.Key)).ToList();
+        }
+
+        return items
+            .OrderBy(kv => kv.Key)
+            .Select(kv => kv.Value);
+    }
+
+    public T GetOrCreate(string key)
+    {
+        if (_dictionary.TryGetValue(key.Trim(), out var value))
+            return value;
+
+        value = _create(key);
+        _dictionary.Add(key.ToLower().Trim(), value);
+        return value;
     }
 }

@@ -26,7 +26,7 @@ public class ProfileMagicalPowerMapper
 
     public ProfileMagicalPowerRaw Map(ProfileMagicalPower value) => new(value.Power.Name, value.Casting, value.Range);
 
-    public ProfileMagicalPower Map(ProfileMagicalPowerRaw raw) => new(_context.GetOrCreateMagicalPower(raw.Name))
+    public ProfileMagicalPower Map(ProfileMagicalPowerRaw raw) => new(_context.MagicalPowers.GetOrCreate(raw.Name))
     {
         Casting = raw.Casting,
         Range = raw.Range

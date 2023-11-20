@@ -333,28 +333,16 @@ else
     private async Task SubmitForm() =>
         await BlazoredModal.CloseAsync(ModalResult.Ok(Model));
 
-    private async Task<IEnumerable<EquipmentProfile>> SearchEquipment(string searchText) => await Task.FromResult(
-        Context.GetEquipments()
-            .Where(profile => profile.Name.ToLower().Contains(searchText.ToLower()))
-            .Where(profile => Model?.Equipment.All(equipment => equipment.Profile.Name != profile.Name) ?? false)
-            .Append(new EquipmentProfile(searchText)).ToList());
+    private async Task<IEnumerable<EquipmentProfile>> SearchEquipment(string searchText) =>
+        await Task.FromResult(Context.Equipments.GetAll(searchText, Model?.Equipment.Select(equipment => equipment.Profile.Name), true));
 
-    private async Task<IEnumerable<SpecialRule>> SearchRule(string searchText) => await Task.FromResult(
-        Context.GetSpecialRules()
-            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
-            .Where(profile => Model?.SpecialRules.All(rule => rule.Rule.Name != profile.Name) ?? false)
-            .Append(new SpecialRule(searchText)).ToList());
+    private async Task<IEnumerable<SpecialRule>> SearchRule(string searchText) =>
+        await Task.FromResult(Context.SpecialRules.GetAll(searchText, Model?.SpecialRules.Select(rule => rule.Rule.Name!), true));
 
-    private async Task<IEnumerable<HeroicAction>> SearchHeroicAction(string searchText) => await Task.FromResult(
-        Context.GetHeroicActions()
-            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
-            .Where(profile => Model?.HeroicActions.All(action => action.Name != profile.Name) ?? false)
-            .Append(new HeroicAction(searchText)).ToList());
+    private async Task<IEnumerable<HeroicAction>> SearchHeroicAction(string searchText) =>
+        await Task.FromResult(Context.HeroicActions.GetAll(searchText, Model?.HeroicActions.Select(action => action.Name), true));
 
-    private async Task<IEnumerable<MagicalPower>> SearchMagicalPower(string searchText) => await Task.FromResult(
-        Context.GetMagicalPowers()
-            .Where(rule => rule.Name!.ToLower().Contains(searchText.ToLower()))
-            .Where(profile => Model?.MagicalPowers.All(power => power.Power.Name != profile.Name) ?? false)
-            .Append(new MagicalPower(searchText)).ToList());
+    private async Task<IEnumerable<MagicalPower>> SearchMagicalPower(string searchText) =>
+        await Task.FromResult(Context.MagicalPowers.GetAll(searchText, Model?.MagicalPowers.Select(power => power.Power.Name), true));
 
 }

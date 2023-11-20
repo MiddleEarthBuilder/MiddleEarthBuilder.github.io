@@ -2,41 +2,54 @@
   "Equipments": [
     {
       "Name": "Anduril, Flame of the West",
-      "Description": "Elven-made hand-and-a-half sword. To Wound Roll: 4\u002B is always success. 3\u002B if used as a two-handed weapon.",
-      "DeniedEquipment": []
+      "Description": "Elven-made hand-and-a-half sword. To Wound Roll: 4\u002B is always success. 3\u002B if used as a two-handed weapon."
+    },
+    {
+      "Name": "Armour",
+      "Description": "Defence \u002B1"
     },
     {
       "Name": "Armoured horse",
-      "Description": "Mv 10\u0022 F3/6\u002B S3 D5 A0 W1 C3",
-      "DeniedEquipment": []
+      "Description": "Mv 10\u0022 F3/6\u002B S3 D5 A0 W1 C3"
+    },
+    {
+      "Name": "Dagger",
+      "Description": ""
+    },
+    {
+      "Name": "Elven cloak",
+      "Description": ""
     },
     {
       "Name": "Glamdring",
-      "Description": "Elven-made hand-and-a-half sword. Strength \u002B1.",
-      "DeniedEquipment": []
+      "Description": "Elven-made hand-and-a-half sword. Strength \u002B1."
     },
     {
       "Name": "Heavy Armour",
-      "Description": "Defence \u002B2",
-      "DeniedEquipment": []
+      "Description": "Defence \u002B2"
     },
     {
       "Name": "Narya",
-      "Description": "Fate rolls re-roll.",
-      "DeniedEquipment": []
+      "Description": "Fate rolls re-roll."
     },
     {
       "Name": "Shadowfax",
-      "Description": "Mv12\u0022 F0 S4 D5 A0 W1 C5 M0 W2 F1",
-      "DeniedEquipment": []
+      "Description": "Mv12\u0022 F0 S4 D5 A0 W1 C5 M0 W2 F1"
     },
     {
       "Name": "Staff of Power",
-      "Description": "",
-      "DeniedEquipment": []
+      "Description": ""
+    },
+    {
+      "Name": "Sword",
+      "Description": ""
     }
   ],
   "SpecialRules": [
+    {
+      "Name": "\u0022The rule of Gondor is mine, and no other\u0027s!\u0022",
+      "Description": "If your force contains Denethor then he must be your leader, unless your force also contains Aragorn, King Elessar."
+    },
     {
       "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022",
       "Description": "Friendly Gondor models from this army list increase their Courage value by 1."
@@ -76,6 +89,10 @@
     {
       "Name": "Bodyguard",
       "Description": ""
+    },
+    {
+      "Name": "Broken Mind",
+      "Description": "At the start of every turn, before Priority is rolled, the controlling player must take a Courage test for Denethor. If the test is passed, all is fine. If the test is failed, Denethor is controlled by the opposing player until the End phase of that turn. Whilst under the control of the opposing player, friendly models cannot target Denethor with shooting attacks or Magical Powers that cause damage and may not make Strikes if they beat him in a fight. If Boromir is part of the same army as Denethor, then Denethor will automatically pass these Courage tests so long as Boromir is alive. Should Boromir be slain, then Denethor will automatically fail the next Courage test he must take for this special rule."
     },
     {
       "Name": "Burly",
@@ -181,6 +198,7 @@
       "Name": "Terror",
       "Description": ""
     },
+    { "Name": "Throw Stones (Range 8\u0022, Strength 1)" },
     {
       "Name": "Thrown Stones",
       "Description": ""
@@ -226,7 +244,7 @@
         {
           "ArmyList": "Minas Tirith",
           "Name": "Aragorn, King Elessar",
-          "Tier": "Hero of legend",
+          "Tier": "Hero of Legend",
           "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
           "Characteristics": {
             "Move": 6,
@@ -244,18 +262,15 @@
           "Equipment": [
             {
               "Name": "Anduril, Flame of the West",
-              "DefaultCount": 1,
-              "ReplacedEquipment": []
+              "DefaultCount": 1
             },
             {
               "Name": "Heavy Armour",
-              "DefaultCount": 1,
-              "ReplacedEquipment": []
+              "DefaultCount": 1
             },
             {
               "Name": "Armoured horse",
-              "Cost": 15,
-              "ReplacedEquipment": []
+              "Cost": 15
             }
           ],
           "SpecialRules": [
@@ -277,7 +292,7 @@
         {
           "ArmyList": "Minas Tirith",
           "Name": "Gandalf the White",
-          "Tier": "Hero of valour",
+          "Tier": "Hero of Valour",
           "Keywords": [ "Wizard", "Infantry", "Hero" ],
           "Characteristics": {
             "Move": 6,
@@ -295,23 +310,19 @@
           "Equipment": [
             {
               "Name": "Staff of Power",
-              "DefaultCount": 1,
-              "ReplacedEquipment": []
+              "DefaultCount": 1
             },
             {
               "Name": "Glamdring",
-              "DefaultCount": 1,
-              "ReplacedEquipment": []
+              "DefaultCount": 1
             },
             {
               "Name": "Narya",
-              "DefaultCount": 1,
-              "ReplacedEquipment": []
+              "DefaultCount": 1
             },
             {
               "Name": "Shadowfax",
-              "Cost": 20,
-              "ReplacedEquipment": []
+              "Cost": 20
             }
           ],
           "SpecialRules": [],
@@ -323,7 +334,7 @@
           "MagicalPowers": [
             {
               "Name": "Blinding Light",
-              "Casting": 22
+              "Casting": 2
             },
             {
               "Name": "Immobilise",
@@ -366,11 +377,85 @@
             }
           ],
           "Cost": 220
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Denethor Steward of Gondor",
+          "Tier": "Hero of Valour",
+          "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 5,
+            "Shoot": 4,
+            "Strength": 4,
+            "Defense": 5,
+            "Attacks": 2,
+            "Wounds": 2,
+            "Courage": 5,
+            "Might": 0,
+            "Will": 3,
+            "Fate": 0
+          },
+          "Equipment": [
+            {
+              "Name": "Armour",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Sword",
+              "DefaultCount": 1
+            }
+          ],
+          "SpecialRules": [
+            { "Name": "Broken Mind" },
+            { "Name": "\u0022The rule of Gondor is mine, and no other\u0027s!\u0022" }
+          ],
+          "HeroicActions": [],
+          "MagicalPowers": [],
+          "Cost": 35
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Peregrin Took, Guard Of The Citadel",
+          "Tier": "Independent Hero",
+          "Keywords": [ "Hobbit", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 4,
+            "Fight": 3,
+            "Shoot": 3,
+            "Strength": 2,
+            "Defense": 4,
+            "Attacks": 1,
+            "Wounds": 1,
+            "Courage": 4,
+            "Might": 1,
+            "Will": 1,
+            "Fate": 2
+          },
+          "Equipment": [
+            {
+              "Name": "Armour",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Dagger",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Elven cloak",
+              "Cost": 5
+            }
+          ],
+          "SpecialRules": [
+            { "Name": "Resistant to Magic" },
+            { "Name": "Throw Stones (Range 8\u0022, Strength 1)" }
+          ],
+          "HeroicActions": [ { "Name": "Heroic Defence" } ],
+          "MagicalPowers": [],
+          "Cost": 25
         }
       ],
-      "Warriors": [],
-      "ArmyBonuses": [ { "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022" } ],
-      "Alliances": []
+      "ArmyBonuses": [ { "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022" } ]
     }
   ]
 }

@@ -40,7 +40,7 @@ public class HeroMapper
 
     public Hero? Map(HeroRaw raw)
     {
-        var armyList = _context.GetOrCreateArmyList(raw.ArmyList);
+        var armyList = _context.ArmyLists.GetOrCreate(raw.ArmyList);
         var hero = armyList.Heroes.FirstOrDefault(hero => hero.Name == raw.Name);
         return hero == null ?
             null :

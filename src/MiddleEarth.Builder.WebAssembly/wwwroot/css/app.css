@@ -203,3 +203,8 @@ td .form-control::-webkit-inner-spin-button {
 .border-header {
     border: #a61c00;
 }
+
+.shield {
+    border: 1px solid #6d643b;
+    border-radius: 10% 10% 100% 100%;
+}

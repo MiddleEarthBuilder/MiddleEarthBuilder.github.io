@@ -74,7 +74,7 @@
     private async Task SubmitForm()
     {
         ArgumentNullException.ThrowIfNull(_contextRaw);
-        await Context.Load(_contextRaw);
+        await Context.LoadAsync(_contextRaw);
         await BlazoredModal.CloseAsync(ModalResult.Ok(Context));
     }
 
@@ -108,12 +108,12 @@
 
         public void Initialize(Context context)
         {
-            LoadedEquipments = context.GetEquipments().Count;
-            LoadedSpecialRules = context.GetSpecialRules().Count;
-            LoadedHeroicActions = context.GetHeroicActions().Count;
-            LoadedMagicalPowers = context.GetMagicalPowers().Count;
-            LoadedArmyLists = context.GetArmyLists().Count;
-            LoadedArmies = context.GetArmies().Count;
+            LoadedEquipments = context.Equipments.Count;
+            LoadedSpecialRules = context.SpecialRules.Count;
+            LoadedHeroicActions = context.HeroicActions.Count;
+            LoadedMagicalPowers = context.MagicalPowers.Count;
+            LoadedArmyLists = context.ArmyLists.Count;
+            LoadedArmies = context.Armies.Count;
         }
     }
 }

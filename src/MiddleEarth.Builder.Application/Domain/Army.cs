@@ -3,7 +3,6 @@
 public class Army
 {
     public string Name { get; set; }
-    public ArmyList List { get; set; }
     public Hero? Leader { get; set; }
     public List<Warband> Warbands { get; set; } = new();
 
@@ -25,10 +24,9 @@ public class Army
         }
     }
 
-    public Army(string name, ArmyList list)
+    public Army(string name)
     {
         Name = name;
-        List = list;
     }
 }
 
@@ -41,7 +39,6 @@ public class Army
 /// <param name="Warbands">Warbands' details</param>
 public record ArmyRaw(
     string Name,
-    string ArmyList,
     string? Leader,
     WarbandRaw[]? Warbands);
 
@@ -58,13 +55,12 @@ public class ArmyMapper
 
     public ArmyRaw Map(Army value) => new(
         value.Name,
-        value.List.Name,
         value.Leader?.Profile.Name,
         value.Warbands.Any() ? value.Warbands.Select(_mapper.WarbandMapper.Map).ToArray() : null);
 
     public Army Map(ArmyRaw raw)
     {
-        var army = new Army(raw.Name, _context.GetOrCreateArmyList(raw.ArmyList))
+        var army = new Army(raw.Name)
         {
             Warbands = raw.Warbands?.Select(_mapper.WarbandMapper.Map).ToList() ?? new List<Warband>()
         };

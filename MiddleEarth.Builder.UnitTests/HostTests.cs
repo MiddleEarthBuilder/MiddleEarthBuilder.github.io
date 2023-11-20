@@ -31,9 +31,9 @@ public class HostTests
         var context = host.Services.GetRequiredService<Context>();
         await using var stream = File.OpenRead("../../../../src/MiddleEarth.Builder.WebAssembly/wwwroot/data/default.json");
         var contextRaw = await importer.GetFromStream(stream, CancellationToken.None);
-        await context.Load(contextRaw);
+        await context.LoadAsync(contextRaw);
 
-        context.GetArmyLists().Should().HaveCountGreaterThan(0);
-        context.GetSpecialRules().Should().HaveCountGreaterThan(0);
+        context.ArmyLists.Count.Should().BeGreaterThan(0);
+        context.SpecialRules.Count.Should().BeGreaterThan(0);
     }
 }

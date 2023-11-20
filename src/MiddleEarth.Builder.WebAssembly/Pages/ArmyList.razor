@@ -49,7 +49,8 @@
             @foreach (var (hero, i) in Army.Heroes.Select((r, i) => (r, i)))
             {
                 <button @onclick="() => ShowHeroForm(hero, i)"
-                        class="bg-transparent border-0 p-1 text-start">
+                        class="bg-transparent border-0 p-1 text-start"
+                        style="width: 400px; max-width: 400px">
                     <div class="d-flex justify-content-between">
                         <h6>
                             @hero.Name
@@ -62,31 +63,37 @@
                     <table class="table table-striped text-center w-100">
                         <thead class="table-secondary">
                             <tr>
-                                <th>Mv</th>
-                                <th>F</th>
-                                <th>S</th>
-                                <th>D</th>
-                                <th>A</th>
-                                <th>W</th>
-                                <th>C</th>
-                                <th>M</th>
-                                <th>W</th>
-                                <th>F</th>
-                                <th>Cost</th>
+                                <th style="width: 30px; max-width: 30px;">Mv</th>
+                                <th class="p-1"></th>
+                                <th style="width: 40px; max-width: 40px;">F</th>
+                                <th style="width: 30px; max-width: 30px;">S</th>
+                                <th style="width: 30px; max-width: 30px;">D</th>
+                                <th style="width: 30px; max-width: 30px;">A</th>
+                                <th style="width: 30px; max-width: 30px;">W</th>
+                                <th style="width: 30px; max-width: 30px;">C</th>
+                                <th class="p-1"></th>
+                                <th style="width: 30px; max-width: 30px;">M</th>
+                                <th style="width: 30px; max-width: 30px;">W</th>
+                                <th style="width: 30px; max-width: 30px;">F</th>
+                                <th class="p-1"></th>
+                                <th style="width: 50px; max-width: 50px;">Cost</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>@hero.Characteristics.Move</td>
+                                <td class="p-1"></td>
                                 <td>@hero.Characteristics.FightAndShoot</td>
                                 <td>@hero.Characteristics.Strength</td>
                                 <td>@hero.Characteristics.Defense</td>
                                 <td>@hero.Characteristics.Attacks</td>
                                 <td>@hero.Characteristics.Wounds</td>
                                 <td>@hero.Characteristics.Courage</td>
-                                <td>@hero.Characteristics.Might</td>
-                                <td>@hero.Characteristics.Will</td>
-                                <td>@hero.Characteristics.Fate</td>
+                                <td class="p-1"></td>
+                                <td class="p-0"><div class="shield p-2">@hero.Characteristics.Might</div></td>
+                                <td class="p-0"><div class="shield p-2">@hero.Characteristics.Will</div></td>
+                                <td class="p-0"><div class="shield p-2">@hero.Characteristics.Fate</div></td>
+                                <td class="p-1"></td>
                                 <td>@hero.Cost</td>
                             </tr>
                         </tbody>
@@ -166,7 +173,8 @@
             @foreach (var (warrior, i) in Army.Warriors.Select((r, i) => (r, i)))
             {
                 <button @onclick="() => ShowWarriorForm(warrior, i)"
-                        class="bg-transparent border-0 p-1 text-start">
+                        class="bg-transparent border-0 p-1 text-start"
+                        style="width: 400px; max-width: 400px">
                     <h6>
                         @($"{warrior.Name} ({warrior.Cost}p)")
                     </h6>
@@ -199,13 +207,15 @@
 
     protected override async Task OnInitializedAsync() => await LoadAsync();
 
-    private async Task LoadAsync()
+    private Task LoadAsync()
     {
         if (string.IsNullOrEmpty(ArmyListName) || Army?.Name == ArmyListName)
-            return;
+            return Task.CompletedTask;
 
-        Army = Context.GetOrCreateArmyList(ArmyListName);
+        Army = Context.ArmyLists.GetOrCreate(ArmyListName);
         Army.Side = SideEnum;
+
+        return Task.CompletedTask;
     }
 
     private void HandleValidSubmit()
@@ -225,7 +235,7 @@
             source ?? new ProfileSpecialRule(),
             Army!.ArmyBonuses, idx);
         if (data is { Rule.Name: { } })
-            Context.GetOrCreateSpecialRule(data.Rule.Name).Update(data.Rule);
+            Context.SpecialRules.GetOrCreate(data.Rule.Name).Update(data.Rule);
     }
 
     private async Task ShowHeroForm(HeroProfile? source = null, int? idx = null)
@@ -238,16 +248,16 @@
             return;
 
         foreach (var profileEquipment in data.Equipment)
-            Context.GetOrCreateEquipment(profileEquipment.Profile.Name).Update(profileEquipment.Profile);
+            Context.Equipments.GetOrCreate(profileEquipment.Profile.Name).Update(profileEquipment.Profile);
 
         foreach (var profileSpecialRule in data.SpecialRules)
-            Context.GetOrCreateSpecialRule(profileSpecialRule.Rule.Name!).Update(profileSpecialRule.Rule);
+            Context.SpecialRules.GetOrCreate(profileSpecialRule.Rule.Name!).Update(profileSpecialRule.Rule);
 
         foreach (var heroicAction in data.HeroicActions)
-            Context.GetOrCreateHeroicAction(heroicAction.Name).Update(heroicAction);
+            Context.HeroicActions.GetOrCreate(heroicAction.Name).Update(heroicAction);
 
         foreach (var magicalPower in data.MagicalPowers)
-            Context.GetOrCreateMagicalPower(magicalPower.Power.Name).Update(magicalPower.Power);
+            Context.MagicalPowers.GetOrCreate(magicalPower.Power.Name).Update(magicalPower.Power);
     }
 
     private Task ShowWarriorForm(WarriorProfile? source = null, int? idx = null) =>

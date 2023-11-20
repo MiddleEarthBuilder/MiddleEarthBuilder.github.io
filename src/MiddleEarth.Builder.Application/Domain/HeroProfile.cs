@@ -79,7 +79,7 @@ public class HeroProfileMapper
         value.Note);
 
     public HeroProfile Map(HeroProfileRaw raw) => new(
-        _context.GetOrCreateArmyList(raw.ArmyList),
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
         raw.Name,
         Tier.GetTier(raw.Tier))
     {

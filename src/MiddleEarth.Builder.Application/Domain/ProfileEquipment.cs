@@ -38,7 +38,7 @@ public class ProfileEquipmentMapper
 
     public ProfileEquipmentRaw Map(ProfileEquipment value)
     {
-        _context.GetOrCreateEquipment(value.Profile.Name).Update(value.Profile);
+        _context.Equipments.GetOrCreate(value.Profile.Name).Update(value.Profile);
         return new ProfileEquipmentRaw(
             value.Profile.Name,
             value.DefaultCount,
@@ -46,7 +46,7 @@ public class ProfileEquipmentMapper
             value.ReplacedEquipment.Any() ? value.ReplacedEquipment.ToArray() : null);
     }
 
-    public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.GetOrCreateEquipment(raw.Name))
+    public ProfileEquipment Map(ProfileEquipmentRaw raw) => new(_context.Equipments.GetOrCreate(raw.Name))
     {
         DefaultCount = raw.DefaultCount,
         Cost = raw.Cost,

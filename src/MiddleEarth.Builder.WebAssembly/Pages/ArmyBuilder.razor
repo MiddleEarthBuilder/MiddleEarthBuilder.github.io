@@ -1,19 +1,7 @@
-﻿@page "/armies/{ArmyListName}/builder"
+﻿@page "/builder"
 @inject Context Context
 
-<h3>@ArmyListName</h3>
-<h4>Builder</h4>
+<h3>Army Builder</h3>
 
 @code {
-    [Parameter]
-    public string? ArmyListName { get; set; }
-
-    private Army? Army { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (string.IsNullOrEmpty(ArmyListName))
-            return;
-        Army = await Context.CreateArmy(Guid.NewGuid().ToString(), ArmyListName); // TODO: Set name
-    }
 }

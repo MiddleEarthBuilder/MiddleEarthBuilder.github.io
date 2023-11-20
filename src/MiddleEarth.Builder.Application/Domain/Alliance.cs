@@ -38,6 +38,6 @@ public class AllianceMapper
         value.Level);
 
     public Alliance Map(AllianceRaw raw) => new(
-        _context.GetOrCreateArmyList(raw.ArmyList),
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
         raw.Level);
 }

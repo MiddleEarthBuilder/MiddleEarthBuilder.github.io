@@ -4,8 +4,7 @@ namespace MiddleEarth.Builder.Application.Domain;
 
 public class Characteristics
 {
-    [Required]
-    public int? Move { get; set; }
+    [Required] public int? Move { get; set; } = 6;
     public string FightAndShoot
     {
         get => FightString;

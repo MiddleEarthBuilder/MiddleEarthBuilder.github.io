@@ -31,21 +31,20 @@ else
     [Parameter]
     public string? Side { get; set; }
 
-    private IReadOnlyCollection<Application.Domain.ArmyList>? ArmyLists { get; set; }
+    private IEnumerable<Application.Domain.ArmyList>? ArmyLists { get; set; }
 
     private Side SideEnum => Enum.TryParse<Side>(Side ?? string.Empty, true, out var side) ? side : Application.Domain.Side.Undefined;
 
-    protected override Task OnParametersSetAsync()
+
+    protected override async Task OnParametersSetAsync() => await LoadAsync();
+
+    protected override async Task OnInitializedAsync() => await LoadAsync();
+
+    private Task LoadAsync()
     {
-        ArmyLists = Context.GetArmyLists(SideEnum);
+        ArmyLists = Context.ArmyLists.GetAll()
+            .Where(list => list.Side == SideEnum);
 
         return Task.CompletedTask;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        ArmyLists = Context.GetArmyLists(SideEnum);
-
-        await base.OnInitializedAsync();
     }
 }

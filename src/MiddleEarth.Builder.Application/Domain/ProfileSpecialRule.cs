@@ -56,13 +56,13 @@ public class ProfileSpecialRuleMapper
 
     public ProfileSpecialRuleRaw Map(ProfileSpecialRule value)
     {
-        _context.GetOrCreateSpecialRule(value.Rule.Name!).Update(value.Rule);
+        _context.SpecialRules.GetOrCreate(value.Rule.Name!).Update(value.Rule);
         return new ProfileSpecialRuleRaw(
             value.Rule.Name!,
             value.Target);
     }
 
-    public ProfileSpecialRule Map(ProfileSpecialRuleRaw raw) => new(_context.GetOrCreateSpecialRule(raw.Name))
+    public ProfileSpecialRule Map(ProfileSpecialRuleRaw raw) => new(_context.SpecialRules.GetOrCreate(raw.Name))
     {
         Target = raw.Target
     };

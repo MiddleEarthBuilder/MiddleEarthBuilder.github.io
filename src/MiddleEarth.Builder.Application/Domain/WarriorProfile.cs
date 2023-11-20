@@ -56,7 +56,7 @@ public class WarriorProfileMapper
         value.Note);
 
     public WarriorProfile Map(WarriorProfileRaw raw) => new(
-        _context.GetOrCreateArmyList(raw.ArmyList),
+        _context.ArmyLists.GetOrCreate(raw.ArmyList),
         raw.Name)
     {
         Keywords = raw.Keywords.ToList(),

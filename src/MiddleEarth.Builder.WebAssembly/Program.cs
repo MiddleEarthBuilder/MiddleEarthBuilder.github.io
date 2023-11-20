@@ -31,6 +31,6 @@ var host = builder.Build();
 var importer = host.Services.GetRequiredService<ContextImporter>();
 var context = host.Services.GetRequiredService<Context>();
 var contextRaw = await importer.GetDefault(CancellationToken.None);
-await context.Load(contextRaw);
+await context.LoadAsync(contextRaw);
 
 await host.RunAsync();
