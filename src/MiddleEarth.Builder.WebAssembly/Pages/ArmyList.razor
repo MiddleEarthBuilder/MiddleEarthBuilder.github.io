@@ -34,7 +34,7 @@
                     <div class="fw-bold">
                         @rule.FullName
                     </div>
-                    <div class="ms-3">
+                    <div class="ms-3 pre-wrap">
                         @rule.Rule.Description
                     </div>
                 </button>
@@ -125,7 +125,7 @@
                             @foreach (var rule in hero.SpecialRules)
                             {
                                 <dt>@rule.FullName</dt>
-                                <dd class="ms-3">@rule.Rule.Description</dd>
+                                <dd class="ms-3 pre-wrap">@rule.Rule.Description</dd>
                             }
                         </dl>
                     }

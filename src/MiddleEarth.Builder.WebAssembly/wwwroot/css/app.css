@@ -39,6 +39,30 @@ body {
     font-weight: bold;
 }
 
+.fs-7 {
+    font-size: 14px;
+}
+
+.fs-8 {
+    font-size: 12px;
+}
+
+table textarea.fs-8 {
+    height: 17px;
+}
+
+.fs-9 {
+    font-size: 10px;
+}
+
+.fs-10 {
+    font-size: 8px;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+
 a, .btn-link {
     color: #0071c1;
 }
@@ -180,7 +204,6 @@ th .form-control, td .form-control {
     outline: none;
     border-bottom: 1px solid #ced4da;
     padding: 0 5px;
-    text-align: center;
 }
 
 .form-sm {
@@ -207,4 +230,8 @@ td .form-control::-webkit-inner-spin-button {
 .shield {
     border: 1px solid #6d643b;
     border-radius: 10% 10% 100% 100%;
+}
+
+.pre-wrap {
+    white-space: pre-wrap;
 }

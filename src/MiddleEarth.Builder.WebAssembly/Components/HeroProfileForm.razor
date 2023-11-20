@@ -28,52 +28,52 @@
             <table class="table-bordered border-input text-center w-100">
                 <thead>
                     <tr>
-                        <th><label for="move" class="form-label">Mv</label></th>
-                        <th><label for="fight" class="form-label">F</label></th>
-                        <th><label for="strength" class="form-label">S</label></th>
-                        <th><label for="defense" class="form-label">D</label></th>
-                        <th><label for="attack" class="form-label">A</label></th>
-                        <th><label for="wound" class="form-label">W</label></th>
-                        <th><label for="courage" class="form-label">C</label></th>
-                        <th><label for="might" class="form-label">M</label></th>
-                        <th><label for="will" class="form-label">W</label></th>
-                        <th><label for="fate" class="form-label">F</label></th>
-                        <th><label for="cost" class="form-label">Cost</label></th>
+                        <th><label for="move" class="form-label m-0">Mv</label></th>
+                        <th><label for="fight" class="form-label m-0">F</label></th>
+                        <th><label for="strength" class="form-label m-0">S</label></th>
+                        <th><label for="defense" class="form-label m-0">D</label></th>
+                        <th><label for="attack" class="form-label m-0">A</label></th>
+                        <th><label for="wound" class="form-label m-0">W</label></th>
+                        <th><label for="courage" class="form-label m-0">C</label></th>
+                        <th><label for="might" class="form-label m-0">M</label></th>
+                        <th><label for="will" class="form-label m-0">W</label></th>
+                        <th><label for="fate" class="form-label m-0">F</label></th>
+                        <th><label for="cost" class="form-label m-0">Cost</label></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><InputNumber id="move" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Move" /></td>
+                        <td><InputNumber id="move" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Move" /></td>
                         <td>
                             <div class="d-flex justify-content-center m-auto">
-                                <InputNumber id="fight" class="form-control form-sm" @bind-Value="Model.Characteristics.Fight" />/<InputNumber id="shoot" class="form-control form-sm" @bind-Value="Model.Characteristics.Shoot" />+
+                                <InputNumber id="fight" class="form-control form-sm text-center" @bind-Value="Model.Characteristics.Fight" />/<InputNumber id="shoot" class="form-control form-sm text-center" @bind-Value="Model.Characteristics.Shoot" />+
                             </div>
                         </td>
-                        <td><InputNumber id="strength" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Strength" /></td>
-                        <td><InputNumber id="defense" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Defense" /></td>
-                        <td><InputNumber id="attack" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Attacks" /></td>
-                        <td><InputNumber id="wound" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Wounds" /></td>
-                        <td><InputNumber id="courage" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Courage" /></td>
-                        <td><InputNumber id="might" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Might" /></td>
-                        <td><InputNumber id="will" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Will" /></td>
-                        <td><InputNumber id="fate" class="form-control form-sm m-auto" @bind-Value="Model.Characteristics.Fate" /></td>
-                        <td><InputNumber id="cost" class="form-control m-auto" @bind-Value="Model.Cost" /></td>
+                        <td><InputNumber id="strength" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Strength" /></td>
+                        <td><InputNumber id="defense" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Defense" /></td>
+                        <td><InputNumber id="attack" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Attacks" /></td>
+                        <td><InputNumber id="wound" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Wounds" /></td>
+                        <td><InputNumber id="courage" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Courage" /></td>
+                        <td><InputNumber id="might" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Might" /></td>
+                        <td><InputNumber id="will" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Will" /></td>
+                        <td><InputNumber id="fate" class="form-control form-sm m-auto text-center" @bind-Value="Model.Characteristics.Fate" /></td>
+                        <td><InputNumber id="cost" class="form-control m-auto text-center" @bind-Value="Model.Cost" /></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="mb-3">
             <label class="form-label m-0 me-2">Equipment</label>
-            <table class="table-bordered border-input text-center w-100">
+            <table class="table-bordered border-input text-start w-100">
                 <thead>
                     <tr>
-                        <th><label class="form-label">Name</label></th>
-                        <th><label class="form-label">Description</label></th>
-                        <th><label class="form-label">Bow?</label></th>
-                        <th><label class="form-label">Multiple?</label></th>
-                        <th><label class="form-label">Count</label></th>
-                        <th><label class="form-label">Cost</label></th>
-                        <th><label class="form-label">Replaces</label></th>
+                        <th><label class="form-label m-0">Name</label></th>
+                        <th><label class="form-label m-0">Description</label></th>
+                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Bow?</label></th>
+                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Multiple?</label></th>
+                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Count</label></th>
+                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Cost</label></th>
+                        <th><label class="form-label m-0">Replaces</label></th>
                         <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
@@ -81,13 +81,13 @@
                     @foreach (var (equipment, i) in Model.Equipment.Select((e, i) => (e, i)))
                     {
                         <tr>
-                            <th><InputText id="@($"equipment-{i}-name")" class="form-control m-auto" @bind-Value="equipment.Profile.Name" /></th>
-                            <td><InputText id="@($"equipment-{i}-description")" class="form-control m-auto" @bind-Value="equipment.Profile.Description" /></td>
-                            <td><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsBow" /></td>
-                            <td><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input m-auto" @bind-Value="equipment.Profile.IsMultiple" /></td>
-                            <td><InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto" @bind-Value="equipment.DefaultCount" /></td>
-                            <td><InputNumber id="@($"equipment-{i}-cost")" class="form-control m-auto" @bind-Value="equipment.Cost" /></td>
-                            <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control m-auto" @bind-Value="equipment.ReplacedEquipmentString" /></td>
+                            <th><InputText id="@($"equipment-{i}-name")" class="form-control" @bind-Value="equipment.Profile.Name" /></th>
+                            <td><InputTextArea id="@($"equipment-{i}-description")" class="form-control fs-8" @bind-Value="equipment.Profile.Description" /></td>
+                            <td class="text-center"><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input" @bind-Value="equipment.Profile.IsBow" /></td>
+                            <td class="text-center"><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input" @bind-Value="equipment.Profile.IsMultiple" /></td>
+                            <td class="text-center"><InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto text-center" @bind-Value="equipment.DefaultCount" /></td>
+                            <td class="text-center"><InputNumber id="@($"equipment-{i}-cost")" class="form-control m-auto text-center" @bind-Value="equipment.Cost" /></td>
+                            <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control" @bind-Value="equipment.ReplacedEquipmentString" /></td>
                             <td>
                                 @if (i > 0)
                                 {
@@ -121,12 +121,12 @@
         </div>
         <div class="mb-3">
             <label class="form-label m-0 me-2">Special Rules</label>
-            <table class="table-bordered border-input text-center w-100">
+            <table class="table-bordered border-input text-start w-100">
                 <thead>
                     <tr>
-                        <th><label class="form-label">Name</label></th>
-                        <th><label class="form-label">Target</label></th>
-                        <th><label class="form-label">Description</label></th>
+                        <th><label class="form-label m-0">Name</label></th>
+                        <th><label class="form-label m-0">Target</label></th>
+                        <th><label class="form-label m-0">Description</label></th>
                         <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
@@ -136,7 +136,7 @@
                         <tr>
                             <th><InputText id="@($"rule-{i}-name")" class="form-control m-auto" @bind-Value="specialRule.Rule.Name" /></th>
                             <td><InputText id="@($"rule-{i}-target")" class="form-control m-auto" @bind-Value="specialRule.Target" /></td>
-                            <td><InputText id="@($"rule-{i}-description")" class="form-control m-auto" @bind-Value="specialRule.Rule.Description" /></td>
+                            <td><InputTextArea id="@($"rule-{i}-description")" class="form-control fs-8 m-auto" @bind-Value="specialRule.Rule.Description" /></td>
                             <td>
                                 @if (i > 0)
                                 {
@@ -170,11 +170,11 @@
         </div>
         <div class="mb-3">
             <label class="form-label m-0 me-2">Heroic Actions</label>
-            <table class="table-bordered border-input text-center w-100">
+            <table class="table-bordered border-input text-start w-100">
                 <thead>
                     <tr>
-                        <th><label class="form-label">Name</label></th>
-                        <th><label class="form-label">Description</label></th>
+                        <th><label class="form-label m-0">Name</label></th>
+                        <th><label class="form-label m-0">Description</label></th>
                         <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
@@ -183,7 +183,7 @@
                     {
                         <tr>
                             <th><InputText id="@($"heroicAction-{i}-name")" class="form-control m-auto" @bind-Value="heroicAction.Name" /></th>
-                            <td><InputText id="@($"heroicAction-{i}-description")" class="form-control m-auto" @bind-Value="heroicAction.Description" /></td>
+                            <td><InputTextArea id="@($"heroicAction-{i}-description")" class="form-control fs-8 m-auto" @bind-Value="heroicAction.Description" /></td>
                             <td>
                                 @if (i > 0)
                                 {
@@ -217,13 +217,13 @@
         </div>
         <div class="mb-3">
             <label class="form-label m-0 me-2">Magical Powers</label>
-            <table class="table-bordered border-input text-center w-100">
+            <table class="table-bordered border-input text-start w-100">
                 <thead>
                     <tr>
-                        <th><label class="form-label">Name</label></th>
-                        <th><label class="form-label">Range</label></th>
-                        <th><label class="form-label">Casting</label></th>
-                        <th><label class="form-label">Description</label></th>
+                        <th><label class="form-label m-0">Name</label></th>
+                        <th><label class="form-label m-0">Range</label></th>
+                        <th><label class="form-label m-0">Casting</label></th>
+                        <th><label class="form-label m-0">Description</label></th>
                         <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
                     </tr>
                 </thead>
@@ -234,7 +234,7 @@
                             <th><InputText id="@($"magicalPower-{i}-name")" class="form-control m-auto" @bind-Value="magicalPower.Power.Name" /></th>
                             <td><InputNumber id="@($"magicalPower-{i}-range")" class="form-control m-auto" @bind-Value="magicalPower.Range" /></td>
                             <td><InputNumber id="@($"magicalPower-{i}-casting")" class="form-control m-auto" @bind-Value="magicalPower.Casting" /></td>
-                            <th><InputText id="@($"magicalPower-{i}-description")" class="form-control m-auto" @bind-Value="magicalPower.Power.Description" /></th>
+                            <th><InputTextArea id="@($"magicalPower-{i}-description")" class="form-control fs-8 m-auto" @bind-Value="magicalPower.Power.Description" /></th>
                             <td>
                                 @if (i > 0)
                                 {
