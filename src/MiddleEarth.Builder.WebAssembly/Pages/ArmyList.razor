@@ -253,8 +253,8 @@
         foreach (var profileSpecialRule in data.SpecialRules)
             Context.SpecialRules.GetOrCreate(profileSpecialRule.Rule.Name!).Update(profileSpecialRule.Rule);
 
-        foreach (var heroicAction in data.HeroicActions)
-            Context.HeroicActions.GetOrCreate(heroicAction.Name).Update(heroicAction);
+        // foreach (var heroicAction in data.HeroicActions)
+        //     Context.HeroicActions.GetOrCreate(heroicAction.Name).Update(heroicAction);
 
         foreach (var magicalPower in data.MagicalPowers)
             Context.MagicalPowers.GetOrCreate(magicalPower.Power.Name).Update(magicalPower.Power);

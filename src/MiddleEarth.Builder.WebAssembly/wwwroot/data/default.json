@@ -13,6 +13,11 @@
       "Description": "Mv 10\u0022 F3/6\u002B S3 D5 A0 W1 C3"
     },
     {
+      "Name": "Bow",
+      "Description": "",
+      "IsBow": true
+    },
+    {
       "Name": "Dagger",
       "Description": ""
     },
@@ -21,20 +26,49 @@
       "Description": ""
     },
     {
+      "Name": "Fell Warg",
+      "Description": "Mv 10\u0022 F3/6\u002B S4 D4 A1 W1 C2"
+    },
+    {
       "Name": "Glamdring",
       "Description": "Elven-made hand-and-a-half sword. Strength \u002B1."
     },
     {
-      "Name": "Heavy Armour",
+      "Name": "Heavy armour",
       "Description": "Defence \u002B2"
+    },
+    {
+      "Name": "Horn of Gondor",
+      "Description": "Boromir can blow the horn at the start of a Fight if he is outnumbered by two-to-one or more. The enemy combatant in the Fight with the highest Courage value must take a Courage test. If the test if passed, the combat is fought as normal. If the test is failed, Boromir automatically wins the fight and can strike blows against his enemies."
+    },
+    {
+      "Name": "Horse",
+      "Description": "Mv 10\u0022 F3/6\u002B S3 D4 A0 W1 C3"
+    },
+    {
+      "Name": "Lance",
+      "Description": ""
+    },
+    {
+      "Name": "Longbow",
+      "Description": "",
+      "IsBow": true
     },
     {
       "Name": "Narya",
       "Description": "Fate rolls re-roll."
     },
     {
+      "Name": "Pony",
+      "Description": "Mv 8\u0022 F2/6\u002B S2 D4 A0 W1 C2"
+    },
+    {
       "Name": "Shadowfax",
       "Description": "Mv12\u0022 F0 S4 D5 A0 W1 C5 M0 W2 F1"
+    },
+    {
+      "Name": "Shield",
+      "Description": ""
     },
     {
       "Name": "Staff of Power",
@@ -43,9 +77,21 @@
     {
       "Name": "Sword",
       "Description": ""
+    },
+    {
+      "Name": "The Banner of Gondor",
+      "Description": "The Banner of Minas Tirith is a banner with a range of 6\u0022. Additionally, Boromir and all friendly Condor Warrior models within 6\u0022 of it gain a \u002B 1 bonus to their Fight value. Note, this is cumulative with other bonuses to a model\u0027s Fight value. Boromir suffers no penalties for carrying the Banner of Minas Tirith. He may not carry the Banner of Minas Tirith if he is also carrying a lance."
+    },
+    {
+      "Name": "Warg",
+      "Description": "Mv 10\u0022 F3/6\u002B S4 D4 A1 W1 C2"
     }
   ],
   "SpecialRules": [
+    {
+      "Name": "\u0022Is there a Captain here who still has the Courage to do his Lord\u0027s Will?\u0022",
+      "Description": "If Denethor is part of the same army as Faramir, then Faramir will automatically pass all Courage tests he is forced to make whilst Denethor is alive and on the battlefield. However, whilst Denethor is on the battlefield, Faramir must always Charge an enemy model if he is able to do so."
+    },
     {
       "Name": "\u0022The rule of Gondor is mine, and no other\u0027s!\u0022",
       "Description": "If your force contains Denethor then he must be your leader, unless your force also contains Aragorn, King Elessar."
@@ -217,13 +263,38 @@
     }
   ],
   "HeroicActions": [
-    { "Name": "Heroic Challenge" },
-    { "Name": "Heroic Channeling" },
-    { "Name": "Heroic Defence" },
-    { "Name": "Heroic March" },
-    { "Name": "Heroic Resolve" },
-    { "Name": "Heroic Strength" },
-    { "Name": "Heroic Strike" }
+    {
+      "Name": "Heroic Accuracy",
+      "Description": "Heroic Accuracy enables a Hero model to re-roll failed In The Way rolls when shooting in that Shoot phase.\n\nTAKE AIM!\nIf a Hero performing a Heroic Accuracy wishes, they may shout \u201CTake Aim!\u201D to their comrades, allowing all friendly models within 6\u0022 to also re-roll failed In The Way rolls when shooting in that Shoot phase."
+    },
+    {
+      "Name": "Heroic Challenge",
+      "Description": "A Hero that is in base contact with an enemy Hero, of the same Heroic Tier or higher, may declare a Heroic Challenge. It can accept or decline.\nIf accepted, other models cannot charge, fight and strike heroes involved in challenge until one of them is slayed. Whichever Hero is successful in slaying their opponent will immediately gain D3 Might points; this can take them above their starting level.\nIf the Challenge is declined, then any Heroic Actions called by the declining Hero will not affect other friendly models until the Hero who issued the Challenge is slain."
+    },
+    {
+      "Name": "Heroic Channeling",
+      "Description": "A Hero model who uses Heroic Channelling uses the Channelled versions of any Magical Powers that they cast this turn."
+    },
+    {
+      "Name": "Heroic Defence",
+      "Description": "A Hero model that declares a Heroic Defence will only suffer a Wound on the roll of a natural 6 in the ensuing Fight phase, regardless of any modifiers or Brutal Power Attacks. If the Hero would usually have been wounded on a 6/4\u002B, 6/5\u002B or 6/6, then they will only be wounded if both rolls are natural rolls."
+    },
+    {
+      "Name": "Heroic March",
+      "Description": "A Hero model who uses a Heroic March adds 3\u0022 to their maximum Move distance if they are Infantry, or 5\u0022 to their mount\u2019s maximum Move distance if they are Cavalry, or if the Hero has the Fly special rule. Models who utilise a Heroic March may not Charge in the same Move phase."
+    },
+    {
+      "Name": "Heroic Resolve",
+      "Description": "Friendly models that are within 6\u0022 of a Hero model that declared a Heroic Resolve, including the Hero themselves, receive one free additional dice to any Resist tests.\nthey make for the remainder of the turn."
+    },
+    {
+      "Name": "Heroic Strength",
+      "Description": "Strength \u002Bd3 for the duration of the Fight phase."
+    },
+    {
+      "Name": "Heroic Strike",
+      "Description": "Fight \u002Bd6 for the duration of the Fight phase."
+    }
   ],
   "MagicalPowers": [
     { "Name": "Banishment" },
@@ -265,7 +336,7 @@
               "DefaultCount": 1
             },
             {
-              "Name": "Heavy Armour",
+              "Name": "Heavy armour",
               "DefaultCount": 1
             },
             {
@@ -278,14 +349,7 @@
             { "Name": "Mighty Hero" },
             { "Name": "Stand Men of the West!" }
           ],
-          "HeroicActions": [
-            { "Name": "Heroic Challenge" },
-            { "Name": "Heroic Defence" },
-            { "Name": "Heroic March" },
-            { "Name": "Heroic Resolve" },
-            { "Name": "Heroic Strength" },
-            { "Name": "Heroic Strike" }
-          ],
+          "HeroicActions": [ "Heroic Challenge", "Heroic Defence", "Heroic March", "Heroic Resolve", "Heroic Strength", "Heroic Strike" ],
           "MagicalPowers": [],
           "Cost": 225
         },
@@ -326,11 +390,7 @@
             }
           ],
           "SpecialRules": [],
-          "HeroicActions": [
-            { "Name": "Heroic Resolve" },
-            { "Name": "Heroic Channeling" },
-            { "Name": "Heroic Strike" }
-          ],
+          "HeroicActions": [ "Heroic Resolve", "Heroic Channeling", "Heroic Strike" ],
           "MagicalPowers": [
             {
               "Name": "Blinding Light",
@@ -416,7 +476,7 @@
         },
         {
           "ArmyList": "Minas Tirith",
-          "Name": "Peregrin Took, Guard Of The Citadel",
+          "Name": "Peregrin Took, Guard of the Citadel",
           "Tier": "Independent Hero",
           "Keywords": [ "Hobbit", "Gondor", "Infantry", "Hero" ],
           "Characteristics": {
@@ -450,9 +510,167 @@
             { "Name": "Resistant to Magic" },
             { "Name": "Throw Stones (Range 8\u0022, Strength 1)" }
           ],
-          "HeroicActions": [ { "Name": "Heroic Defence" } ],
+          "HeroicActions": [ "Heroic Defence" ],
           "MagicalPowers": [],
           "Cost": 25
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Boromir, Captain of the White Tower ",
+          "Tier": "Hero of Valour",
+          "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 6,
+            "Shoot": 4,
+            "Strength": 4,
+            "Defense": 6,
+            "Attacks": 3,
+            "Wounds": 3,
+            "Courage": 6,
+            "Might": 6,
+            "Will": 3,
+            "Fate": 3
+          },
+          "Equipment": [
+            {
+              "Name": "Heavy armour",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Sword",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Horn of Gondor",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "The Banner of Gondor",
+              "Cost": 40
+            },
+            {
+              "Name": "Horse",
+              "Cost": 10
+            },
+            {
+              "Name": "Lance",
+              "Cost": 5
+            },
+            {
+              "Name": "Shield",
+              "Cost": 5
+            }
+          ],
+          "SpecialRules": [],
+          "HeroicActions": [ "Heroic Strike", "Heroic Strength", "Heroic Defence" ],
+          "MagicalPowers": [],
+          "Cost": 160
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Faramir, Captain Of Gondor",
+          "Tier": "Hero of Valour",
+          "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 5,
+            "Shoot": 3,
+            "Strength": 4,
+            "Defense": 5,
+            "Attacks": 2,
+            "Wounds": 2,
+            "Courage": 6,
+            "Might": 3,
+            "Will": 3,
+            "Fate": 2
+          },
+          "Equipment": [
+            {
+              "Name": "Armour",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Sword",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Armoured horse",
+              "Cost": 15,
+              "ReplacedEquipment": [ "Horse" ]
+            },
+            {
+              "Name": "Horse",
+              "Cost": 10,
+              "ReplacedEquipment": [ "Armoured horse" ]
+            },
+            {
+              "Name": "Bow",
+              "Cost": 5
+            },
+            {
+              "Name": "Heavy armour",
+              "Cost": 5,
+              "ReplacedEquipment": [ "Armour" ]
+            },
+            {
+              "Name": "Lance",
+              "Cost": 5
+            },
+            {
+              "Name": "Shield",
+              "Cost": 5
+            }
+          ],
+          "SpecialRules": [
+            { "Name": "Woodland Creature" },
+            { "Name": "\u0022Is there a Captain here who still has the Courage to do his Lord\u0027s Will?\u0022" }
+          ],
+          "HeroicActions": [ "Heroic Resolve", "Heroic Accuracy", "Heroic Strike", "Heroic Defence" ],
+          "MagicalPowers": [],
+          "Cost": 80
+        },
+        {
+          "ArmyList": "Minas Tirith",
+          "Name": "Beregond, Guard Of The Citadel",
+          "Tier": "Minor Hero",
+          "Keywords": [ "Man", "Gondor", "Infantry", "Hero" ],
+          "Characteristics": {
+            "Move": 6,
+            "Fight": 4,
+            "Shoot": 3,
+            "Strength": 4,
+            "Defense": 6,
+            "Attacks": 1,
+            "Wounds": 1,
+            "Courage": 4,
+            "Might": 1,
+            "Will": 1,
+            "Fate": 1
+          },
+          "Equipment": [
+            {
+              "Name": "Heavy armour",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Sword",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Longbow",
+              "DefaultCount": 1
+            },
+            {
+              "Name": "Horse",
+              "DefaultCount": 1,
+              "Cost": 5
+            }
+          ],
+          "SpecialRules": [ { "Name": "Bodyguard" } ],
+          "HeroicActions": [ "Heroic Accuracy" ],
+          "MagicalPowers": [],
+          "Cost": 30
         }
       ],
       "ArmyBonuses": [ { "Name": "\u0022You are Men of Gondor. Whatever comes through that Gate, you will stand your Ground!\u0022" } ]

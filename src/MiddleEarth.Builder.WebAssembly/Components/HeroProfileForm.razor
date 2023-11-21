@@ -71,7 +71,7 @@
                         <th><label class="form-label m-0">Description</label></th>
                         <th class="text-center"><label class="form-label m-0 m-auto text-center">Bow?</label></th>
                         <th class="text-center"><label class="form-label m-0 m-auto text-center">Multiple?</label></th>
-                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Count</label></th>
+                        <th class="text-center"><label class="form-label m-0 m-auto text-center">Default?</label></th>
                         <th class="text-center"><label class="form-label m-0 m-auto text-center">Cost</label></th>
                         <th><label class="form-label m-0">Replaces</label></th>
                         <th style="min-width: 57px; width: 57px; max-width: 57px;"></th>
@@ -85,7 +85,16 @@
                             <td><InputTextArea id="@($"equipment-{i}-description")" class="form-control fs-8" @bind-Value="equipment.Profile.Description" /></td>
                             <td class="text-center"><InputCheckbox id="@($"equipment-{i}-bow")" class="form-check-input" @bind-Value="equipment.Profile.IsBow" /></td>
                             <td class="text-center"><InputCheckbox id="@($"equipment-{i}-once")" class="form-check-input" @bind-Value="equipment.Profile.IsMultiple" /></td>
-                            <td class="text-center"><InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto text-center" @bind-Value="equipment.DefaultCount" /></td>
+                            <td class="text-center">
+                                @if (equipment.Profile.IsMultiple)
+                                {
+                                    <InputNumber id="@($"equipment-{i}-count")" class="form-control form-sm m-auto text-center" @bind-Value="equipment.DefaultCount"/>
+                                }
+                                else
+                                {
+                                    <InputCheckbox id="@($"equipment-{i}-count")" class="form-check-input" @bind-Value="equipment.IsDefault" />
+                                }
+                            </td>
                             <td class="text-center"><InputNumber id="@($"equipment-{i}-cost")" class="form-control m-auto text-center" @bind-Value="equipment.Cost" /></td>
                             <td><InputText id="@($"equipment-{i}-replaced-equipment")" class="form-control" @bind-Value="equipment.ReplacedEquipmentString" /></td>
                             <td>

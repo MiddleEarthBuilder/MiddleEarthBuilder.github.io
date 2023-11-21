@@ -116,10 +116,15 @@ public class Repository<T>
     public IEnumerable<T> GetAll(string? searchText = null, IEnumerable<string>? except = null, bool addItemFromSearchText = false)
     {
         if (searchText == null)
-            return _dictionary.Values;
+            return _dictionary
+                .OrderBy(kv => kv.Key)
+                .Select(kv => kv.Value);
 
         var items = _dictionary
-            .Where(kv => kv.Key.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            .Where(kv => kv.Key.Contains(searchText, StringComparison.InvariantCultureIgnoreCase))
+            .OrderBy(kv => !kv.Key.StartsWith(searchText, StringComparison.InvariantCultureIgnoreCase))
+            .ThenBy(kv => kv.Key)
+            .ToList();
 
         if (addItemFromSearchText && !items.Any(kv => string.Equals(kv.Key, searchText, StringComparison.InvariantCultureIgnoreCase)))
             items.Add(new KeyValuePair<string, T>(searchText.ToLower().Trim(), _create(searchText)));
@@ -131,7 +136,6 @@ public class Repository<T>
         }
 
         return items
-            .OrderBy(kv => kv.Key)
             .Select(kv => kv.Value);
     }
 

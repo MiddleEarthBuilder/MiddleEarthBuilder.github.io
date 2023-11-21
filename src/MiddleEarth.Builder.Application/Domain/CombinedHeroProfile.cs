@@ -8,7 +8,7 @@ public record CombinedHeroProfileRaw(
     CharacteristicsRaw Characteristics,
     ProfileEquipmentRaw[]? Equipment,
     ProfileSpecialRuleRaw[]? SpecialRules,
-    HeroicActionRaw[]? HeroicActions,
+    string[]? HeroicActions,
     ProfileMagicalPowerRaw[]? MagicalPowers,
     int Cost,
     string? Note,

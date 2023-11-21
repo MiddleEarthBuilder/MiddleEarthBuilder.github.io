@@ -47,10 +47,12 @@ public class RepositoryTests
         var repository = CreateRepository();
 
         // act
-        var items = repository.GetAll("lo");
+        var items = repository.GetAll("lo").ToArray();
 
         // assert
         items.Should().HaveCount(2);
+        items[0].Id.Should().Be("Lorem");
+        items[1].Id.Should().Be("dolor");
     }
 
     [Fact]

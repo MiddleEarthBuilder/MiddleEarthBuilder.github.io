@@ -49,7 +49,7 @@ public record HeroProfileRaw(
     CharacteristicsRaw Characteristics,
     ProfileEquipmentRaw[]? Equipment,
     ProfileSpecialRuleRaw[]? SpecialRules,
-    HeroicActionRaw[]? HeroicActions,
+    string[]? HeroicActions,
     ProfileMagicalPowerRaw[]? MagicalPowers,
     int Cost,
     string? Note);
@@ -73,7 +73,7 @@ public class HeroProfileMapper
         _mapper.CharacteristicsMapper.Map(value.Characteristics),
         value.Equipment.Select(_mapper.ProfileEquipmentMapper.Map).ToArray(),
         value.SpecialRules.Select(_mapper.ProfileSpecialRuleMapper.Map).ToArray(),
-        value.HeroicActions.Select(_mapper.HeroicActionMapper.Map).ToArray(),
+        value.HeroicActions.Select(action => action.Name).ToArray(),
         value.MagicalPowers.Select(_mapper.ProfileMagicalPowerMapper.Map).ToArray(),
         value.Cost,
         value.Note);
@@ -87,7 +87,7 @@ public class HeroProfileMapper
         Characteristics = _mapper.CharacteristicsMapper.Map(raw.Characteristics),
         Equipment = raw.Equipment?.Select(_mapper.ProfileEquipmentMapper.Map).ToList() ?? new List<ProfileEquipment>(),
         SpecialRules = raw.SpecialRules?.Select(_mapper.ProfileSpecialRuleMapper.Map).ToList() ?? new List<ProfileSpecialRule>(),
-        HeroicActions = raw.HeroicActions?.Select(_mapper.HeroicActionMapper.Map).ToList() ?? new List<HeroicAction>(),
+        HeroicActions = raw.HeroicActions?.Select(_context.HeroicActions.GetOrCreate).ToList() ?? new List<HeroicAction>(),
         MagicalPowers = raw.MagicalPowers?.Select(_mapper.ProfileMagicalPowerMapper.Map).ToList() ?? new List<ProfileMagicalPower>(),
         Cost = raw.Cost,
         Note = raw.Note

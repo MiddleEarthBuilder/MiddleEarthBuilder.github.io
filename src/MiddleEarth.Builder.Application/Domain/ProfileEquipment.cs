@@ -3,7 +3,13 @@
 public class ProfileEquipment
 {
     public EquipmentProfile Profile { get; set; }
-    public int DefaultCount { get; set; }
+    public bool IsDefault
+    {
+        get => DefaultCount > 0;
+        set => DefaultCount = value ? Math.Max(DefaultCount, 1) : 0;
+    }
+
+    public int DefaultCount { get; set; } = 1;
     public int Cost { get; set; }
     public List<string> ReplacedEquipment { get; set; } = new();
     public string ReplacedEquipmentString
